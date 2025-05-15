@@ -8,11 +8,15 @@
   <link rel="stylesheet" href="/css/mdui.min.css">
   <meta name="keywords" content="fcl, foldcraftlauncher, fcl启动器, fcl官网, 官方原版, 下载, 最新版, fcl渲染器, fcl插件">
   <meta name="description" content="这里是由一群FCL玩家自行搭建的公益下载站。可以在此页面下载《Fold Craft Launcher》（简称FCL），这里提供了FCL最新版、FCL单架构版、FCL历史版本、FCL渲染器和FCL插件，有直链、官方HG、网盘等多个可靠下载源。此页面没有烦人的广告，没有乱七八糟的套路，只为了能让玩家下载到最新版FCL。">
-  <title>FCL下载站</title>
+  <title>Fold Craft Launcher 下载站</title>
   
   <style>
     img {
       width: 100%;
+    }
+    
+    .hide {
+      display: none;
     }
   </style>
 </head>
@@ -21,7 +25,9 @@
   
   <div class="mdui-appbar mdui-appbar-fixed">
     <div class="mdui-toolbar mdui-color-indigo">
-      <a href="javascript:;" class="mdui-typo-title">Fold Craft Launcher 下载站</a>
+      <div class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: 'FCL_icon'}"><img src="/file/picture/FCL_icon.webp"></div>
+      <a href="javascript:;" class="mdui-typo-title">FCL下载站</a>
+      <div class="mdui-spinner" id="loading"></div>
       <div class="mdui-toolbar-spacer"></div>
       <a href="/" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '刷新'}"><i class="mdui-icon material-icons">refresh</i></a>
       <a href="https://old.foldcraftlauncher.cn" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '回到旧版'}"><i class="mdui-icon material-icons">style</i></a>
