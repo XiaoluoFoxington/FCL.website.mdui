@@ -13,28 +13,67 @@
       width: 100%;
     }
     
-    a {
-      color: #88f;
-    }
+    
     
     mark {
       color: #00f;
       background-color: #ff0;
     }
+
+    .___contributor_card {
+      
+    }
+
+    #contributors {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 200vh;
+    }
+
+    .mdui-card-media-covered {
+      background-color: rgba(0, 0, 0, .6);
+    }
+
+    @media screen and (min-width: 768px) {
+      .mdui-ripple {
+        flex-direction: row !important;
+      }
+
+      img:not(.mdui-icon):not(.___fcl_icon):not(.___avatar) {
+        max-width: 70%;
+        margin: 4px auto;
+        margin-left: calc(50% - 35%);
+      }
+
+      .___sponsor_qrcode {
+        width: 25%;
+        margin-left: calc(50% - 12.5%) !important;
+      }
+
+      #contributors {
+        flex-direction: row;
+        height: auto;
+      }
+
+      .___contributor_card {
+        width: 24%;
+      }
+    }
   </style>
 </head>
 
-<body class="mdui-appbar-with-toolbar mdui-appbar-with-tab-larger mdui-theme-layout-dark mdui-theme-primary-teal mdui-theme-accent-green">
+<body class="mdui-appbar-with-toolbar mdui-appbar-with-tab-larger mdui-theme-layout-dark mdui-theme-primary-teal mdui-theme-accent-yellow">
   
   <div class="mdui-appbar mdui-appbar-fixed">
     <div class="mdui-toolbar mdui-color-indigo">
       <a href="javascript:;" class="mdui-typo-title">Fold Craft Launcher 下载站</a>
       <div class="mdui-toolbar-spacer"></div>
-      <a href="/index.html" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">refresh</i></a>
-      <a href="https://old.foldcraftlauncher.cn" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">style</i></a>
-      <a mdui-dialog="{target: '#ghLinks'}" class="mdui-btn mdui-btn-icon"><ion-icon name="logo-github" class="mdui-icon"></ion-icon></a>
+      <a href="/" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '刷新'}"><i class="mdui-icon material-icons">refresh</i></a>
+      <a href="https://old.foldcraftlauncher.cn" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '回到旧版'}"><i class="mdui-icon material-icons">style</i></a>
+      <a mdui-dialog="{target: '#ghLinks'}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: 'GitHub'}"><ion-icon name="logo-github" class="mdui-icon"></ion-icon></a>
     </div>
-    <div class="mdui-tab mdui-color-indigo" mdui-tab>
+    <div class="mdui-tab mdui-color-indigo">
       <a href="#tab1" class="mdui-ripple mdui-ripple-white">
         <i class="mdui-icon material-icons">description</i>
         <label>介绍</label>
@@ -64,12 +103,12 @@
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
           </div>
           <div class="mdui-panel-item-body">
-            <p>最终我背叛了我自己。</p>
-            <p>当网站在玩家社区越来越知名时，那些曾被我讥讽为"屏幕空间杀手"的呼吸感留白，终究成了安抚信息焦虑症的视觉安定剂。在经历了114514次关于“这网站长得像Win98遗孤”的“亲切”问候后，我们决定向矩形之神低头——即日起，此网站正式加入Material Design豪华午餐。</p>
-            <p>是的，那个曾经高喊"去他妈的Material Design"的叛逆站长，此刻正亲手为每个元素加上“<code>.mdui-…</code>”类。正如所有理想主义者最终都会成为自己最讨厌的样子，我们终于领悟到：只符合一个人审美的设计，不叫设计。</p>
-            <p>但最讽刺的莫过于发现：标准化设计本质是种加密算法。当用户面对陌生界面时，Material Design就是他们认知世界的罗塞塔石碑——圆角矩形自动解码为可点击卡片，汉堡菜单被默认为功能抽屉，就连加载动画的旋转角度都暗藏着集体潜意识的期待。</p>
-            <p>这或许就是数字时代的俄耳甫斯悖论：你若执意带着旧时光的美学亡魂返回人间，终将在用户流失率的冥河中溺毙。那么，就把千禧年的互联网狂想曲谱成地下室的秘密和弦吧，至少Material Design的风声里，还藏着让用户顺畅呼吸的韵律。</p>
-            <p>标题栏上有个回到旧样式的按钮。你可以随时回到过去，可是那里已经没有任何新内容了…</p>
+            <p class="mdui-typo">最终我背叛了我自己。</p>
+            <p class="mdui-typo">当网站在玩家社区越来越知名时，那些曾被我讥讽为"屏幕空间杀手"的呼吸感留白，终究成了安抚信息焦虑症的视觉安定剂。在经历了114514次关于“这网站长得像Win98遗孤”的“亲切”问候后，我们决定向矩形之神低头——即日起，此网站正式加入Material Design豪华午餐。</p>
+            <p class="mdui-typo">是的，那个曾经高喊"去他妈的Material Design"的叛逆站长，此刻正亲手为每个元素加上“<code>.mdui-…</code>”类。正如所有理想主义者最终都会成为自己最讨厌的样子，我们终于领悟到：只符合一个人审美的设计，不叫设计。</p>
+            <p class="mdui-typo">但最讽刺的莫过于发现：标准化设计本质是种加密算法。当用户面对陌生界面时，Material Design就是他们认知世界的罗塞塔石碑——圆角矩形自动解码为可点击卡片，汉堡菜单被默认为功能抽屉，就连加载动画的旋转角度都暗藏着集体潜意识的期待。</p>
+            <p class="mdui-typo">这或许就是数字时代的俄耳甫斯悖论：你若执意带着旧时光的美学亡魂返回人间，终将在用户流失率的冥河中溺毙。那么，就把千禧年的互联网狂想曲谱成地下室的秘密和弦吧，至少Material Design的风声里，还藏着让用户顺畅呼吸的韵律。</p>
+            <p class="mdui-typo">标题栏上有个回到旧样式的按钮。你可以随时回到过去，可是那里已经没有任何新内容了…</p>
           </div>
         </div>
         
@@ -79,11 +118,11 @@
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
           </div>
           <div class="mdui-panel-item-body">
-            <div style="width: 100%; text-align: center;"><img src="/file/picture/FCL_icon.webp" style="width: 10rem;"></div>
-            <p>《Fold Craft Launcher》（下文简称FCL），此软件可以使你在Android设备上运行《我的世界：Java版》（《Minecraft : Java Edition》），并支持各类模组加载器。除此之外，还有自动安装、管理多个游戏版本和下载模组、整合包等多个强大功能。 </p>
+            <div style="width: 100%; text-align: center;"><img class="___fcl_icon" src="/file/picture/FCL_icon.webp" style="width: 10rem;"></div>
+            <p class="mdui-typo">《Fold Craft Launcher》（下文简称FCL），此软件可以使你在Android设备上运行《我的世界：Java版》（《Minecraft : Java Edition》），并支持各类模组加载器。除此之外，还有自动安装、管理多个游戏版本和下载模组、整合包等多个强大功能。 </p>
             <img src="/file/picture/首页.webp">
-            <p>
-              这里是FCL玩家自己搭建的FCL发行版下载站。由于GFW阻断了<a href="https://github.com/FCL-Team/FoldCraftLauncher" target="_blank">FCL的GitHub链接</a>，导致了许多玩家无法下载FCL最新版。我们提供了快速安全的直链和整理了一些可靠的第三方下载地址。
+            <p class="mdui-typo">
+              这里是FCL玩家自己搭建的FCL发行版下载站。由于GFW阻断了<a href="https://github.com/FCL-Team/FoldCraftLauncher" target="_blank">FCL的GitHub链接</a>，导致了许多玩家无法下载FCL最新版。我们提供了<a href="/?tab=1#fcl">快速安全的直链</a>。
             </p>
           </div>
         </div>
@@ -96,14 +135,14 @@
           <div class="mdui-panel-item-body">
             
             <div class="mdui-panel" mdui-panel>
-              <div class="mdui-panel-item mdui-panel-item-open">
+              <div class="mdui-panel-item mdui-panel-item-open mdui-color-light-blue-900">
                 <div class="mdui-panel-item-header">
                   <div class="mdui-panel-item-title">开源</div>
                   <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
                 </div>
                 <div class="mdui-panel-item-body">
                   
-                  <p>
+                  <p class="mdui-typo">
                     此软件已在<a href="https://github.com/FCL-Team/FoldCraftLauncher" target="_blank">GitHub</a>开源，您可以自由查看源代码，我们保证不会有任何恶意代码。是绿色安全的软件。
                   </p>
                   
@@ -117,7 +156,7 @@
                 </div>
                 <div class="mdui-panel-item-body">
                   
-                  <p>
+                  <p class="mdui-typo">
                     具有自动下载并安装游戏版本，支持模组加载器，并带有游戏版本管理。
                   </p>
                   
@@ -139,7 +178,7 @@
                 </div>
                 <div class="mdui-panel-item-body">
                   
-                  <p>
+                  <p class="mdui-typo">
                     除了下载游戏版本，还有下载整合包、模组、资源包、世界和光影。
                   </p>
                   
@@ -157,7 +196,7 @@
                 </div>
                 <div class="mdui-panel-item-body">
                   
-                  <p>
+                  <p class="mdui-typo">
                     目前已内置支持Java 8、Java 11、Java 17和Java 21，具有Pojav与Boat两种启动方式。启动器会根据游戏版本自动选择Java版本。 </p>
                   
                   <img src="/file/picture/Java.webp">
@@ -172,7 +211,7 @@
                 </div>
                 <div class="mdui-panel-item-body">
                   
-                  <p>
+                  <p class="mdui-typo">
                     自制或者在布局仓库下载其他玩家制作的控制布局，没有实体键盘也可以获得不错的游戏体验。
                   </p>
                   
@@ -192,16 +231,16 @@
     </div>
     
     <div id="tab2">
-      <p>您想要下载什么？</p>
+      <p class="mdui-typo">您想要下载什么？</p>
       <div class="mdui-panel" mdui-panel>
         
         <div class="mdui-panel-item">
-          <div class="mdui-panel-item-header">
+          <div class="mdui-panel-item-header" id="fcl">
             <div class="mdui-panel-item-title">FCL</div>
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
           </div>
           <div class="mdui-panel-item-body">
-            <p>您想要下载哪个版本？</p>
+            <p class="mdui-typo">您想要下载哪个版本？</p>
             <div class="mdui-panel" mdui-panel>
               
               <div class="mdui-panel-item">
@@ -210,7 +249,7 @@
                   <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
                 </div>
                 <div class="mdui-panel-item-body">
-                  <p>您的手机CPU架构是？</p>
+                  <p class="mdui-typo">您的手机CPU架构是？</p>
                   <a href="https://vip.123pan.cn/1811746932/11471878" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
                   <a href="https://vip.123pan.cn/1811746932/11471879" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
                   <a href="https://vip.123pan.cn/1811746932/11471882" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
@@ -225,7 +264,7 @@
                   <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
                 </div>
                 <div class="mdui-panel-item-body">
-                  <p>您的手机CPU架构是？</p>
+                  <p class="mdui-typo">您的手机CPU架构是？</p>
                   <a href="https://vip.123pan.cn/1811746932/11403824" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
                   <a href="https://vip.123pan.cn/1811746932/11403825" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
                   <a href="https://vip.123pan.cn/1811746932/11403834" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
@@ -238,7 +277,7 @@
                   <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
                 </div>
                 <div class="mdui-panel-item-body">
-                  <p>您的手机CPU架构是？</p>
+                  <p class="mdui-typo">您的手机CPU架构是？</p>
                   <a href="https://vip.123pan.cn/1811746932/11324563" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
                   <a href="https://vip.123pan.cn/1811746932/11324561" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
                   <a href="https://vip.123pan.cn/1811746932/11324564" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
@@ -251,7 +290,7 @@
                   <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
                 </div>
                 <div class="mdui-panel-item-body">
-                  <p>您的手机CPU架构是？</p>
+                  <p class="mdui-typo">您的手机CPU架构是？</p>
                   <a href="https://vip.123pan.cn/1811746932/11299574" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
                   <a href="https://vip.123pan.cn/1811746932/11299575" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
                   <a href="https://vip.123pan.cn/1811746932/11299583" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
@@ -266,7 +305,7 @@
                   <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
                 </div>
                 <div class="mdui-panel-item-body">
-                  <p>您的手机CPU架构是？</p>
+                  <p class="mdui-typo">您的手机CPU架构是？</p>
                   <a href="https://vip.123pan.cn/1811746932/11245195" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
                   <a href="https://vip.123pan.cn/1811746932/11270081" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
                   <a href="https://vip.123pan.cn/1811746932/11270193" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
@@ -300,7 +339,7 @@
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
           </div>
           <div class="mdui-panel-item-body">
-            <p>暂不提供</p>
+            <p class="mdui-typo">暂不提供</p>
           </div>
         </div>
         
@@ -310,7 +349,7 @@
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
           </div>
           <div class="mdui-panel-item-body">
-            <p>直链流量费用高昂，请不要滥用，目前下载站一直在亏损，我们除了赞助外无任何收益，属于公益性质。如果您条件允许，可点击顶部“赞助”TAB赞助站长。</p>
+            <p class="mdui-typo">直链流量费用高昂，请不要滥用，目前下载站一直在亏损，我们除了赞助外无任何收益，属于公益性质。如果您条件允许，可点击顶部<a href="/?tab=2">赞助站长</a>。</p>
           </div>
         </div>
         
@@ -325,14 +364,14 @@
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
           </div>
           <div class="mdui-panel-item-body">
-            <p>
+            <p class="mdui-typo">
               此站完全属于公益性质。我们始终坚守“0广告，0套路”，让更多人体验到开源社区的美好。如果您认为此站点对您有帮助且您<mark>有能力并经济独立</mark>，可考虑在下方赞助我。赞助后您可以在<a href="https://wj.qq.com/s2/20865225/25ca/" target="_blank">此处</a>填写您的赞助信息，我们会显示在此页面。
             </p>
-            <img src="/file/picture/微信赞赏码.png">
+            <img class="___sponsor_qrcode" src="/file/picture/微信赞赏码.png">
           </div>
         </div>
         
-        <div class="mdui-panel-item mdui-panel-item-open">
+        <div class="mdui-panel-item mdui-panel-item-open" id="sponsor">
           <div class="mdui-panel-item-header">
             <div class="mdui-panel-item-title">赞助列表（时间排序，最新在前）</div>
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
@@ -398,10 +437,25 @@
   </div>
   
   <div id="tab4">
-    <p>
-      tab 4
-    </p>
-  </div>
+    <div class="mdui-container">
+      <h4>关于我们</h4>
+      <p class="mdui-typo">
+        本站并非FCL官方网站，而是由一群热爱FCL的玩家共同维护的社区网站。<br />
+      </p>
+      <h4>贡献者(排名不分先后)</h4>
+      <p class="mdui-typo">
+        <div id="contributors">
+          <span class="mdui-typo">详见<a href="https://github.com/FCL-Team/FCL.website.mdui/graphs/contributors">GitHub</a></span>
+          <style>
+            #contributors {
+              display: block;
+            }
+          </style>
+        </div>
+      </p>
+      <h4>收到的赞助</h4>
+      <p class="mdui-typo"><a href="/?tab=2#sponsor">点我查看赞助列表</a></p>
+    </div>
   </div>
   
   
@@ -416,6 +470,15 @@
   <script src="/js/mdui.min.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="/js/index.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3.5.14/dist/vue.esm-browser.prod.js"
+      }
+    }
+  </script>
+  <script type="module" src="/js/contributors.js"></script>
 </body>
 
 </html>
