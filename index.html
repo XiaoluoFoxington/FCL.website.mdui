@@ -13,57 +13,10 @@
       width: 100%;
     }
     
-    
-    
-    mark {
-      color: #00f;
-      background-color: #ff0;
-    }
-
-    .___contributor_card {
-      
-    }
-
-    #contributors {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      height: 200vh;
-    }
-
-    .mdui-card-media-covered {
-      background-color: rgba(0, 0, 0, .6);
-    }
-
-    @media screen and (min-width: 768px) {
-      .mdui-ripple {
-        flex-direction: row !important;
-      }
-
-      img:not(.mdui-icon):not(.___fcl_icon):not(.___avatar) {
-        max-width: 70%;
-        margin: 4px auto;
-        margin-left: calc(50% - 35%);
-      }
-
-      .___sponsor_qrcode {
-        width: 25%;
-        margin-left: calc(50% - 12.5%) !important;
-      }
-
-      #contributors {
-        flex-direction: row;
-        height: auto;
-      }
-
-      .___contributor_card {
-        width: 24%;
-      }
-    }
   </style>
 </head>
 
-<body class="mdui-appbar-with-toolbar mdui-appbar-with-tab-larger mdui-theme-layout-dark mdui-theme-primary-teal mdui-theme-accent-yellow">
+<body class="mdui-appbar-with-toolbar mdui-appbar-with-tab-larger mdui-theme-layout-dark mdui-theme-primary-teal mdui-theme-accent-green">
   
   <div class="mdui-appbar mdui-appbar-fixed">
     <div class="mdui-toolbar mdui-color-indigo">
@@ -437,25 +390,6 @@
   </div>
   
   <div id="tab4">
-    <div class="mdui-container">
-      <h4>关于我们</h4>
-      <p class="mdui-typo">
-        本站并非FCL官方网站，而是由一群热爱FCL的玩家共同维护的社区网站。<br />
-      </p>
-      <h4>贡献者(排名不分先后)</h4>
-      <p class="mdui-typo">
-        <div id="contributors">
-          <span class="mdui-typo">详见<a href="https://github.com/FCL-Team/FCL.website.mdui/graphs/contributors">GitHub</a></span>
-          <style>
-            #contributors {
-              display: block;
-            }
-          </style>
-        </div>
-      </p>
-      <h4>收到的赞助</h4>
-      <p class="mdui-typo"><a href="/?tab=2#sponsor">点我查看赞助列表</a></p>
-    </div>
   </div>
   
   
@@ -469,16 +403,7 @@
   
   <script src="/js/mdui.min.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <script src="/js/index.js"></script>
-  <script type="importmap">
-    {
-      "imports": {
-        "vue": "https://unpkg.com/vue@3.5.14/dist/vue.esm-browser.prod.js"
-      }
-    }
-  </script>
-  <script type="module" src="/js/contributors.js"></script>
 </body>
 
 </html>
