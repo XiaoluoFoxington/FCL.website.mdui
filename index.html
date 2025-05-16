@@ -32,6 +32,15 @@
       <a href="/" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '刷新'}"><i class="mdui-icon material-icons">refresh</i></a>
       <a href="https://old.foldcraftlauncher.cn" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '回到旧版'}"><i class="mdui-icon material-icons">style</i></a>
       <a mdui-dialog="{target: '#ghLinks'}" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: 'GitHub'}"><ion-icon name="logo-github" class="mdui-icon"></ion-icon></a>
+      <a mdui-menu="{target: '#toolbar-more'}" class="mdui-icon"><i class="mdui-icon material-icons">more_vert</i></a>
+      <ul class="mdui-menu mdui-menu-cascade" id="toolbar-more">
+        <li class="mdui-menu-item">
+          <a href="javascript: openNotice();" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">notifications</i>
+            公告
+          </a>
+        </li>
+      </ul>
     </div>
     <div class="mdui-tab mdui-color-indigo">
       <a href="#tab1" class="mdui-ripple mdui-ripple-white mdui-ripple">
