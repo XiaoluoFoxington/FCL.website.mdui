@@ -52,3 +52,20 @@ function openNotice() {
   mdui.dialog(notice);
   
 }
+
+function openEgg() {
+
+  const egg = {
+    
+    title: '',
+    
+    content: '<img src="/file/picture/得意.webp">',
+    buttons: [
+    {
+      text: '关闭'
+    }]
+  };
+  
+  mdui.dialog(egg);
+  
+}
