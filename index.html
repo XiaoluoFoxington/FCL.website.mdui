@@ -18,6 +18,26 @@
     .hide {
       display: none;
     }
+    
+    .exorcist-mode * {
+      animation: shake 0.1s infinite;
+    }
+    
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translate(0)
+      }
+      
+      25% {
+        transform: translate(-2px, -2px)
+      }
+      
+      75% {
+        transform: translate(2px, 2px)
+      }
+    }
   </style>
 </head>
 
@@ -58,6 +78,12 @@
           <a href="https://github.com/XiaoluoFoxington/FCL.website.mdui/issues" target="_blank" class="mdui-ripple">
             <i class="mdui-menu-item-icon mdui-icon material-icons">bug_report</i>
             反馈
+          </a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="javascript:document.body.classList.add('exorcist-mode');" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">help</i>
+            千万别点
           </a>
         </li>
         <li class="mdui-divider"></li>
