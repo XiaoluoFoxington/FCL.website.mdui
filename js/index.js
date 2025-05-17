@@ -37,41 +37,9 @@ window.onload = function() {
 }
 
 function openNotice() {
-  
-  const notice = {
-    
-    title: '公告',
-    
-    content: '直链流量费用高昂，请不要滥用，目前下载站一直在亏损，我们除了赞助外无任何收益，属于公益性质。如果您条件允许，可以考虑赞助站长（当然不赞助也能下）',
-    buttons: [
-    {
-      text: '确认',
-      action: function(btn, dialog) {
-        dialog.close();
-      }
-    }]
-  };
-  
-  mdui.dialog(notice);
-  
+  mdui.alert('直链流量费用高昂，请不要滥用，目前下载站一直在亏损，我们除了赞助外无任何收益，属于公益性质。如果您条件允许，可以考虑赞助站长（当然不赞助也能下）', '公告');
 }
 
 function openEgg() {
-  
-  const egg = {
-    
-    title: '',
-    
-    content: '<img src="/file/picture/得意.webp">',
-    buttons: [
-    {
-      text: '关闭',
-      action: function(btn, dialog) {
-        dialog.close();
-      }
-    }]
-  };
-  
-  mdui.dialog(egg);
-  
+  mdui.alert('<img src="/file/picture/得意.webp">')
 }
