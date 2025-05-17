@@ -42,7 +42,7 @@ function openNotice() {
     
     title: '公告',
     
-    content: '直链流量费用高昂，请不要滥用，目前下载站一直在亏损，我们除了赞助外无任何收益，属于公益性质。如果您条件允许，可以考虑赞助站长（当然不赞助也能下）',
+    content: '<p class="typo">求求某些缺德的人补药再滥用我滴流量了（悲</p><p class="typo"><img src="/file/picture/公告.webp"></p>',
     
     buttons: [
     {
