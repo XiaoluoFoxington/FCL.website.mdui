@@ -31,7 +31,6 @@
       <a href="javascript:;" class="mdui-typo-title">FCL下载站</a>
       <div class="mdui-spinner" id="loading"></div>
       <div class="mdui-toolbar-spacer mdui-ripple"></div>
-      <a href="/" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '刷新'}"><i class="mdui-icon material-icons">refresh</i></a>
       <a href="https://old.foldcraftlauncher.cn" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '回到旧版'}"><i class="mdui-icon material-icons">style</i></a>
       <a mdui-menu="{target: '#toolbar-gh'}" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: 'GitHub'}"><ion-icon name="logo-github" class="mdui-icon"></ion-icon></a>
       <ul class="mdui-menu mdui-menu-cascade" id="toolbar-gh">
@@ -42,6 +41,12 @@
       </ul>
       <a mdui-menu="{target: '#toolbar-more'}" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '更多'}"><i class="mdui-icon material-icons">more_vert</i></a>
       <ul class="mdui-menu mdui-menu-cascade" id="toolbar-more">
+        <li class="mdui-menu-item">
+          <a href="/" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">refresh</i>
+            刷新
+          </a>
+        </li>
         <li class="mdui-menu-item">
           <a href="javascript: openNotice();" class="mdui-ripple">
             <i class="mdui-menu-item-icon mdui-icon material-icons">notifications</i>
@@ -62,7 +67,7 @@
         </li>
         <li class="mdui-menu-item">
           <a href="javascript: openEgg();" class="mdui-ripple">
-            <img src="https://cdn.mengze.vip/gh/XiaoluoFoxington/FCL.website.mdui/file/avatar/XiaoluoFoxington.png" class="mdui-menu-item-icon mdui-icon mdui-img-circle">
+            <img src="https://cdn.mengze.vip/gh/XiaoluoFoxington/FCL.website.mdui/file/avatar/XiaoluoFoxington.png" class="mdui-menu-item-icon mdui-icon">
             XiaoluoFoxington
           </a>
         </li>
