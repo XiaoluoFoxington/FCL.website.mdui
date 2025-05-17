@@ -1,5 +1,4 @@
 window.addEventListener('DOMContentLoaded', function() {
-  'use strict';
   var Tab = new mdui.Tab('.mdui-tab');
   
   function hashUnfold() {
@@ -29,7 +28,7 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  openNotice();
+  // openNotice();
 });
 
 window.onload = function() {
