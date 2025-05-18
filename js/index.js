@@ -33,6 +33,8 @@ window.addEventListener('DOMContentLoaded', function() {
   }
   
   openNotice();
+  
+  geetest();
 });
 
 window.onload = function() {
@@ -170,4 +172,36 @@ async function loadDownLinks({
     console.error('内容加载失败:', error);
     document.getElementById(targetId).innerHTML = `<p class="error">加载失败: ${error.message}</p>`;
   }
+}
+
+
+/**
+ * GeeTest
+ */
+function geetest() {
+  var button = document.getElementById('loadDownLinksBtn');
+  
+  initGeetest4({
+    captchaId: 'adc196db554a4bf4db58b401c057c782',
+    product: 'bind'
+  }, function(captcha) {
+    captcha.onReady(function() {
+    }).onSuccess(function() {
+      var result = captcha.getValidate();
+      if (!result) {
+        return alert('请完成验证');
+      }
+      result.captcha_id = "adc196db554a4bf4db58b401c057c782";
+      
+      loadDownLinks();
+      
+    }).onError(function() {
+      // 错误处理逻辑
+    });
+    
+    button.onclick = function() {
+      captcha.showBox();
+    }
+  });
+  
 }

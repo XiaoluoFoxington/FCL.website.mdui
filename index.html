@@ -302,18 +302,14 @@
       <div class="mdui-panel" mdui-panel>
         <div class="mdui-panel-item mdui-panel-item-open">
           <div class="mdui-panel-item-header mdui-ripple">
-            <div>请确认</div>
+            <div>人机验证</div>
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
           </div>
           <div class="mdui-panel-item-body">
             <div class="mdui-typo">
-              <ul>
-                <li>我不会滥用</li>
-                <li>我不是爬虫</li>
-                <li>我不是机器人</li>
-              </ul>
+              <p>点击下方按钮完成人机验证以显示下载链接。</p>
             </div>
-            <a class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple" href="javascript: loadDownLinks();">我已确认</a>
+            <button class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple" id="loadDownLinksBtn">人机验证</button>
           </div>
         </div>
       </div>
@@ -688,6 +684,7 @@
   </div>
   
   <script src="/js/mdui.min.js"></script>
+  <script src="/js/lib/gt4.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script src="/js/index.js"></script>
 </body>
