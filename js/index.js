@@ -1,5 +1,8 @@
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
+  
+  loadTheme();
+  
   var Tab = new mdui.Tab('.mdui-tab');
   
   function hashUnfold() {
@@ -33,9 +36,12 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 window.onload = function() {
-  document.getElementById('loading').remove();
+  document.getElementById('loading').remove(); //移除加载动画
 }
 
+/**
+ * 显示公告
+ */
 function openNotice() {
   
   const notice = {
@@ -56,6 +62,9 @@ function openNotice() {
   
 }
 
+/**
+ * 彩蛋
+ */
 function openEgg() {
   
   const egg = {
@@ -74,4 +83,28 @@ function openEgg() {
   
   mdui.dialog(egg);
   
+}
+
+/**
+ * 主题切换
+ */
+function toggleTheme() {
+    const body = document.body;
+    const isDark = body.classList.contains('mdui-theme-layout-dark');
+    
+    body.classList.toggle('mdui-theme-layout-dark', !isDark);
+    
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+}
+
+/**
+ * 加载主题
+ */
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const body = document.body;
+    
+    if (savedTheme) {
+        body.classList.toggle('mdui-theme-layout-dark', savedTheme === 'dark');
+    }
 }

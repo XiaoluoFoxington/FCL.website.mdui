@@ -25,7 +25,7 @@
     }
     
     @keyframes shake {
-
+      
       0%,
       100% {
         transform: translate(0)
@@ -53,12 +53,30 @@
       <a href="javascript:;" class="mdui-typo-title">FCL下载站</a>
       <div class="mdui-spinner" id="loading"></div>
       <div class="mdui-toolbar-spacer mdui-ripple"></div>
-      <a href="https://old.foldcraftlauncher.cn" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '回到旧版'}"><i class="mdui-icon material-icons">style</i></a>
+      <a mdui-menu="{target: '#toolbar-theme'}" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '样式'}"><i class="mdui-icon material-icons">style</i></a>
+      <ul class="mdui-menu mdui-menu-cascade" id="toolbar-theme">
+        <li class="mdui-menu-item">
+          <a href="javascript: toggleTheme();" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">brightness_medium</i>
+            深/浅色切换
+          </a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://old.foldcraftlauncher.cn" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">settings_backup_restore</i>
+            回到旧样式
+          </a>
+        </li>
+      </ul>
       <a mdui-menu="{target: '#toolbar-gh'}" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: 'GitHub'}"><ion-icon name="logo-github" class="mdui-icon"></ion-icon></a>
       <ul class="mdui-menu mdui-menu-cascade" id="toolbar-gh">
         <li class="mdui-menu-item">
           <a href="https://github.com/FCL-Team/FoldCraftLauncher" target="_blank" class="mdui-ripple">FCL-Team/FoldCraftLauncher</a>
+        </li>
+        <li class="mdui-menu-item">
           <a href="https://github.com/XiaoluoFoxington/FCL.website.mdui" target="_blank" class="mdui-ripple">XiaoluoFoxington/FCL.website.mdui</a>
+        </li>
+        <li class="mdui-menu-item">
           <a href="https://github.com/fcl-docs/FCL.website" target="_blank" class="mdui-ripple">fcl-docs/FCL.website</a>
         </li>
       </ul>
