@@ -52,12 +52,9 @@ function openNotice() {
     
     content: `
 <div class="mdui-typo">
-  <p>PojavLauncher的用户请注意！PojavLauncher开发团队于2025年5月17日宣布项目停止更新，GH代码仓库归档。这意味以后不会再有新功能开发和安全更新。大家可转向FCL启动器、ZL启动器作为替代方案，或密切关注Pojav团队全新成立的AngelAuraMC组织推出的Amethyst启动器项目。</p>
+  <p>PojavLauncher的用户请注意！PojavLauncher开发团队于2025年5月17日宣布项目停止更新，GH代码仓库归档。这意味以后不会再有新功能开发和安全更新。大家可转向FCL启动器、ZL启动器作为替代方案，或密切关注Pojav团队全新成立的<a href="https://github.com/AngelAuraMC" target="_blank">AngelAuraMC组织</a>推出的<a href="https://github.com/AngelAuraMC/Amethyst-Android" target="_blank">Amethyst启动器项目</a>。</p>
   <hr>
-  <p>求求某些缺德的人补药再滥用我滴流量了（悲</p>
-  <p>
-    <img src="/file/picture/公告.webp">
-  </p>
+  <p>接入 GeeTest 了。让我省点心吧。本来想着那点流量能用到我中考之后的，看来是不可能了…</p>
 </div>
 `,
     
