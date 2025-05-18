@@ -117,3 +117,57 @@ function loadTheme() {
     body.classList.toggle('mdui-theme-layout-dark', savedTheme === 'dark');
   }
 }
+
+/**
+ * 从指定URL获取HTML内容
+ * @async
+ * @param {string} url - 请求的URL地址
+ * @returns {Promise<string>} HTML内容字符串
+ * @throws {Error} 当网络请求失败或响应状态非200时抛出错误
+ */
+async function fetchContent(url) {
+  const response = await fetch(url);
+  
+  if (!response.ok) {
+    throw new Error(`HTTP错误! 状态码: ${response.status}`);
+  }
+  
+  return await response.text();
+}
+
+/**
+ * 将内容更新到指定容器
+ * @param {string} content - 要插入的HTML内容
+ * @param {string} containerId - 目标容器的ID
+ * @throws {Error} 当目标容器不存在时抛出错误
+ */
+function updateContainer(content, containerId) {
+  const container = document.getElementById(containerId);
+  
+  if (!container) {
+    throw new Error(`找不到ID为 ${containerId} 的容器`);
+  }
+  
+  container.innerHTML = content;
+}
+
+/**
+ * 主处理函数：加载并更新内容
+ * @async
+ * @param {Object} options 配置选项
+ * @param {string} [options.url='/file/data/DonwLinks.html'] - 请求URL
+ * @param {string} [options.targetId='tab2'] - 目标容器ID
+ */
+async function loadDownLinks({
+  url = '/file/data/DonwLinks.html',
+  targetId = 'tab2'
+} = {}) {
+  try {
+    const htmlContent = await fetchContent(url);
+    updateContainer(htmlContent, targetId);
+    mdui.mutation();
+  } catch (error) {
+    console.error('内容加载失败:', error);
+    document.getElementById(targetId).innerHTML = `<p class="error">加载失败: ${error.message}</p>`;
+  }
+}
