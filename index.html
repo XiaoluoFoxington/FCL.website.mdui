@@ -299,7 +299,24 @@
     </div>
     
     <div id="tab2">
-      <a class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="javascript: loadDownLinks();">我不是机器人、不是爬虫，并且我确保不会滥用下载链接</a>
+      <div class="mdui-panel" mdui-panel>
+        <div class="mdui-panel-item mdui-panel-item-open">
+          <div class="mdui-panel-item-header mdui-ripple">
+            <div>请确认</div>
+            <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+          </div>
+          <div class="mdui-panel-item-body">
+            <div class="mdui-typo">
+              <ul>
+                <li>我不会滥用</li>
+                <li>我不是爬虫</li>
+                <li>我不是机器人</li>
+              </ul>
+            </div>
+            <a class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple" href="javascript: loadDownLinks();">我已确认</a>
+          </div>
+        </div>
+      </div>
     </div>
     
     <div id="tab3">
