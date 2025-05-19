@@ -40,6 +40,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 window.onload = function() {
   document.getElementById('loading').remove(); //移除加载动画
+  document.getElementById('fclIcon').classList.remove('hide');
   
   console.log('window.onload：完成');
 }
