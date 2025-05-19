@@ -33,12 +33,15 @@ window.addEventListener('DOMContentLoaded', function() {
   }
   
   openNotice();
-  
   geetest();
+  
+  console.log('DOMContentLoaded：完成');
 });
 
 window.onload = function() {
   document.getElementById('loading').remove(); //移除加载动画
+  
+  console.log('window.onload：完成');
 }
 
 /**
@@ -46,7 +49,7 @@ window.onload = function() {
  */
 function openNotice() {
   
-  const notice = {
+  mdui.dialog({
     
     title: '公告',
     
@@ -64,9 +67,7 @@ function openNotice() {
     }],
     
     history: false
-  };
-  
-  mdui.dialog(notice);
+  });
   
 }
 
@@ -75,7 +76,7 @@ function openNotice() {
  */
 function openEgg() {
   
-  const egg = {
+  mdui.dialog({
     
     title: '',
     
@@ -87,9 +88,7 @@ function openEgg() {
     }],
     
     history: false
-  };
-  
-  mdui.dialog(egg);
+  });
   
 }
 
@@ -103,6 +102,8 @@ function toggleTheme() {
   body.classList.toggle('mdui-theme-layout-dark', !isDark);
   
   localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  
+  console.log('主题切换：浅色：' + isDark);
 }
 
 /**
@@ -114,21 +115,24 @@ function loadTheme() {
   
   if (savedTheme) {
     body.classList.toggle('mdui-theme-layout-dark', savedTheme === 'dark');
+    console.log('加载主题：' + savedTheme);
   }
 }
 
 /**
- * 从指定URL获取HTML内容
+ * 获取页面：从指定URL获取HTML内容
  * @async
  * @param {string} url - 请求的URL地址
  * @returns {Promise<document>} HTML内容
  * @throws {Error} 当网络请求失败或响应状态非200时抛出错误
  */
 async function fetchContent(url) {
+  console.log('获取页面：从：' + url);
+  
   const response = await fetch(url);
   
   if (!response.ok) {
-    throw new Error(`HTTP错误! 状态码: ${response.status}`);
+    throw new Error(`获取页面: HTTP状态码: ${response.status}`);
   }
   
   const domParser = new DOMParser();
@@ -137,7 +141,7 @@ async function fetchContent(url) {
 }
 
 /**
- * 将内容更新到指定容器
+ * 替换内容：将内容更新到指定容器
  * @param {string} content - 要插入的HTML内容
  * @param {string} containerId - 目标容器的ID
  * @throws {Error} 当目标容器不存在时抛出错误
@@ -146,14 +150,14 @@ function updateContainer(content, containerId) {
   const container = document.getElementById(containerId);
   
   if (!container) {
-    throw new Error(`找不到ID为 ${containerId} 的容器`);
+    throw new Error(`替换内容: 找不到容器: ${containerId}`);
   }
   
   container.innerHTML = content;
 }
 
 /**
- * 主处理函数：加载并更新内容
+ * 加载直链：获取下载链接到下载页面
  * @async
  * @param {Object} options 配置选项
  * @param {string} [options.url='/file/data/DonwLinks.html'] - 请求URL
@@ -170,13 +174,25 @@ async function loadDownLinks({
     script.text = setupScript.innerHTML;
     document.getElementById(targetId).appendChild(script);
     updateContainer(htmlContent.querySelector('[content]').innerHTML, targetId);
+    console.log('加载直链：完成');
     mdui.mutation();
   } catch (error) {
-    console.error('内容加载失败:', error);
-    document.getElementById(targetId).innerHTML = `<p class="error">加载失败: ${error.message}</p>`;
+    console.error('加载直链: ', error);
+    mdui.dialog({
+      
+      title: '错误',
+      
+      content: error,
+      
+      buttons: [
+      {
+        text: '确定'
+      }],
+      
+      history: false
+    });
   }
 }
-
 
 /**
  * GeeTest
@@ -187,6 +203,10 @@ function geetest() {
   if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
     button.onclick = function() {
       loadDownLinks();
+      mdui.snackbar({
+        message: '调试：跳过人机验证',
+        position: 'right-bottom',
+      });
     };
     return;
   }
@@ -198,14 +218,22 @@ function geetest() {
     captcha.onReady(function() {}).onSuccess(function() {
       var result = captcha.getValidate();
       if (!result) {
-        return alert('请完成验证');
+        mdui.snackbar({
+          message: '人机验证：请完成',
+          position: 'right-bottom',
+        });
       }
       result.captcha_id = "adc196db554a4bf4db58b401c057c782";
       
+      console.log('人机验证：通过');
       loadDownLinks();
       
     }).onError(function() {
-      // 错误处理逻辑
+      console.log('人机验证：发生错误');
+      mdui.snackbar({
+        message: '人机验证：发生错误',
+        position: 'right-bottom',
+      });
     });
     
     button.onclick = function() {
