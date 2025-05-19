@@ -1,4 +1,34 @@
+<script setup>
+(async() => {
+  if(!navigator.userAgent) return false;
+  const browserHelper = (await import(
+    'https://latedream.cn/libs/ldcommon/browser-helper.min.js'
+  )).default;
+  function parseArch(arch) {
+    let result = false;
+    rules.regexes.forEach(
+      (regex, index) => {
+        if (regex.test(arch))
+          result = `${rules.names[index]}(${arch})`;
+      }
+    );
+    return result;
+  }
+  const info = await browserHelper.getInfo(); console.log(info);
+  const rules = {
+    regexes: [/aarch64|arm64|armv8/i, /armeabi-v7a|(arm$)|armv7/i, /armeabi$/i,
+      /x86_64|x64|amd64/i, /x86|i[36]86/i, /win32/i],
+    names: ['arm64-v8a', 'armeabi-v7a', 'armeabi', 'x86_64', 'x86', `${info.architecture}_${info.bitness}`]
+  };
+  document.getElementById('device-info').textContent = `
+浏览器报告您的设备信息：${info.system} ${info.systemVersion} 系统，基于 ${parseArch(info.platform) || `${info.architecture}(${info.platform})`} 架构。
+`;
+})();
+</script>
+
+<div content>
 <p class="mdui-typo">您想要下载什么？</p>
+<p class="mdui-typo" id="device-info"></p>
 <div class="mdui-panel" mdui-panel>
   
   <div class="mdui-panel-item">
@@ -197,7 +227,7 @@
       <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
     </div>
     <div class="mdui-panel-item-body">
-      <p class="mdui-typo">直链流量费用高昂，请不要滥用，目前下载站一直在亏损，我们除了赞助外无任何收益，属于公益性质。如果您条件允许，可点击顶部<a href="/?tab=2">赞助站长</a>。</p>
+      <p class="mdui-typo">直链流量费用高昂，请不要滥用，目前下载站一直在亏损，我们除了赞助外无任何收益，属于公益性质。如果您条件允许，可点击顶部<a href="/?tab=3">赞助站长</a>。</p>
     </div>
   </div>
   
@@ -228,4 +258,5 @@
     </div>
   </div>
   
+</div>
 </div>
