@@ -121,7 +121,7 @@ function loadTheme() {
  * 从指定URL获取HTML内容
  * @async
  * @param {string} url - 请求的URL地址
- * @returns {Promise<string>} HTML内容字符串
+ * @returns {Promise<document>} HTML内容
  * @throws {Error} 当网络请求失败或响应状态非200时抛出错误
  */
 async function fetchContent(url) {
@@ -131,7 +131,9 @@ async function fetchContent(url) {
     throw new Error(`HTTP错误! 状态码: ${response.status}`);
   }
   
-  return await response.text();
+  const domParser = new DOMParser();
+  const htmlDoc = domParser.parseFromString(await response.text(), 'text/html');
+  return htmlDoc;
 }
 
 /**
@@ -163,7 +165,11 @@ async function loadDownLinks({
 } = {}) {
   try {
     const htmlContent = await fetchContent(url);
-    updateContainer(htmlContent, targetId);
+    const setupScript = htmlContent.querySelector('[setup]');
+    const script = document.createElement('script');
+    script.text = setupScript.innerHTML;
+    document.getElementById(targetId).appendChild(script);
+    updateContainer(htmlContent.querySelector('[content]').innerHTML, targetId);
     mdui.mutation();
   } catch (error) {
     console.error('内容加载失败:', error);
