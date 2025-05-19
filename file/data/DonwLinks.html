@@ -2,7 +2,7 @@
   (async () => {
     if (!navigator.userAgent) return false;
     const browserHelper = (await import(
-      'https://latedream.cn/libs/ldcommon/browser-helper.min.js'
+      '/js/lib/browser-helper.min.js'
     )).default;
     
     function parseArch(arch) {
@@ -23,15 +23,17 @@
       ],
       names: ['arm64-v8a', 'armeabi-v7a', 'armeabi', 'x86_64', 'x86', `${info.architecture}_${info.bitness}`]
     };
-    document.getElementById('device-info').textContent = `
-浏览器报告您的设备信息：${info.system} ${info.systemVersion} 系统，基于 ${parseArch(info.platform) || `${info.architecture}(${info.platform})`} 架构。
+    document.getElementById('device-info').innerHTML = `
+浏览器报告您的设备信息：<code>${info.system} ${info.systemVersion}</code>系统，基于<code>${parseArch(info.platform) || `${info.architecture}(${info.platform})`}</code>架构。
 `;
   })();
 </script>
 
 <div content>
-  <p class="mdui-typo">您想要下载什么？</p>
-  <p class="mdui-typo" id="device-info"></p>
+  <div class="mdui-typo">
+    <p id="device-info"></p>
+    <p>您想要下载什么？</p>
+  </div>
   <div class="mdui-panel" mdui-panel>
     
     <div class="mdui-panel-item">
