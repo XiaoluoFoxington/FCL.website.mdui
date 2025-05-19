@@ -184,12 +184,18 @@ async function loadDownLinks({
 function geetest() {
   var button = document.getElementById('loadDownLinksBtn');
   
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    button.onclick = function() {
+      loadDownLinks();
+    };
+    return;
+  }
+  
   initGeetest4({
     captchaId: 'adc196db554a4bf4db58b401c057c782',
     product: 'bind'
   }, function(captcha) {
-    captcha.onReady(function() {
-    }).onSuccess(function() {
+    captcha.onReady(function() {}).onSuccess(function() {
       var result = captcha.getValidate();
       if (!result) {
         return alert('请完成验证');
