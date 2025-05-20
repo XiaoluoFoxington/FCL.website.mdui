@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', function() {
   if (location.href.split('?').length > 1) {
     var requery = new URLSearchParams(location.href.split('?')[1]);
     if (requery.has('tab')) Tab.show(parseInt(requery.get('tab')));
-    hashUnfold().then(function() {
+    hashUnfold().finally(function() {
       // 保证地址栏干净(
       history.replaceState(null, null, location.href.split('?')[0]);
     });
