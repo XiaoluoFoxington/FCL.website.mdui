@@ -34,6 +34,13 @@ window.addEventListener('DOMContentLoaded', function() {
   
   openNotice();
   geetest();
+
+  this.document.getElementById('do-not-click').addEventListener('click', async function(event) {
+    event.preventDefault();
+
+    const events = (await import('./DoNotClick.js')).default;
+    events[parseInt(Math.random() * events.length)].run();
+  });
   
   console.log('DOMContentLoaded：完成');
 });
