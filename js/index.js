@@ -70,7 +70,7 @@ function openNotice() {
   <p>这个世界已经死了。或者说，这个世界从来就没有活过。从滥用直链者的自私，从强加想法于他人者的吐槽辱骂。</p>
   <p>不，是有意义的！下载站搭建完成后，我收到的第一句感谢，第一笔赞助，第一条PR…是你们，让我有了坚持下去的动力，让我不顾是否有意义，让我享受编写网站所带给我的快乐。</p>
   <p>整整1TiB的流量仅耗时2个月就已全部用完，而我的经济实力，面对接下来的暑假，也许有点见挫…</p>
-  <p>我将会尽我最大的努力继续运营这个下载站。但也希望某些人好次为知。</p>
+  <p>我将会尽我最大的努力继续运营这个下载站。但也希望某些人好自为知。</p>
   <hr>
   <p>PojavLauncher的用户请注意！PojavLauncher开发团队于2025年5月17日宣布项目停止更新，GH代码仓库归档。这意味以后不会再有新功能开发和安全更新。大家可转向FCL启动器、ZL启动器作为替代方案，或密切关注Pojav团队全新成立的<a href="https://github.com/AngelAuraMC" target="_blank">AngelAuraMC组织</a>推出的<a href="https://github.com/AngelAuraMC/Amethyst-Android" target="_blank">Amethyst启动器项目</a>。</p>
 </div>
