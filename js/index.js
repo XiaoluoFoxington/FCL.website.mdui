@@ -33,11 +33,10 @@ window.addEventListener('DOMContentLoaded', function() {
   }
   
   openNotice();
-  geetest();
 
   this.document.getElementById('do-not-click').addEventListener('click', async function(event) {
     event.preventDefault();
-
+    
     const events = (await import('./DoNotClick.js')).default;
     events[parseInt(Math.random() * events.length)].run();
   });
@@ -165,7 +164,7 @@ function updateContainer(content, containerId) {
 }
 
 /**
- * 加载直链：获取下载链接到下载页面
+ * 加载直链：整合人机验证与内容加载
  * @async
  * @param {Object} options 配置选项
  * @param {string} [options.url='/file/data/DonwLinks.html'] - 请求URL
@@ -175,78 +174,63 @@ async function loadDownLinks({
   url = '/file/data/DonwLinks.html',
   targetId = 'tab2'
 } = {}) {
-  try {
-    const htmlContent = await fetchContent(url);
-    const setupScript = htmlContent.querySelector('[setup]');
-    const script = document.createElement('script');
-    script.text = setupScript.innerHTML;
-    document.getElementById(targetId).appendChild(script);
-    updateContainer(htmlContent.querySelector('[content]').innerHTML, targetId);
-    console.log('加载直链：完成');
-    mdui.mutation();
-  } catch (error) {
-    console.error('加载直链: ', error);
-    mdui.dialog({
-      
-      title: '错误',
-      
-      content: error,
-      
-      buttons: [
-      {
-        text: '确定'
-      }],
-      
-      history: false
-    });
-  }
-}
-
-/**
- * GeeTest
- */
-function geetest() {
-  var button = document.getElementById('loadDownLinksBtn');
-  
-  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-    button.onclick = function() {
-      loadDownLinks();
-      mdui.snackbar({
-        message: '调试：跳过人机验证',
-        position: 'right-bottom',
+  /** 核心加载逻辑 */
+  async function _executeLoad() {
+    try {
+      const htmlContent = await fetchContent(url);
+      const setupScript = htmlContent.querySelector('[setup]');
+      const script = document.createElement('script');
+      script.text = setupScript.innerHTML;
+      document.getElementById(targetId).appendChild(script);
+      updateContainer(htmlContent.querySelector('[content]').innerHTML, targetId);
+      console.log('加载直链：完成');
+      mdui.mutation();
+    } catch (error) {
+      console.error('加载直链: ', error);
+      mdui.dialog({
+        title: '错误',
+        content: error,
+        buttons: [{ text: '确定' }],
+        history: false
       });
-    };
+    }
+  }
+  
+  // 环境检测
+  const isLocal = window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1";
+  
+  if (isLocal) {
+    await _executeLoad();
+    mdui.snackbar({
+      message: '调试：跳过人机验证',
+      position: 'right-bottom',
+    });
     return;
   }
   
+  // 生产环境初始化验证
   initGeetest4({
     captchaId: 'adc196db554a4bf4db58b401c057c782',
     product: 'bind'
-  }, function(captcha) {
-    captcha.onReady(function() {}).onSuccess(function() {
-      var result = captcha.getValidate();
-      if (!result) {
-        mdui.snackbar({
-          message: '人机验证：请完成',
-          position: 'right-bottom',
-        });
-      }
-      result.captcha_id = "adc196db554a4bf4db58b401c057c782";
-      
-      console.log('人机验证：通过');
-      loadDownLinks();
-      
-    }).onError(function() {
-      console.log('人机验证：发生错误');
-      mdui.snackbar({
-        message: '人机验证：发生错误',
-        position: 'right-bottom',
+  }, (captcha) => {
+    captcha.onReady(() => {})
+      .onSuccess(() => {
+        const result = captcha.getValidate();
+        if (!result) {
+          mdui.snackbar({ message: '人机验证：请完成', position: 'right-bottom' });
+          return;
+        }
+        result.captcha_id = "adc196db554a4bf4db58b401c057c782";
+        console.log('人机验证：通过');
+        _executeLoad();
+      })
+      .onError(() => {
+        console.log('人机验证：发生错误');
+        mdui.snackbar({ message: '人机验证：发生错误', position: 'right-bottom' });
       });
-    });
     
-    button.onclick = function() {
-      captcha.showBox();
-    }
+    // 直接触发验证框
+    captcha.showBox();
   });
-  
 }
