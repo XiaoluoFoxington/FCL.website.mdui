@@ -16,7 +16,7 @@
       return result;
     }
     const info = await browserHelper.getInfo();
-    console.log(`系统检测：${info}`);
+    console.log('系统检测：', info); // tips: `${info}` === '[object Object]'
     const rules = {
       regexes: [/aarch64|arm64|armv8/i, /armeabi-v7a|(arm$)|armv7/i, /armeabi$/i,
         /x86_64|x64|amd64/i, /x86|i[36]86/i, /win32/i
