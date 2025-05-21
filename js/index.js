@@ -5,33 +5,23 @@ window.addEventListener('DOMContentLoaded', function() {
   
   var Tab = new mdui.Tab('.mdui-tab');
   
-  function hashUnfold() {
-    return new Promise(function(resolve, reject) {
-      try {
-        var hash = location.hash.substring(1);
-        if (hash) {
-          var target = document.getElementById(hash);
-          target.scrollIntoView();
-          if (!target.classList.contains('mdui-panel-item-open'))
-            target.click();
-        }
-        resolve();
-      } catch (e) {
-        reject(e);
+  function hashApi() {
+    const hash = window.location.hash.slice(1);
+    const query = new URLSearchParams(hash);
+    if(query.has('tab')) Tab.show(Math.floor(query.get('tab')));
+    if(query.has('target')) {
+      const target = document.getElementById(query.get('target'));
+      if(!!target) {
+        target.scrollIntoView();
+        if (!target.classList.contains('mdui-panel-item-open'))
+          target.click();
+        history.replaceState(null, null, location.href.split('#')[0]); // clean location bar
       }
-    });
+    }
   };
-  
-  // tab路由
-  if (location.href.split('?').length > 1) {
-    var requery = new URLSearchParams(location.href.split('?')[1]);
-    if (requery.has('tab')) Tab.show(parseInt(requery.get('tab')));
-    hashUnfold().finally(function() {
-      // 保证地址栏干净(
-      history.replaceState(null, null, location.href.split('?')[0]);
-    });
-  }
-  
+  this.addEventListener('hashchange', hashApi);
+  hashApi();
+
   openNotice();
 
   this.document.getElementById('do-not-click').addEventListener('click', async function(event) {
@@ -212,6 +202,7 @@ async function loadDownLinks({
       message: '调试：跳过人机验证',
       position: 'right-bottom',
     });
+    dispatchEvent(new Event('hashchange'));
     return;
   }
   
@@ -230,6 +221,7 @@ async function loadDownLinks({
         result.captcha_id = "adc196db554a4bf4db58b401c057c782";
         console.log('人机验证：通过');
         _executeLoad();
+        dispatchEvent(new Event('hashchange'));
       })
       .onError(() => {
         console.log('人机验证：发生错误');
