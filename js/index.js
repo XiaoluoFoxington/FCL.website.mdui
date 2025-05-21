@@ -240,6 +240,6 @@ function fuckHacker() {
     
     window.location.replace(newURL.toString());
   } else {
-    mdui.snackbar({ message: '防盗链：完成重定向', position: 'right-bottom' });
+    mdui.snackbar({ message: '防盗链：无需重定向', position: 'right-bottom' });
   }
 }
