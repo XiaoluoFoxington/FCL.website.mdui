@@ -38,7 +38,13 @@ window.addEventListener('DOMContentLoaded', function() {
     event.preventDefault();
     
     const events = (await import('./DoNotClick.js')).default;
-    events[parseInt(Math.random() * events.length)].run();
+    const randomEvent = events[Math.floor(Math.random() * events.length)];
+    randomEvent.run();
+    console.log(`千万别点：${randomEvent.name}`);
+    mdui.snackbar({
+      message: `千万别点：${randomEvent.name}`,
+      position: 'right-bottom',
+    });
   });
   
   console.log('DOMContentLoaded：完成');
