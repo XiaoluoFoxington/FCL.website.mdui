@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
-  
+  fuckHacker();
   loadTheme();
   
   var Tab = new mdui.Tab('.mdui-tab');
@@ -8,10 +8,10 @@ window.addEventListener('DOMContentLoaded', function() {
   function hashApi() {
     const hash = window.location.hash.slice(1);
     const query = new URLSearchParams(hash);
-    if(query.has('tab')) Tab.show(Math.floor(query.get('tab')));
-    if(query.has('target')) {
+    if (query.has('tab')) Tab.show(Math.floor(query.get('tab')));
+    if (query.has('target')) {
       const target = document.getElementById(query.get('target'));
-      if(!!target) {
+      if (!!target) {
         target.scrollIntoView();
         if (!target.classList.contains('mdui-panel-item-open'))
           target.click();
@@ -21,9 +21,9 @@ window.addEventListener('DOMContentLoaded', function() {
   };
   this.addEventListener('hashchange', hashApi);
   hashApi();
-
+  
   openNotice();
-
+  
   this.document.getElementById('do-not-click').addEventListener('click', async function(event) {
     event.preventDefault();
     
@@ -51,27 +51,26 @@ window.onload = function() {
  * 显示公告
  */
 function openNotice() {
-
+  
   const xhr = new XMLHttpRequest();
   xhr.open('GET', '/file/data/notice.html');
   xhr.send();
   
   xhr.addEventListener('readystatechange', function() {
-    if(xhr.readyState === 4) mdui.dialog({
-    
+    if (xhr.readyState === 4) mdui.dialog({
       title: '公告',
-      
       content: xhr.responseText,
-      
       buttons: [
       {
         text: '确认'
       }],
-      
+      onOpen: function() {
+        mdui.mutation();
+      },
       history: false
     });
   });
- 
+  
 }
 
 /**
@@ -80,16 +79,12 @@ function openNotice() {
 function openEgg() {
   
   mdui.dialog({
-    
     title: '',
-    
     content: '<img src="/file/picture/得意.webp">',
-    
     buttons: [
     {
       text: '关闭'
     }],
-    
     history: false
   });
   
@@ -231,4 +226,20 @@ async function loadDownLinks({
     // 直接触发验证框
     captcha.showBox();
   });
+}
+
+/**
+ * 防盗链：重定向至最新的子域名
+ */
+function fuckHacker() {
+  if (window.location.hostname === 'foldcraftlauncher.cn') {
+    const newURL = new URL(window.location.href);
+    
+    newURL.hostname = '114.foldcraftlauncher.cn';
+    newURL.protocol = 'https:';
+    
+    window.location.replace(newURL.toString());
+  } else {
+    mdui.snackbar({ message: '防盗链：完成重定向', position: 'right-bottom' });
+  }
 }
