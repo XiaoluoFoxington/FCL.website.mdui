@@ -2,12 +2,6 @@ export default [
   {
     name: '页面旋转动画',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       const style = document.createElement('style');
       style.innerHTML = `
         @keyframes spin {
@@ -24,36 +18,18 @@ export default [
   {
     name: 'Y轴翻转效果',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       document.body.style.cssText = 'transform: rotateY(180deg); transition: transform 0.6s;';
     }
   },
   {
     name: 'X轴翻转效果',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       document.body.style.cssText = 'transform: rotateX(180deg); transition: transform 0.6s;';
     }
   },
   {
     name: '随机字体大小',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       const style = document.createElement('style');
       style.innerHTML = '.random-size {font-size: var(--random-size, 16px);}';
       document.head.appendChild(style);
@@ -69,12 +45,6 @@ export default [
   {
     name: '随机背景闪烁',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       setInterval(() => {
         document.body.style.backgroundColor =
           `#${Math.floor(Math.random()*16777215).toString(16)}`;
@@ -84,12 +54,6 @@ export default [
   {
     name: '元素抖动效果',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       const style = document.createElement('style');
       style.innerHTML = `
         @keyframes shake {
@@ -113,24 +77,12 @@ export default [
   {
     name: '颜色反转滤镜',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       document.body.style.filter = 'invert(1)';
     }
   },
   {
     name: '随机缩放效果',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       setInterval(() => {
         document.body.style.transform =
           `scale(${Math.random() * 2 + 0.5})`;
@@ -140,12 +92,6 @@ export default [
   {
     name: '3D文字阴影',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       const style = document.createElement('style');
       style.innerHTML = `
         .text-shadow {
@@ -159,12 +105,6 @@ export default [
   {
     name: '随机模糊效果',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       document.body.style.filter = 'blur(5px)';
       document.body.style.transition = 'filter 0.3s';
       setInterval(() => {
@@ -175,12 +115,6 @@ export default [
   {
     name: '彩虹文字动画',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       const style = document.createElement('style');
       style.innerHTML = `
         @keyframes rainbow {
@@ -201,12 +135,6 @@ export default [
   {
     name: '元素漂浮效果',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       const style = document.createElement('style');
       style.innerHTML = `
         @keyframes float {
@@ -224,24 +152,12 @@ export default [
   {
     name: '禁用鼠标事件',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       document.body.style.pointerEvents = 'none';
     }
   },
   {
     name: '随机键盘干扰',
     run() {
-      console.log(`千万别点：${this.name}`);
-      mdui.snackbar({
-        message: `千万别点：${this.name}`,
-        position: 'right-bottom',
-      });
-
       document.addEventListener('keydown', (e) => {
         if (Math.random() > 0.5) {
           e.preventDefault();
