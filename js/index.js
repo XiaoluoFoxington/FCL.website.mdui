@@ -1,8 +1,5 @@
-const targetHost = 'cia.foldcraftlauncher.cn';
-
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
-  fuckHacker();
   loadTheme();
   
   var Tab = new mdui.Tab('.mdui-tab');
@@ -228,29 +225,4 @@ async function loadDownLinks({
     // 直接触发验证框
     captcha.showBox();
   });
-}
-
-/**
- * 防盗链：重定向至最新的子域名
- */
-function fuckHacker() {
-  const currentHost = window.location.hostname;
-  const fakeTargetHost0 = 'fuckhacker.foldcraftlauncher.cn';
-  const fakeTargetHost1 = 'hackerdieallfamliy.foldcraftlauncher.cn';
-  const fakeTargetHost2 = '1145141919810.foldcraftlauncher.cn';
-  
-  const isLocal = ['localhost', '127.0.0.1'].includes(currentHost);
-  
-  if (currentHost !== targetHost && !isLocal) {
-    const newURL = new URL(window.location.href);
-    newURL.hostname = targetHost;
-    newURL.protocol = 'https:';
-    window.location.replace(newURL.toString());
-  } else {
-    mdui.snackbar({
-      message: currentHost === targetHost ?
-        '防盗链：完成' : `防盗链：调试：${currentHost}不重定向`,
-      position: 'right-bottom'
-    });
-  }
 }
