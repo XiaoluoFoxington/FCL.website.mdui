@@ -1,4 +1,4 @@
-const targetHost = '114.foldcraftlauncher.cn';
+const targetHost = 'cia.foldcraftlauncher.cn';
 
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
