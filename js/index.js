@@ -1,3 +1,5 @@
+const targetHost = '114.foldcraftlauncher.cn';
+
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
   fuckHacker();
@@ -194,7 +196,7 @@ async function loadDownLinks({
   if (isLocal) {
     await _executeLoad();
     mdui.snackbar({
-      message: '调试：跳过人机验证',
+      message: '人机验证：调试：跳过人机验证',
       position: 'right-bottom',
     });
     dispatchEvent(new Event('hashchange'));
@@ -232,14 +234,23 @@ async function loadDownLinks({
  * 防盗链：重定向至最新的子域名
  */
 function fuckHacker() {
-  if (window.location.hostname === 'foldcraftlauncher.cn') {
+  const currentHost = window.location.hostname;
+  const fakeTargetHost0 = 'fuckhacker.foldcraftlauncher.cn';
+  const fakeTargetHost1 = 'hackerdieallfamliy.foldcraftlauncher.cn';
+  const fakeTargetHost2 = '1145141919810.foldcraftlauncher.cn';
+  
+  const isLocal = ['localhost', '127.0.0.1'].includes(currentHost);
+  
+  if (currentHost !== targetHost && !isLocal) {
     const newURL = new URL(window.location.href);
-    
-    newURL.hostname = '114.foldcraftlauncher.cn';
+    newURL.hostname = targetHost;
     newURL.protocol = 'https:';
-    
     window.location.replace(newURL.toString());
   } else {
-    mdui.snackbar({ message: '防盗链：无需重定向', position: 'right-bottom' });
+    mdui.snackbar({
+      message: currentHost === targetHost ?
+        '防盗链：完成' : `防盗链：调试：${currentHost}不重定向`,
+      position: 'right-bottom'
+    });
   }
 }
