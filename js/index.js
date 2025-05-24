@@ -1,3 +1,8 @@
+// COPYRIGHT 2025
+// CONTRIBUTOR LIST:
+// 洛狐XiaoluoFoxington
+// 晚梦LateDream
+
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
   loadTheme();
@@ -22,19 +27,7 @@ window.addEventListener('DOMContentLoaded', function() {
   hashApi();
   
   openNotice();
-  
-  this.document.getElementById('do-not-click').addEventListener('click', async function(event) {
-    event.preventDefault();
-    
-    const events = (await import('./DoNotClick.js')).default;
-    const randomEvent = events[Math.floor(Math.random() * events.length)];
-    randomEvent.run();
-    console.log(`千万别点：${randomEvent.name}`);
-    mdui.snackbar({
-      message: `千万别点：${randomEvent.name}`,
-      position: 'right-bottom',
-    });
-  });
+  setupDoNotClickBtn();
   
   console.log('DOMContentLoaded：完成');
 });
@@ -47,29 +40,49 @@ window.onload = function() {
 }
 
 /**
+ * 初始化“千万别点”
+ */
+function setupDoNotClickBtn() {
+  document.getElementById('do-not-click').addEventListener('click', async function(event) {
+    event.preventDefault();
+    
+    const events = (await import('./DoNotClick.js')).default;
+    const randomEvent = events[Math.floor(Math.random() * events.length)];
+    randomEvent.run();
+    console.log(`千万别点：${randomEvent.name}`);
+    mdui.snackbar({
+      message: `千万别点：${randomEvent.name}`,
+      position: 'right-bottom',
+    });
+  });
+}
+
+/**
  * 显示公告
  */
-function openNotice() {
-  
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', '/file/data/notice.html');
-  xhr.send();
-  
-  xhr.addEventListener('readystatechange', function() {
-    if (xhr.readyState === 4) mdui.dialog({
+async function openNotice() {
+  try {
+    const noticeDoc = await fetchContent('/file/data/notice.html');
+    mdui.dialog({
       title: '公告',
-      content: xhr.responseText,
+      content: noticeDoc.body.innerHTML,
       buttons: [
-      {
-        text: '确认'
-      }],
+        {
+          text: '确认'
+        }
+      ],
       onOpen: function() {
         mdui.mutation();
       },
       history: false
     });
-  });
-  
+  } catch (error) {
+    console.error('公告：加载失败：', error);
+    mdui.snackbar({
+      message: '公告：加载失败：' + error,
+      position: 'right-bottom'
+    });
+  }
 }
 
 /**
