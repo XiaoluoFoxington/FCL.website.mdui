@@ -16,6 +16,24 @@
       width: 100%;
     }
     
+    .loadContainer {
+      background-color: #00000080;
+      z-index: 114514;
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: 0;
+      left: 0;
+    }
+    
+    .scale-out {
+      opacity: 0;
+      transition: all 0.5s ease-in-out;
+    }
+    
     .hide {
       display: none;
     }
@@ -48,12 +66,38 @@
   <img src="/file/picture/得意.webp" class="hide">
   <img src="/file/picture/公告.webp" class="hide">
   
+  <!-- 加载提示 -->
+  <div class="loadContainer" id="loading">
+    <div class="mdui-panel" style="width: auto;" mdui-panel>
+      <div class="mdui-panel-item mdui-panel-item-open">
+        <div class="mdui-panel-item-header mdui-ripple">
+          <div>等待 DOMContentLoaded …</div>
+          <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+        <div class="mdui-panel-item-body">
+          <div class="mdui-typo">
+            <div class="mdui-spinner"></div>
+            <p>网页正在加载，可能需要一段时间，请耐心等待。</p>
+            <p>如果你已经没有耐心继续等待了，请尝试：</p>
+            <ul>
+              <li>检查网络连接</li>
+              <li>绕过GFW</li>
+              <li>启用 JavaScript</li>
+              <li>更换浏览器</li>
+              <li><a href="https://wj.qq.com/s2/22395480/df5b/" target="_blank">向站长反馈</a></li>
+              <li><a href="javascript: removeLoadTip();">强制关闭此提示</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <!-- 应用栏 -->
   <div class="mdui-appbar mdui-appbar-fixed">
     <!-- 工具栏 -->
     <div class="mdui-toolbar mdui-color-indigo mdui-color-theme">
-      <div class="mdui-spinner" id="loading"></div>
-      <div class="mdui-btn mdui-btn-icon mdui-ripple hide" id="fclIcon" mdui-tooltip="{content: 'FCL_icon'}"><img src="/file/picture/FCL_icon.webp"></div>
+      <div class="mdui-btn mdui-btn-icon mdui-ripple" id="fclIcon" mdui-tooltip="{content: 'FCL_icon'}"><img src="/file/picture/FCL_icon.webp"></div>
       <a href="javascript:;" class="mdui-typo-title">FCL下载站</a>
       <div class="mdui-toolbar-spacer mdui-ripple"></div>
       <a mdui-menu="{target: '#toolbar-theme'}" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '样式'}"><i class="mdui-icon material-icons">style</i></a>
