@@ -3,6 +3,20 @@
 // 洛狐XiaoluoFoxington
 // 晚梦LateDream
 
+const loadingDialog = mdui.dialog({
+  title: '正在加载…',
+  content: '<div class="mdui-spinner"></div>',
+  buttons: [],
+  history: false,
+  closeOnEsc: false,
+  closeOnConfirm: false,
+  modal: true,
+  onOpen: function() {
+    mdui.mutation();
+  }
+});
+
+
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
   loadTheme();
@@ -73,11 +87,13 @@ function setupDoNotClickBtn() {
 async function openNotice() {
   try {
     const noticeDoc = await fetchContent('/file/data/notice.html');
+    
+    loadingDialog.close();
+    
     mdui.dialog({
       title: '公告',
       content: noticeDoc.body.innerHTML,
-      buttons: [
-      {
+      buttons: [{
         text: '确认'
       }],
       onOpen: function() {
@@ -86,10 +102,17 @@ async function openNotice() {
       history: false
     });
   } catch (error) {
+    loadingDialog.close();
+    
     console.error('公告：加载失败：', error);
-    mdui.snackbar({
-      message: '公告：加载失败：' + error,
-      position: 'right-bottom'
+    mdui.dialog({
+      title: '公告：加载失败',
+      content: error,
+      buttons: [
+      {
+        text: '关闭'
+      }],
+      history: false
     });
   }
 }
@@ -142,21 +165,24 @@ function loadTheme() {
  * 获取页面：从指定URL获取HTML内容
  * @async
  * @param {string} url - 请求的URL地址
- * @returns {Promise<document>} HTML内容
- * @throws {Error} 当网络请求失败或响应状态非200时抛出错误
+ * @returns {Promise<Document>} HTML文档对象
+ * @throws {Error} 当网络请求失败、响应状态非200或解析失败时抛出错误
  */
 async function fetchContent(url) {
-  console.log('获取页面：从：' + url);
+  console.log(`获取页面：${url}`);
   
   const response = await fetch(url);
-  
   if (!response.ok) {
-    throw new Error(`获取页面: HTTP状态码: ${response.status}`);
+    throw new Error(`获取页面：HTTP错误: ${response.status} ${response.statusText}`);
   }
   
-  const domParser = new DOMParser();
-  const htmlDoc = domParser.parseFromString(await response.text(), 'text/html');
-  return htmlDoc;
+  try {
+    const html = await response.text();
+    const domParser = new DOMParser();
+    return domParser.parseFromString(html, 'text/html');
+  } catch (error) {
+    throw new Error(`获取页面：HTML解析失败: ${error.message}`);
+  }
 }
 
 /**
@@ -167,37 +193,69 @@ async function fetchContent(url) {
  */
 function updateContainer(content, containerId) {
   const container = document.getElementById(containerId);
-  
   if (!container) {
-    throw new Error(`替换内容: 找不到容器: ${containerId}`);
+    throw new Error(`替换内容：容器不存在: ${containerId}`);
   }
-  
   container.innerHTML = content;
 }
 
 /**
- * 加载直链：整合人机验证与内容加载
+ * 加载直链：下载链接内容加载
  * @async
- * @param {Object} options 配置选项
- * @param {string} [options.url='/file/data/DonwLinks.html'] - 请求URL
+ * @param {Object} [options={}] 配置选项
+ * @param {string} [options.url='/file/data/DownLinks.html'] - 请求URL
  * @param {string} [options.targetId='tab2'] - 目标容器ID
  */
-async function loadDownLinks({
-  url = '/file/data/DonwLinks.html',
-  targetId = 'tab2'
-} = {}) {
-  const htmlContent = await fetchContent(url);
-  const setupScript = htmlContent.querySelector('[setup]');
-  const script = document.createElement('script');
-  script.text = setupScript.innerHTML;
-  document.getElementById(targetId).appendChild(script);
-  updateContainer(htmlContent.querySelector('[content]').innerHTML, targetId);
-  console.log('加载直链：完成');
-  mdui.mutation();
+async function loadDownLinks(options = {}) {
+  const {
+    url = '/file/data/DownLinks.html',
+      targetId = 'tab2'
+  } = options;
+  
+  const loadingDialog = window.loadingDialog || { open: () => {}, close: () => {} };
+  
+  try {
+    loadingDialog.open();
+    const htmlDoc = await fetchContent(url);
+    const targetContainer = document.getElementById(targetId);
+    
+    if (!targetContainer) {
+      throw new Error(`加载直链：目标容器不存在: ${targetId}`);
+    }
+    
+    const contentElement = htmlDoc.querySelector('[content]');
+    if (contentElement) {
+      targetContainer.innerHTML = contentElement.innerHTML;
+    }
+    
+    // 执行setup脚本（如果存在）
+    const setupScript = htmlDoc.querySelector('[setup]');
+    if (setupScript?.textContent.trim()) {
+      const script = document.createElement('script');
+      script.text = setupScript.textContent;
+      targetContainer.appendChild(script);
+    }
+    
+    console.log('加载直链：完成');
+    mdui.mutation?.();
+  } catch (error) {
+    console.error('加载直链：失败:', error);
+    mdui.dialog({
+      title: '加载直链：错误',
+      content: error,
+      buttons: [
+      {
+        text: '关闭'
+      }],
+      history: false
+    });
+  } finally {
+    loadingDialog.close();
+  }
 }
 
 /**
- * 鉴权并下载
+ * 鉴权下载
  * @param {string} originalUrl 原始URL
  */
 async function authAndDown(originalUrl) {
@@ -217,7 +275,7 @@ async function authAndDown(originalUrl) {
   } catch (error) {
     console.error('鉴权下载：', error);
     mdui.snackbar({
-      message: '下载失败：请完成人机验证',
+      message: '鉴权下载：请完成人机验证',
       position: 'right-bottom',
       buttonText: '重试',
       onButtonClick: () => authAndDown(originalUrl)
