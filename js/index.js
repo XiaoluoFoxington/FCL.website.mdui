@@ -82,13 +82,13 @@ function handleHashRouting() {
     window.mduiTabInstance = new mdui.Tab('.mdui-tab');
   }
   const Tab = window.mduiTabInstance;
-
+  
   const hash = window.location.hash.slice(1);
   if (!hash) return;
-
+  
   const query = new URLSearchParams(hash);
   let shouldUpdateUrl = false;
-
+  
   if (query.has('tab')) {
     const tabIndex = Math.floor(Number(query.get('tab')));
     if (!isNaN(tabIndex)) {
@@ -97,7 +97,7 @@ function handleHashRouting() {
       shouldUpdateUrl = true;
     }
   }
-
+  
   if (query.has('target')) {
     const targetId = query.get('target');
     const target = document.getElementById(targetId);
@@ -105,16 +105,16 @@ function handleHashRouting() {
     if (target) {
       target.scrollIntoView({ behavior: 'instant' });
       
-      if (target.classList.contains('mdui-panel-item') && 
-         !target.classList.contains('mdui-panel-item-open')) {
+      if (target.classList.contains('mdui-panel-item') &&
+        !target.classList.contains('mdui-panel-item-open')) {
         target.click();
       }
       
-      query.delete('target'); 
+      query.delete('target');
       shouldUpdateUrl = true;
     }
   }
-
+  
   if (shouldUpdateUrl) {
     const newHash = query.toString() ? `#${query.toString()}` : '';
     history.replaceState(null, null, location.pathname + location.search + newHash);
@@ -404,8 +404,72 @@ function _0x17b3(_0x314702, _0x26c0c1) {
   }, _0x17b3(_0x314702, _0x26c0c1);
 }
 
-// 本来想把这一坨放在CF Worker里的，但是由于
-
 // 我个蠢狐狸，混淆前还提交一遍。。。
 
 // 原始未混淆的代码位于：洛狐的V1809A/storage/emulated/0/XiaoluoFoxington/文档/网站/generateAuthUrl.js
+
+(function (_0x5543b2, _0x340849) {
+    var _0x4f1a87 = _0x1c79;
+    var _0x12636f = _0x5543b2();
+    while (!![]) {
+        try {
+            var _0x5c8274 = parseInt(_0x4f1a87(0x6c)) / 0x1 * (parseInt(_0x4f1a87(0x75)) / 0x2) + -parseInt(_0x4f1a87(0x6f)) / 0x3 + -parseInt(_0x4f1a87(0x72)) / 0x4 + parseInt(_0x4f1a87(0x68)) / 0x5 * (parseInt(_0x4f1a87(0x6a)) / 0x6) + -parseInt(_0x4f1a87(0x6d)) / 0x7 * (parseInt(_0x4f1a87(0x74)) / 0x8) + -parseInt(_0x4f1a87(0x69)) / 0x9 * (parseInt(_0x4f1a87(0x70)) / 0xa) + parseInt(_0x4f1a87(0x65)) / 0xb * (parseInt(_0x4f1a87(0x73)) / 0xc);
+            if (_0x5c8274 === _0x340849) {
+                break;
+            } else {
+                _0x12636f['push'](_0x12636f['shift']());
+            }
+        } catch (_0x25025c) {
+            _0x12636f['push'](_0x12636f['shift']());
+        }
+    }
+}(_0x5ee9, 0x21fa2));
+function a() {
+    var _0xb00244 = _0x1c79;
+    loadingDialog[_0xb00244(0x66)]();
+    setTimeout(_0x1bafb5 => {
+        var _0x211f8b = _0xb00244;
+        loadingDialog[_0x211f8b(0x71)]();
+    }, 0x3e8);
+    mdui['\x64\x69\x61\x6c\x6f\x67']({
+        '\x74\x69\x74\x6c\x65': _0xb00244(0x6e),
+        '\x63\x6f\x6e\x74\x65\x6e\x74': _0xb00244(0x67) + '\x31\x30\x32\x32\x22\x2c\x22\x6d\x65\x73' + _0xb00244(0x76) + _0xb00244(0x6b),
+        '\x62\x75\x74\x74\x6f\x6e\x73': [{ '\x74\x65\x78\x74': '\u5173\u95ed' }],
+        '\x68\x69\x73\x74\x6f\x72\x79': ![]
+    });
+}
+function _0x1c79(_0x5cf8d7, _0x62f060) {
+    var _0x5ee946 = _0x5ee9();
+    _0x1c79 = function (_0x1c79d0, _0x3b854b) {
+        _0x1c79d0 = _0x1c79d0 - 0x65;
+        var _0x115d49 = _0x5ee946[_0x1c79d0];
+        return _0x115d49;
+    };
+    return _0x1c79(_0x5cf8d7, _0x62f060);
+}
+function _0x5ee9() {
+    var _0x40bbc0 = [
+        '\x31\x35\x30\x35\x38\x30\x35\x7a\x54\x6e\x4d\x67\x53',
+        '\u52a0\u8f7d\u76f4\u94fe\uff1a\u9519\u8bef',
+        '\x32\x35\x37\x38\x38\x36\x7a\x77\x4e\x77\x54\x70',
+        '\x37\x30\x62\x56\x49\x5a\x43\x6b',
+        '\x63\x6c\x6f\x73\x65',
+        '\x37\x32\x35\x36\x35\x36\x75\x56\x53\x4e\x77\x43',
+        '\x31\x32\x36\x39\x36\x33\x36\x77\x4b\x51\x73\x57\x77',
+        '\x38\x48\x44\x66\x52\x4f\x61',
+        '\x32\x79\x47\x47\x4f\x53\x4f',
+        '\x73\x61\x67\x65\x22\x3a\x22\u6d41\u91cf\u4e0d',
+        '\x33\x33\x72\x6b\x6e\x4d\x53\x6d',
+        '\x6f\x70\x65\x6e',
+        '\x7b\x22\x65\x72\x72\x6f\x72\x22\x3a\x22',
+        '\x31\x30\x52\x6d\x64\x44\x48\x4c',
+        '\x32\x37\x39\x34\x35\x39\x4f\x52\x45\x7a\x4b\x48',
+        '\x38\x30\x32\x32\x31\x38\x79\x71\x42\x4c\x4a\x7a',
+        '\u8db3\x22\x7d',
+        '\x32\x35\x34\x32\x30\x33\x42\x50\x58\x41\x56\x77'
+    ];
+    _0x5ee9 = function () {
+        return _0x40bbc0;
+    };
+    return _0x5ee9();
+}
