@@ -19,32 +19,25 @@ const loadingDialog = mdui.dialog({
 
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
+  initApp();
+  
   loadTheme();
-  
-  var Tab = new mdui.Tab('.mdui-tab');
-  
-  function hashApi() {
-    const hash = window.location.hash.slice(1);
-    const query = new URLSearchParams(hash);
-    if (query.has('tab')) Tab.show(Math.floor(query.get('tab')));
-    if (query.has('target')) {
-      const target = document.getElementById(query.get('target'));
-      if (!!target) {
-        target.scrollIntoView();
-        if (!target.classList.contains('mdui-panel-item-open'))
-          target.click();
-        history.replaceState(null, null, location.href.split('#')[0]); // clean location bar
-      }
-    }
-  };
-  this.addEventListener('hashchange', hashApi);
-  hashApi();
   
   openNotice();
   setupDoNotClickBtn();
   
   console.log('DOMContentLoaded：完成');
 });
+
+/**
+ * 初始化各种玩意
+ */
+function initApp() {
+  initEruda();
+  handleHashRouting();
+  
+  window.addEventListener('hashchange', handleHashRouting);
+}
 
 window.onload = function() {
   removeLoadTip();
@@ -79,6 +72,66 @@ function setupDoNotClickBtn() {
       position: 'right-bottom',
     });
   });
+}
+
+/**
+ * 哈希参数：处理页面哈希路由参数
+ */
+function handleHashRouting() {
+  if (!window.mduiTabInstance) {
+    window.mduiTabInstance = new mdui.Tab('.mdui-tab');
+  }
+  const Tab = window.mduiTabInstance;
+
+  const hash = window.location.hash.slice(1);
+  if (!hash) return;
+
+  const query = new URLSearchParams(hash);
+  let shouldUpdateUrl = false;
+
+  if (query.has('tab')) {
+    const tabIndex = Math.floor(Number(query.get('tab')));
+    if (!isNaN(tabIndex)) {
+      Tab.show(tabIndex);
+      query.delete('tab');
+      shouldUpdateUrl = true;
+    }
+  }
+
+  if (query.has('target')) {
+    const targetId = query.get('target');
+    const target = document.getElementById(targetId);
+    
+    if (target) {
+      target.scrollIntoView({ behavior: 'instant' });
+      
+      if (target.classList.contains('mdui-panel-item') && 
+         !target.classList.contains('mdui-panel-item-open')) {
+        target.click();
+      }
+      
+      query.delete('target'); 
+      shouldUpdateUrl = true;
+    }
+  }
+
+  if (shouldUpdateUrl) {
+    const newHash = query.toString() ? `#${query.toString()}` : '';
+    history.replaceState(null, null, location.pathname + location.search + newHash);
+  }
+}
+
+/**
+ * 初始化Eruda
+ */
+function initEruda() {
+  // const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+  const debugMode = new URLSearchParams(location.search).has('debug');
+  
+  if (window.eruda && debugMode) {
+    eruda.init();
+    console.info('Eruda：启用');
+  }
 }
 
 /**
