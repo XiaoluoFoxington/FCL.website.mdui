@@ -345,7 +345,7 @@ async function loadChecksums() {
     return;
   } else {
     await loadContent({
-      url: '/file/data/checks1ums.html',
+      url: '/file/data/checksums.html',
       targetId: 'tab3',
       context: '校验'
     });
