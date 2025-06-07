@@ -314,6 +314,60 @@ async function loadDownLinks(options = {}) {
 }
 
 /**
+ * 加载赞表：赞助列表内容加载
+ * @async
+ * @param {Object} [options={}] 配置选项
+ * @param {string} [options.url='/file/data/supportList.html'] - 请求URL
+ * @param {string} [options.targetId='supportList'] - 目标容器ID
+ */
+async function loadSupportList(options = {}) {
+  const {
+    url = '/file/data/supportList.html',
+      targetId = 'supportList'
+  } = options;
+  
+  const loadingDialog = showLoading();
+  
+  try {
+    loadingDialog.open();
+    const htmlDoc = await fetchContent(url);
+    const targetContainer = document.getElementById(targetId);
+    
+    if (!targetContainer) {
+      throw new Error(`加载赞表：目标容器不存在: ${targetId}`);
+    }
+    
+    const contentElement = htmlDoc.querySelector('[content]');
+    if (contentElement) {
+      targetContainer.innerHTML = contentElement.innerHTML;
+    }
+    
+    const setupScript = htmlDoc.querySelector('[setup]');
+    if (setupScript?.textContent.trim()) {
+      const script = document.createElement('script');
+      script.text = setupScript.textContent;
+      targetContainer.appendChild(script);
+    }
+    
+    console.log('加载赞表：完成');
+    mdui.mutation?.();
+  } catch (error) {
+    console.error('加载赞表：失败:', error);
+    mdui.dialog({
+      title: '加载赞表：错误',
+      content: error,
+      buttons: [
+      {
+        text: '关闭'
+      }],
+      history: false
+    });
+  } finally {
+    loadingDialog.close();
+  }
+}
+
+/**
  * 鉴权下载
  * @param {string} originalUrl 原始URL
  */
