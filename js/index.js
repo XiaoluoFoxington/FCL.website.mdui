@@ -3,6 +3,8 @@
 // 洛狐XiaoluoFoxington
 // 晚梦LateDream
 
+let checksumsLoaded = false;
+
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
   initApp();
@@ -23,6 +25,7 @@ function initApp() {
   handleHashRouting();
   
   window.addEventListener('hashchange', handleHashRouting);
+  document.getElementById('loadChecksums').addEventListener('click', loadChecksums);
 }
 
 window.onload = function() {
@@ -331,6 +334,23 @@ async function loadSupportList() {
     targetId: 'supportList',
     context: '赞表'
   });
+}
+
+/**
+ * 加载校验
+ */
+async function loadChecksums() {
+  console.log('校验：是否不加载：' + checksumsLoaded);
+  if (checksumsLoaded) {
+    return;
+  } else {
+    await loadContent({
+      url: '/file/data/checks1ums.html',
+      targetId: 'tab3',
+      context: '校验'
+    });
+    checksumsLoaded = true;
+  }
 }
 
 /**
