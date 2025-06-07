@@ -259,18 +259,18 @@ function updateContainer(content, containerId) {
 }
 
 /**
- * 加载直链：下载链接内容加载
+ * 通用内容加载函数
  * @async
- * @param {Object} [options={}] 配置选项
- * @param {string} [options.url='/file/data/DownLinks.html'] - 请求URL
- * @param {string} [options.targetId='tab2'] - 目标容器ID
+ * @param {Object} options - 配置选项
+ * @param {string} [options.url] - 内容URL
+ * @param {string} [options.targetId] - 目标容器ID
+ * @param {string} [options.context] - 上下文名称（用于日志/错误提示）
  */
-async function loadDownLinks(options = {}) {
-  const {
-    url = '/file/data/DownLinks.html',
-      targetId = 'tab2'
-  } = options;
-  
+async function loadContent({
+  url = '',
+  targetId = '',
+  context = '内容'
+}) {
   const loadingDialog = showLoading();
   
   try {
@@ -279,15 +279,16 @@ async function loadDownLinks(options = {}) {
     const targetContainer = document.getElementById(targetId);
     
     if (!targetContainer) {
-      throw new Error(`加载直链：目标容器不存在: ${targetId}`);
+      throw new Error(`${context}：加载：目标容器不存在 - ${targetId}`);
     }
     
+    // 插入内容
     const contentElement = htmlDoc.querySelector('[content]');
     if (contentElement) {
       targetContainer.innerHTML = contentElement.innerHTML;
     }
     
-    // 执行setup脚本（如果存在）
+    // 执行setup脚本
     const setupScript = htmlDoc.querySelector('[setup]');
     if (setupScript?.textContent.trim()) {
       const script = document.createElement('script');
@@ -295,17 +296,14 @@ async function loadDownLinks(options = {}) {
       targetContainer.appendChild(script);
     }
     
-    console.log('加载直链：完成');
+    console.log(`${context}：加载：完成`);
     mdui.mutation?.();
   } catch (error) {
-    console.error('加载直链：失败:', error);
+    console.error(`${context}：加载：`, error);
     mdui.dialog({
-      title: '加载直链：错误',
-      content: error,
-      buttons: [
-      {
-        text: '关闭'
-      }],
+      title: `${context}：加载`,
+      content: error.message,
+      buttons: [{ text: '关闭' }],
       history: false
     });
   } finally {
@@ -314,57 +312,25 @@ async function loadDownLinks(options = {}) {
 }
 
 /**
- * 加载赞表：赞助列表内容加载
- * @async
- * @param {Object} [options={}] 配置选项
- * @param {string} [options.url='/file/data/supportList.html'] - 请求URL
- * @param {string} [options.targetId='supportList'] - 目标容器ID
+ * 加载直链
  */
-async function loadSupportList(options = {}) {
-  const {
-    url = '/file/data/supportList.html',
-      targetId = 'supportList'
-  } = options;
-  
-  const loadingDialog = showLoading();
-  
-  try {
-    loadingDialog.open();
-    const htmlDoc = await fetchContent(url);
-    const targetContainer = document.getElementById(targetId);
-    
-    if (!targetContainer) {
-      throw new Error(`加载赞表：目标容器不存在: ${targetId}`);
-    }
-    
-    const contentElement = htmlDoc.querySelector('[content]');
-    if (contentElement) {
-      targetContainer.innerHTML = contentElement.innerHTML;
-    }
-    
-    const setupScript = htmlDoc.querySelector('[setup]');
-    if (setupScript?.textContent.trim()) {
-      const script = document.createElement('script');
-      script.text = setupScript.textContent;
-      targetContainer.appendChild(script);
-    }
-    
-    console.log('加载赞表：完成');
-    mdui.mutation?.();
-  } catch (error) {
-    console.error('加载赞表：失败:', error);
-    mdui.dialog({
-      title: '加载赞表：错误',
-      content: error,
-      buttons: [
-      {
-        text: '关闭'
-      }],
-      history: false
-    });
-  } finally {
-    loadingDialog.close();
-  }
+async function loadDownLinks() {
+  await loadContent({
+    url: '/file/data/DownLinks.html',
+    targetId: 'tab2',
+    context: '直链'
+  });
+}
+
+/**
+ * 加载赞表
+ */
+async function loadSupportList() {
+  await loadContent({
+    url: '/file/data/supportList.html',
+    targetId: 'supportList',
+    context: '赞表'
+  });
 }
 
 /**
