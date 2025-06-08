@@ -4,6 +4,7 @@
 // 晚梦LateDream
 
 let checksumsLoaded = false;
+let showEpilepsyWarning = true;
 
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
@@ -12,7 +13,6 @@ window.addEventListener('DOMContentLoaded', function() {
   loadTheme();
   
   openNotice();
-  setupDoNotClickBtn();
   
   console.log('DOMContentLoaded：完成');
 });
@@ -65,21 +65,52 @@ function showLoading() {
 }
 
 /**
- * 初始化“千万别点”
+ * 执行"千万别点"事件
  */
-function setupDoNotClickBtn() {
-  document.getElementById('do-not-click').addEventListener('click', async function(event) {
-    event.preventDefault();
-    
+async function runDoNotClickEvent() {
+  /*
+  if (!showEpilepsyWarning) {
+    run();
+    return;
+  }
+  
+  mdui.dialog({
+    title: '光敏性癫痫警告',
+    content: '此功能包含闪烁、闪光或动态视觉效果，可能对光敏性癫痫患者或光敏症患者造成不适。如果您有相关病史，请勿继续操作。',
+    buttons: [
+    {
+      text: '取消',
+      onClick: () => true // 返回 true 关闭弹窗
+    },
+    {
+      text: '继续',
+      onClick: () => run
+    }],
+    onOpen: function() {
+      mdui.mutation();
+    },
+    history: false,
+    closeOnEsc: false,
+    modal: true
+  });
+  
+  function run() {
+  */
+  
+    showEpilepsyWarning = false;
     const events = (await import('./DoNotClick.js')).default;
     const randomEvent = events[Math.floor(Math.random() * events.length)];
+    
+    // 执行随机事件
     randomEvent.run();
+    
+    // 显示通知
     console.log(`千万别点：${randomEvent.name}`);
     mdui.snackbar({
       message: `千万别点：${randomEvent.name}`,
       position: 'right-bottom',
     });
-  });
+//  }
 }
 
 /**
