@@ -68,9 +68,24 @@ function showLoading() {
  * 执行"千万别点"事件
  */
 async function runDoNotClickEvent() {
-  /*
+  const run = async () => {
+    showEpilepsyWarning = false;
+    const events = (await import('./DoNotClick.js')).default;
+    const randomEvent = events[Math.floor(Math.random() * events.length)];
+    
+    randomEvent.run();
+    
+    console.log(`千万别点：${randomEvent.name}`);
+    mdui.snackbar({
+      message: `千万别点：${randomEvent.name}`,
+      position: 'right-bottom',
+    });
+  };
+  
+  console.log('千万别点：显示警告：' + showEpilepsyWarning);
+  
   if (!showEpilepsyWarning) {
-    run();
+    await run();
     return;
   }
   
@@ -80,11 +95,14 @@ async function runDoNotClickEvent() {
     buttons: [
     {
       text: '取消',
-      onClick: () => true // 返回 true 关闭弹窗
+      onClick: () => true
     },
     {
       text: '继续',
-      onClick: () => run
+      onClick: () => {
+        run();
+        return true;
+      }
     }],
     onOpen: function() {
       mdui.mutation();
@@ -93,24 +111,6 @@ async function runDoNotClickEvent() {
     closeOnEsc: false,
     modal: true
   });
-  
-  function run() {
-  */
-  
-    showEpilepsyWarning = false;
-    const events = (await import('./DoNotClick.js')).default;
-    const randomEvent = events[Math.floor(Math.random() * events.length)];
-    
-    // 执行随机事件
-    randomEvent.run();
-    
-    // 显示通知
-    console.log(`千万别点：${randomEvent.name}`);
-    mdui.snackbar({
-      message: `千万别点：${randomEvent.name}`,
-      position: 'right-bottom',
-    });
-//  }
 }
 
 /**
