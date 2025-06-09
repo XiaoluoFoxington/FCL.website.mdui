@@ -4,6 +4,7 @@
 // 晚梦LateDream
 
 let checksumsLoaded = false;
+let aboutLoaded = false;
 let showEpilepsyWarning = true;
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -26,6 +27,7 @@ function initApp() {
   
   window.addEventListener('hashchange', handleHashRouting);
   document.getElementById('loadChecksums').addEventListener('click', loadChecksums);
+  document.getElementById('loadAbout').addEventListener('click', loadAbout);
 }
 
 window.onload = function() {
@@ -427,6 +429,23 @@ async function loadChecksums() {
       context: '校验'
     });
     checksumsLoaded = true;
+  }
+}
+
+/**
+ * 加载关于
+ */
+async function loadAbout() {
+  console.log('关于：是否不加载：' + aboutLoaded);
+  if (aboutLoaded) {
+    return;
+  } else {
+    await loadContent({
+      url: '/file/data/about.html',
+      targetId: 'tab5',
+      context: '关于'
+    });
+    aboutLoaded = true;
   }
 }
 
