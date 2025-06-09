@@ -66,51 +66,106 @@ function showLoading() {
 
 /**
  * 执行"千万别点"事件
+ * @param {number} eventId - 可选的事件ID，指定要运行的事件
  */
-async function runDoNotClickEvent() {
-  const run = async () => {
-    showEpilepsyWarning = false;
-    const events = (await import('./DoNotClick.js')).default;
-    const randomEvent = events[Math.floor(Math.random() * events.length)];
-    
-    randomEvent.run();
-    
-    console.log(`千万别点：${randomEvent.name}`);
+async function runDoNotClickEvent(eventId) {
+  // 添加模块加载日志
+  const events = (await import('./DoNotClick.js')).default;
+  console.log("千万别点：事件数量：", events.length);
+
+  // 定义执行事件的核心函数
+  const runEvent = (event) => {
+    event.run();
+    console.log(`千万别点：执行：${event.name}`);
     mdui.snackbar({
-      message: `千万别点：${randomEvent.name}`,
+      message: `千万别点：${event.name}`,
       position: 'right-bottom',
     });
   };
-  
-  console.log('千万别点：显示警告：' + showEpilepsyWarning);
-  
-  if (!showEpilepsyWarning) {
-    await run();
+
+  // 检查是否需要显示警告的函数
+  const shouldShowWarning = (event) => {
+    const needWarning = event.warning && showEpilepsyWarning;
+    console.log(`千万别点：${event.name}：显示警告：${needWarning}`);
+    return needWarning;
+  };
+
+  // 处理警告对话框的统一函数
+  const handleWarningDialog = (event, runCallback) => {
+    mdui.dialog({
+      title: '光敏性癫痫警告',
+      content: '此功能包含闪烁、闪光或动态视觉效果，可能对光敏性癫痫患者或光敏症患者造成不适。如果您有相关病史，请勿继续操作。',
+      buttons: [
+        {
+          text: '取消',
+          onClick: () => {
+            return true;
+          }
+        },
+        {
+          text: '继续',
+          onClick: () => {
+            showEpilepsyWarning = false;
+            runCallback();
+            return true;
+          }
+        }
+      ],
+      onOpen: function() {
+        mdui.mutation();
+      },
+      history: false,
+      closeOnEsc: false,
+      modal: true
+    });
+  };
+
+  // 如果传入了事件ID
+  if (typeof eventId === 'number') {
+    console.log(`千万别点：指定：${eventId}`);
+    
+    // 检查事件ID是否有效
+    if (eventId >= 0 && eventId < events.length) {
+      const selectedEvent = events[eventId];
+      console.log(`千万别点：${selectedEvent.name}：找到`);
+      
+      // 检查是否需要显示警告
+      if (shouldShowWarning(selectedEvent)) {
+        handleWarningDialog(selectedEvent, () => runEvent(selectedEvent));
+      } else {
+        runEvent(selectedEvent);
+      }
+    } else {
+      // 无效的事件ID，显示错误提示
+      console.error(`千万别点：错误：无效的事件ID：${eventId}`);
+      mdui.dialog({
+        title: '千万别点：错误：',
+        content: `无效的事件ID：${eventId}`,
+        buttons: [{
+          text: '确定',
+          onClick: () => true
+        }],
+        history: false
+      });
+    }
     return;
   }
-  
-  mdui.dialog({
-    title: '光敏性癫痫警告',
-    content: '此功能包含闪烁、闪光或动态视觉效果，可能对光敏性癫痫患者或光敏症患者造成不适。如果您有相关病史，请勿继续操作。',
-    buttons: [
-    {
-      text: '取消',
-      onClick: () => true
-    },
-    {
-      text: '继续',
-      onClick: () => {
-        run();
-        return true;
-      }
-    }],
-    onOpen: function() {
-      mdui.mutation();
-    },
-    history: false,
-    closeOnEsc: false,
-    modal: true
-  });
+
+  // 随机运行事件的逻辑
+  const runRandom = () => {
+    const randomIndex = Math.floor(Math.random() * events.length);
+    const randomEvent = events[randomIndex];
+    console.log(`千万别点：随机选中${randomEvent.name}[${randomIndex}]`);
+    
+    // 检查是否需要显示警告
+    if (shouldShowWarning(randomEvent)) {
+      handleWarningDialog(randomEvent, () => runEvent(randomEvent));
+    } else {
+      runEvent(randomEvent);
+    }
+  };
+
+  runRandom();
 }
 
 /**

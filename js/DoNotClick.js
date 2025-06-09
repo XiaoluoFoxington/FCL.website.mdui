@@ -1,6 +1,7 @@
 export default [
 {
   name: '0#页面旋转动画',
+  warning: true,
   run() {
     const style = document.createElement('style');
     style.innerHTML = `
@@ -44,6 +45,7 @@ export default [
 },
 {
   name: '4#随机背景闪烁',
+  warning: true,
   run() {
     setInterval(() => {
       document.body.style.backgroundColor =
@@ -53,6 +55,7 @@ export default [
 },
 {
   name: '5#元素抖动效果',
+  warning: true,
   run() {
     const style = document.createElement('style');
     style.innerHTML = `
@@ -91,6 +94,7 @@ export default [
 },
 {
   name: '8#3D文字阴影',
+  warning: true,
   run() {
     const style = document.createElement('style');
     style.innerHTML = `
@@ -114,6 +118,7 @@ export default [
 },
 {
   name: '10#彩虹文字动画',
+  warning: true,
   run() {
     const style = document.createElement('style');
     style.innerHTML = `
