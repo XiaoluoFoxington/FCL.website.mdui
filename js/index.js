@@ -69,11 +69,9 @@ function showLoading() {
  * @param {number} eventId - 可选的事件ID，指定要运行的事件
  */
 async function runDoNotClickEvent(eventId) {
-  // 添加模块加载日志
   const events = (await import('./DoNotClick.js')).default;
   console.log("千万别点：事件数量：", events.length);
 
-  // 定义执行事件的核心函数
   const runEvent = (event) => {
     event.run();
     console.log(`千万别点：执行：${event.name}`);
@@ -83,14 +81,12 @@ async function runDoNotClickEvent(eventId) {
     });
   };
 
-  // 检查是否需要显示警告的函数
   const shouldShowWarning = (event) => {
     const needWarning = event.warning && showEpilepsyWarning;
     console.log(`千万别点：${event.name}：显示警告：${needWarning}`);
     return needWarning;
   };
 
-  // 处理警告对话框的统一函数
   const handleWarningDialog = (event, runCallback) => {
     mdui.dialog({
       title: '光敏性癫痫警告',
@@ -106,6 +102,7 @@ async function runDoNotClickEvent(eventId) {
           text: '继续',
           onClick: () => {
             showEpilepsyWarning = false;
+            // 只显示一次警告
             runCallback();
             return true;
           }
@@ -120,23 +117,19 @@ async function runDoNotClickEvent(eventId) {
     });
   };
 
-  // 如果传入了事件ID
   if (typeof eventId === 'number') {
     console.log(`千万别点：指定：${eventId}`);
     
-    // 检查事件ID是否有效
     if (eventId >= 0 && eventId < events.length) {
       const selectedEvent = events[eventId];
       console.log(`千万别点：${selectedEvent.name}：找到`);
       
-      // 检查是否需要显示警告
       if (shouldShowWarning(selectedEvent)) {
         handleWarningDialog(selectedEvent, () => runEvent(selectedEvent));
       } else {
         runEvent(selectedEvent);
       }
     } else {
-      // 无效的事件ID，显示错误提示
       console.error(`千万别点：错误：无效的事件ID：${eventId}`);
       mdui.dialog({
         title: '千万别点：错误：',
@@ -151,13 +144,11 @@ async function runDoNotClickEvent(eventId) {
     return;
   }
 
-  // 随机运行事件的逻辑
   const runRandom = () => {
     const randomIndex = Math.floor(Math.random() * events.length);
     const randomEvent = events[randomIndex];
     console.log(`千万别点：随机选中${randomEvent.name}[${randomIndex}]`);
     
-    // 检查是否需要显示警告
     if (shouldShowWarning(randomEvent)) {
       handleWarningDialog(randomEvent, () => runEvent(randomEvent));
     } else {
@@ -390,7 +381,7 @@ async function loadContent({
   } catch (error) {
     console.error(`${context}：加载：`, error);
     mdui.dialog({
-      title: `${context}：加载`,
+      title: `${context}：加载：错误：`,
       content: error.message,
       buttons: [{ text: '关闭' }],
       history: false
@@ -405,7 +396,7 @@ async function loadContent({
  */
 async function loadDownLinks() {
   await loadContent({
-    url: '/file/data/DownLinks.html',
+    url: '/file/data/downLinks.html',
     targetId: 'tab2',
     context: '直链'
   });
