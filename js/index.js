@@ -73,7 +73,7 @@ function showLoading() {
 async function runDoNotClickEvent(eventId) {
   const events = (await import('./DoNotClick.js')).default;
   console.log("千万别点：事件数量：", events.length);
-
+  
   const runEvent = (event) => {
     event.run();
     console.log(`千万别点：执行：${event.name}`);
@@ -82,34 +82,33 @@ async function runDoNotClickEvent(eventId) {
       position: 'right-bottom',
     });
   };
-
+  
   const shouldShowWarning = (event) => {
     const needWarning = event.warning && showEpilepsyWarning;
     console.log(`千万别点：${event.name}：显示警告：${needWarning}`);
     return needWarning;
   };
-
+  
   const handleWarningDialog = (event, runCallback) => {
     mdui.dialog({
       title: '光敏性癫痫警告',
       content: '此功能包含闪烁、闪光或动态视觉效果，可能对光敏性癫痫患者或光敏症患者造成不适。如果您有相关病史，请勿继续操作。',
       buttons: [
-        {
-          text: '取消',
-          onClick: () => {
-            return true;
-          }
-        },
-        {
-          text: '继续',
-          onClick: () => {
-            showEpilepsyWarning = false;
-            // 只显示一次警告
-            runCallback();
-            return true;
-          }
+      {
+        text: '取消',
+        onClick: () => {
+          return true;
         }
-      ],
+      },
+      {
+        text: '继续',
+        onClick: () => {
+          showEpilepsyWarning = false;
+          // 只显示一次警告
+          runCallback();
+          return true;
+        }
+      }],
       onOpen: function() {
         mdui.mutation();
       },
@@ -118,7 +117,7 @@ async function runDoNotClickEvent(eventId) {
       modal: true
     });
   };
-
+  
   if (typeof eventId === 'number') {
     console.log(`千万别点：指定：${eventId}`);
     
@@ -145,7 +144,7 @@ async function runDoNotClickEvent(eventId) {
     }
     return;
   }
-
+  
   const runRandom = () => {
     const randomIndex = Math.floor(Math.random() * events.length);
     const randomEvent = events[randomIndex];
@@ -157,8 +156,19 @@ async function runDoNotClickEvent(eventId) {
       runEvent(randomEvent);
     }
   };
-
+  
   runRandom();
+}
+
+/**
+ * 选择一个“千万别点”事件运行
+ */
+function runSelectDNCEvent() {
+  mdui.prompt('eventId', '请输入事件ID，空为随机',
+    function(value) {
+      runDoNotClickEvent(Number(value));
+    },
+  );
 }
 
 /**
