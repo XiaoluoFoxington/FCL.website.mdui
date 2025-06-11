@@ -24,18 +24,26 @@
       names: ['arm64-v8a', 'armeabi-v7a', 'armeabi', 'x86_64', 'x86', `${info.architecture}_${info.bitness}`]
     };
     document.getElementById('device-info').innerHTML = `
-浏览器报告您的系统信息：<code>${info.system} ${info.systemVersion}</code>系统，基于<code>${parseArch(info.platform) || `${info.architecture}(${info.platform})`}</code>架构。
+浏览器报告您的系统信息为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${parseArch(info.platform) || `${info.architecture}(${info.platform})`}</code>。
 `;
   })();
 </script>
 
 <div content>
-  <div class="mdui-typo">
-    <p id="device-info"></p>
-    <p>站长会在<mark>每天20:00检查</mark>是否有更新。</p>
-    <p>您想要下载什么？</p>
-  </div>
   <div class="mdui-panel" mdui-panel>
+    <div class="mdui-panel-item mdui-panel-item-open">
+      <div class="mdui-panel-item-header mdui-ripple">
+        <div>说明</div>
+        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-panel-item-body">
+        <div class="mdui-typo">
+          <p id="device-info"></p>
+          <p>站长会在<mark>每天20:00检查</mark>是否有更新。</p>
+          <p>您想要下载什么？</p>
+        </div>
+      </div>
+    </div>
     
     <div class="mdui-panel-item">
       <div class="mdui-panel-item-header mdui-ripple" id="fcl">
