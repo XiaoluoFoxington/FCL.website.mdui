@@ -186,7 +186,7 @@ export default [
     const columns = canvas.width / fontSize;
     const drops = [];
     
-    for(let i = 0; i < columns; i++) {
+    for (let i = 0; i < columns; i++) {
       drops[i] = 1;
     }
     
@@ -197,11 +197,11 @@ export default [
       ctx.fillStyle = '#0F0';
       ctx.font = `${fontSize}px monospace`;
       
-      for(let i = 0; i < drops.length; i++) {
+      for (let i = 0; i < drops.length; i++) {
         const text = chars.charAt(Math.floor(Math.random() * chars.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
         
-        if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
@@ -211,5 +211,52 @@ export default [
     setInterval(draw, 33);
   }
 },
-
-];
+{
+  name: '14#你屏幕上有根毛',
+  run() {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    const hairId = "hair-" + Math.random().toString(36).substr(2, 5);
+    
+    const length = 250 + Math.random() * 150;
+    const startX = Math.random() * (window.innerWidth - length * 0.8);
+    const startY = Math.random() * (window.innerHeight * 0.8);
+    const color = `#402010`;
+    
+    // 生成3个随机控制点创建自然曲线
+    const points = [];
+    for(let i = 0; i < 3; i++) {
+      points.push({
+        x: i * (length/2),
+        y: (Math.random() - 0.5) * 30
+      });
+    }
+    
+    // 构建二次贝塞尔曲线路径
+    const pathData = `M0,0 Q${points[1].x},${points[1].y} ${points[2].x},${points[2].y}`;
+    
+    svg.innerHTML = `
+      <path 
+        d="${pathData}" 
+        stroke="${color}" 
+        stroke-width="${0.8 + Math.random() * 0.7}" 
+        fill="none"
+        stroke-linecap="round"
+      />
+    `;
+    
+    svg.setAttribute("style", `
+      position: fixed;
+      left: ${startX}px;
+      top: ${startY}px;
+      width: ${length}px;
+      height: 40px;
+      overflow: visible;
+      pointer-events: none;
+      z-index: 9999;
+      transform: rotate(${Math.random() * 360}deg);
+      opacity: ${0.8 + Math.random() * 0.2};
+    `);
+    
+    document.body.appendChild(svg);
+  }
+}];
