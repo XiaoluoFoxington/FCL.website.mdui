@@ -11,8 +11,10 @@ window.addEventListener('DOMContentLoaded', function() {
   'use strict';
   initApp();
   
+  updateStatus('加载主题…');
   loadTheme();
   
+  updateStatus('打开公告…');
   openNotice();
   
   console.log('DOMContentLoaded：完成');
@@ -22,15 +24,20 @@ window.addEventListener('DOMContentLoaded', function() {
  * 初始化各种玩意
  */
 function initApp() {
+  updateStatus('初始化Eruda…');
   initEruda();
+
+  updateStatus('初始化地址栏参数解析…');
   handleHashRouting();
   
+  updateStatus('添加事件监听…');
   window.addEventListener('hashchange', handleHashRouting);
   document.getElementById('loadChecksums').addEventListener('click', loadChecksums);
   document.getElementById('loadAbout').addEventListener('click', loadAbout);
 }
 
 window.onload = function() {
+  updateStatus('移除此提示…');
   removeLoadTip();
   console.log('window.onload：完成');
 }
@@ -486,6 +493,14 @@ async function authAndDown(originalUrl) {
       onButtonClick: () => authAndDown(originalUrl)
     });
   }
+}
+
+/**
+ * 更新状态文本
+ */
+function updateStatus(statusText) {
+  const container = document.getElementById('status');
+  container.innerHTML = statusText;
 }
 
 // 那些盗用老子下载链接的人，我艹你们全家！老子拿自己的钱买的直链流量，以公益的性质搭建了这个下载站，就被你们这些缺德的没良心的傻逼给霍霍了！你们就不会考虑他人的感受吗？屎吃多了是吧？哈呀木！
