@@ -26,6 +26,8 @@
     document.getElementById('device-info').innerHTML = `
 浏览器报告您的系统信息为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${parseArch(info.platform) || `${info.architecture}(${info.platform})`}</code>。
 `;
+    
+    loadFclDownWay2();
   })();
 </script>
 
@@ -54,373 +56,397 @@
       </div>
     </div>
     <div class="mdui-panel-item">
-      <div class="mdui-panel-item-header mdui-ripple" id="fcl">
+      <div class="mdui-panel-item-header mdui-ripple">
         <div>FCL</div>
         <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
       </div>
       <div class="mdui-panel-item-body">
         <div class="mdui-typo">
+          <p id="device-info"></p>
           <p>FCL 最低要求 Android SDK 26（Android 8）</p>
-          <p>您想要下载哪个版本？</p>
+          <p>您想要下载从哪个线路？</p>
         </div>
         <div class="mdui-panel" mdui-panel>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple" id="fcl-latest">
-              <div>1.2.3.4（最新版本）</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p>更新内容：</p>
-              <p>
-              <ul>
-                <li>通过点击内置文件浏览器路径直接输入路径</li>
-                <li>下载界面版本过滤条件增加1.21.6版本</li>
-                <li>调整启动器更新检测链接</li>
-                <li>增加光影下载页面类别过滤条件的相关翻译</li>
-              </ul>
-              </p>
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://pan.huang1111.cn/f/Bz5fD/FCL-release-1.2.3.4-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://pan.huang1111.cn/f/q9nc6/FCL-release-1.2.3.4-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://pan.huang1111.cn/f/OBAI2/FCL-release-1.2.3.4-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://pan.huang1111.cn/f/3EYu6/FCL-release-1.2.3.4-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://pan.huang1111.cn/f/eR8f1/FCL-release-1.2.3.4-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
           <div class="mdui-panel-item">
             <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.3.3</div>
+              <div>线路1 [较稳定] [站长提供]</div>
               <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <div class="mdui-panel-item-body">
-              <p>更新内容：</p>
-              <p>
-              <ul>
-                <li>为安卓12以下的设备适配SplashScreen</li>
-                <li>修复引导错误显示的问题</li>
-                <li>修复部分设备上主题相关UI超出屏幕的问题</li>
-                <li>修复当启动器在运行时更新渲染器插件导致启动游戏后无法找到渲染器的问题</li>
-              </ul>
-              </p>
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://pan.huang1111.cn/f/9gRix/FCL-release-1.2.3.3-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://pan.huang1111.cn/f/Q3OFO/FCL-release-1.2.3.3-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://pan.huang1111.cn/f/wqyf8/FCL-release-1.2.3.3-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://pan.huang1111.cn/f/kwXFx/FCL-release-1.2.3.3-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://pan.huang1111.cn/f/Mqqtv/FCL-release-1.2.3.3-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.3.2</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://pan.huang1111.cn/f/jPqtV/FCL-release-1.2.3.2-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://pan.huang1111.cn/f/PjwTq/FCL-release-1.2.3.2-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://pan.huang1111.cn/f/dzluW/FCL-release-1.2.3.2-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://pan.huang1111.cn/f/z9eCE/FCL-release-1.2.3.2-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://pan.huang1111.cn/f/2NVT6/FCL-release-1.2.3.2-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.3.1</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://pan.huang1111.cn/f/ZRwIw/FCL-release-1.2.3.1-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://pan.huang1111.cn/f/gPgSP/FCL-release-1.2.3.1-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://pan.huang1111.cn/f/x9PSl/FCL-release-1.2.3.1-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://pan.huang1111.cn/f/Rjasl/FCL-release-1.2.3.1-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://pan.huang1111.cn/f/1l9u4/FCL-release-1.2.3.1-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.3.0</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://pan.huang1111.cn/f/z1efE/FCL-release-1.2.3.0-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://pan.huang1111.cn/f/9mRtx/FCL-release-1.2.3.0-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://pan.huang1111.cn/f/QgOfO/FCL-release-1.2.3.0-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://pan.huang1111.cn/f/wGyh8/FCL-release-1.2.3.0-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://pan.huang1111.cn/f/kXXUx/FCL-release-1.2.3.0-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.2.9</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://pan.huang1111.cn/f/MDqhv/FCL-release-1.2.2.9-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://pan.huang1111.cn/f/BD5HD/FCL-release-1.2.2.9-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://pan.huang1111.cn/f/qmnI6/FCL-release-1.2.2.9-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://pan.huang1111.cn/f/3yYu6/FCL-release-1.2.2.9-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://pan.huang1111.cn/f/ODAc2/FCL-release-1.2.2.9-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.2.8</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://pan.huang1111.cn/f/ey8T1/FCL-release-1.2.2.8-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://pan.huang1111.cn/f/v8LSZ/FCL-release-1.2.2.8-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://pan.huang1111.cn/f/54oUm/FCL-release-1.2.2.8-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://pan.huang1111.cn/f/bz7u1/FCL-release-1.2.2.8-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://pan.huang1111.cn/f/45vTW/FCL-release-1.2.2.8-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.2.7</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11623344');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11623346');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11623349');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11623350');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11623351');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.2.6</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11471878');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11471879');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11471882');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11471885');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11471886');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.2.5</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11403824');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11403825');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11403834');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.2.4</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11324563');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11324561');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11324564');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.2.3</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11299574');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11299575');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11299583');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11310231');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11310232');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.2.2</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11245195');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11270081');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11270193');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.2.1</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11192515');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11226127');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.2.0</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11158575');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11165175');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11165178');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.1.9</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11073320');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">点击下载（all）</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.1.8</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11013197');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">点击下载（all）</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.1.7</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/10927783');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">点击下载（arm64-v8a）</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.1.6</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/10843347');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">点击下载（arm64-v8a）</a>
-            </div>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-    <div class="mdui-panel-item">
-      <div class="mdui-panel-item-header mdui-ripple">
-        <div>FCL（备用）</div>
-        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-      </div>
-      <div class="mdui-panel-item-body">
-        <div class="mdui-panel" mdui-panel>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.3.4</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.4/FCL-release-1.2.3.4-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.4/FCL-release-1.2.3.4-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.4/FCL-release-1.2.3.4-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.4/FCL-release-1.2.3.4-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.4/FCL-release-1.2.3.4-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.3.3</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.3/FCL-release-1.2.3.3-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.3/FCL-release-1.2.3.3-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.3/FCL-release-1.2.3.3-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.3/FCL-release-1.2.3.3-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.3/FCL-release-1.2.3.3-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+              <div class="mdui-typo">
+                <p>FCL 最低要求 Android SDK 26（Android 8）</p>
+                <p>您想要下载哪个版本？</p>
+              </div>
+              <div class="mdui-panel" mdui-panel>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple" id="fcl-latest">
+                    <div>1.2.3.4（最新版本）</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p>更新内容：</p>
+                    <p>
+                    <ul>
+                      <li>通过点击内置文件浏览器路径直接输入路径</li>
+                      <li>下载界面版本过滤条件增加1.21.6版本</li>
+                      <li>调整启动器更新检测链接</li>
+                      <li>增加光影下载页面类别过滤条件的相关翻译</li>
+                    </ul>
+                    </p>
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://pan.huang1111.cn/f/Bz5fD/FCL-release-1.2.3.4-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://pan.huang1111.cn/f/q9nc6/FCL-release-1.2.3.4-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://pan.huang1111.cn/f/OBAI2/FCL-release-1.2.3.4-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://pan.huang1111.cn/f/3EYu6/FCL-release-1.2.3.4-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://pan.huang1111.cn/f/eR8f1/FCL-release-1.2.3.4-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.3.3</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p>更新内容：</p>
+                    <p>
+                    <ul>
+                      <li>为安卓12以下的设备适配SplashScreen</li>
+                      <li>修复引导错误显示的问题</li>
+                      <li>修复部分设备上主题相关UI超出屏幕的问题</li>
+                      <li>修复当启动器在运行时更新渲染器插件导致启动游戏后无法找到渲染器的问题</li>
+                    </ul>
+                    </p>
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://pan.huang1111.cn/f/9gRix/FCL-release-1.2.3.3-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://pan.huang1111.cn/f/Q3OFO/FCL-release-1.2.3.3-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://pan.huang1111.cn/f/wqyf8/FCL-release-1.2.3.3-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://pan.huang1111.cn/f/kwXFx/FCL-release-1.2.3.3-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://pan.huang1111.cn/f/Mqqtv/FCL-release-1.2.3.3-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.3.2</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://pan.huang1111.cn/f/jPqtV/FCL-release-1.2.3.2-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://pan.huang1111.cn/f/PjwTq/FCL-release-1.2.3.2-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://pan.huang1111.cn/f/dzluW/FCL-release-1.2.3.2-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://pan.huang1111.cn/f/z9eCE/FCL-release-1.2.3.2-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://pan.huang1111.cn/f/2NVT6/FCL-release-1.2.3.2-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.3.1</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://pan.huang1111.cn/f/ZRwIw/FCL-release-1.2.3.1-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://pan.huang1111.cn/f/gPgSP/FCL-release-1.2.3.1-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://pan.huang1111.cn/f/x9PSl/FCL-release-1.2.3.1-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://pan.huang1111.cn/f/Rjasl/FCL-release-1.2.3.1-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://pan.huang1111.cn/f/1l9u4/FCL-release-1.2.3.1-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.3.0</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://pan.huang1111.cn/f/z1efE/FCL-release-1.2.3.0-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://pan.huang1111.cn/f/9mRtx/FCL-release-1.2.3.0-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://pan.huang1111.cn/f/QgOfO/FCL-release-1.2.3.0-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://pan.huang1111.cn/f/wGyh8/FCL-release-1.2.3.0-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://pan.huang1111.cn/f/kXXUx/FCL-release-1.2.3.0-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.2.9</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://pan.huang1111.cn/f/MDqhv/FCL-release-1.2.2.9-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://pan.huang1111.cn/f/BD5HD/FCL-release-1.2.2.9-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://pan.huang1111.cn/f/qmnI6/FCL-release-1.2.2.9-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://pan.huang1111.cn/f/3yYu6/FCL-release-1.2.2.9-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://pan.huang1111.cn/f/ODAc2/FCL-release-1.2.2.9-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.2.8</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://pan.huang1111.cn/f/ey8T1/FCL-release-1.2.2.8-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://pan.huang1111.cn/f/v8LSZ/FCL-release-1.2.2.8-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://pan.huang1111.cn/f/54oUm/FCL-release-1.2.2.8-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://pan.huang1111.cn/f/bz7u1/FCL-release-1.2.2.8-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://pan.huang1111.cn/f/45vTW/FCL-release-1.2.2.8-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.2.7</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11623344');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11623346');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11623349');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11623350');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11623351');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.2.6</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11471878');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11471879');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11471882');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11471885');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11471886');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.2.5</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11403824');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11403825');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11403834');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.2.4</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11324563');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11324561');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11324564');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.2.3</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11299574');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11299575');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11299583');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11310231');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11310232');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.2.2</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11245195');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11270081');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11270193');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.2.1</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11192515');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11226127');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.2.0</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11158575');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11165175');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11165178');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.1.9</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11073320');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">点击下载（all）</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.1.8</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/11013197');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">点击下载（all）</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.1.7</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/10927783');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">点击下载（arm64-v8a）</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.1.6</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <a href="javascript: authAndDown('https://vip.123pan.cn/1811746932/10843347');" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">点击下载（arm64-v8a）</a>
+                  </div>
+                </div>
+                
+              </div>
             </div>
           </div>
           <div class="mdui-panel-item">
             <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.3.2</div>
+              <div>线路2 [更新快] [哈哈66623332提供]</div>
               <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.2/FCL-release-1.2.3.2-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.2/FCL-release-1.2.3.2-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.2/FCL-release-1.2.3.2-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.2/FCL-release-1.2.3.2-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.2/FCL-release-1.2.3.2-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+              <div id="fclDownWay2"><div class="mdui-spinner"></div></div>
             </div>
           </div>
           <div class="mdui-panel-item">
             <div class="mdui-panel-item-header mdui-ripple">
-              <div>1.2.3.1</div>
+              <div>线路3 [fishcpy提供]</div>
               <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.1/FCL-release-1.2.3.1-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.1/FCL-release-1.2.3.1-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.1/FCL-release-1.2.3.1-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.1/FCL-release-1.2.3.1-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.1/FCL-release-1.2.3.1-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+              <div class="mdui-panel" mdui-panel>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.3.4</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.4/FCL-release-1.2.3.4-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.4/FCL-release-1.2.3.4-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.4/FCL-release-1.2.3.4-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.4/FCL-release-1.2.3.4-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.4/FCL-release-1.2.3.4-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.3.3</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.3/FCL-release-1.2.3.3-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.3/FCL-release-1.2.3.3-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.3/FCL-release-1.2.3.3-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.3/FCL-release-1.2.3.3-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.3/FCL-release-1.2.3.3-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.3.2</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.2/FCL-release-1.2.3.2-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.2/FCL-release-1.2.3.2-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.2/FCL-release-1.2.3.2-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.2/FCL-release-1.2.3.2-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.2/FCL-release-1.2.3.2-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.3.1</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.1/FCL-release-1.2.3.1-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.1/FCL-release-1.2.3.1-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.1/FCL-release-1.2.3.1-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.1/FCL-release-1.2.3.1-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.1/FCL-release-1.2.3.1-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple" id="fcl-latest">
+                    <div>1.2.3.0</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body">
+                    <p class="mdui-typo">您的系统架构是？</p>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.0/FCL-release-1.2.3.0-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.0/FCL-release-1.2.3.0-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.0/FCL-release-1.2.3.0-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.0/FCL-release-1.2.3.0-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
+                    <a href="https://download.fishcpy.top/dl/fcl/1.2.3.0/FCL-release-1.2.3.0-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
+                  </div>
+                </div>
+                
+              </div>
             </div>
           </div>
-          
-          <div class="mdui-panel-item">
-            <div class="mdui-panel-item-header mdui-ripple" id="fcl-latest">
-              <div>1.2.3.0</div>
-              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-            </div>
-            <div class="mdui-panel-item-body">
-              <p class="mdui-typo">您的系统架构是？</p>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.0/FCL-release-1.2.3.0-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.0/FCL-release-1.2.3.0-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.0/FCL-release-1.2.3.0-armeabi-v7a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">armeabi-v7a</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.0/FCL-release-1.2.3.0-x86.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86</a>
-              <a href="https://download.fishcpy.top/dl/fcl/1.2.3.0/FCL-release-1.2.3.0-x86_64.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">x86_64</a>
-            </div>
-          </div>
-          
         </div>
       </div>
     </div>

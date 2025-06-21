@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', function() {
 function initApp() {
   updateStatus('初始化Eruda…');
   initEruda();
-
+  
   updateStatus('初始化地址栏参数解析…');
   handleHashRouting();
   
@@ -464,6 +464,107 @@ async function loadAbout() {
     });
     aboutLoaded = true;
   }
+}
+
+/**
+ * 加载FCL下载线路2
+ * @async
+ * @function loadFclDownWay2
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadFclDownWay2() {
+  try {
+    const response = await fetch('http://209.141.62.68:30008/');
+    if (!response.ok) throw new Error(`网络响应错误：${response.status}`);
+    
+    const fileTree = await response.json();
+    const container = document.getElementById('fclDownWay2');
+    
+    container.innerHTML = '';
+    const panel = document.createElement('div');
+    panel.className = 'mdui-panel';
+    panel.setAttribute('mdui-panel', '');
+    
+    fileTree.children
+      .filter(child => child.type === 'directory' && child.name !== 'root')
+      .forEach(versionDir => {
+        const panelItem = createPanelItem(versionDir);
+        panel.appendChild(panelItem);
+      });
+    
+    container.appendChild(panel);
+    new mdui.Panel(panel);
+  } catch (error) {
+    console.error('加载FCL下载线路2：', error);
+    document.getElementById('fclDownWay2').innerHTML = `<div class="mdui-typo">错误：${error.message}</div>`;
+  }
+}
+
+/**
+ * 创建单个版本的面板项
+ * @param {Object} versionDir - 版本目录对象
+ * @returns {HTMLElement} 创建好的面板项元素
+ */
+function createPanelItem(versionDir) {
+  const version = versionDir.name;
+  const archMap = createArchLinkMap(versionDir);
+  
+  const panelItem = document.createElement('div');
+  panelItem.className = 'mdui-panel-item';
+  
+  const header = document.createElement('div');
+  header.className = 'mdui-panel-item-header mdui-ripple';
+  header.innerHTML = `
+        <div>${version}</div>
+        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+    `;
+  
+  const body = document.createElement('div');
+  body.className = 'mdui-panel-item-body';
+  body.innerHTML = `<p class="mdui-typo">您的系统架构是？</p>`;
+  
+  ['all', 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'].forEach(arch => {
+    const btn = createArchButton(arch, archMap[arch]);
+    body.appendChild(btn);
+  });
+  
+  panelItem.appendChild(header);
+  panelItem.appendChild(body);
+  return panelItem;
+}
+
+/**
+ * 创建架构链接映射
+ * @param {Object} versionDir - 版本目录对象
+ * @returns {Object} 架构到下载链接的映射
+ */
+function createArchLinkMap(versionDir) {
+  const map = {};
+  versionDir.children
+    .filter(child => child.type === 'file' && child.arch)
+    .forEach(file => {
+      map[file.arch] = file.download_link;
+    });
+  return map;
+}
+
+/**
+ * 创建架构下载按钮
+ * @param {string} arch - 架构名称
+ * @param {string} link - 下载链接
+ * @returns {HTMLAnchorElement} 按钮元素
+ */
+function createArchButton(arch, link) {
+  const btn = document.createElement('a');
+  btn.className = 'mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple';
+  btn.textContent = arch === 'all' ? '我不知道' : arch;
+  btn.href = link || 'javascript:void(0);';
+  
+  if (!link) {
+    btn.classList.add('mdui-btn-disabled');
+    btn.title = '未提供此架构版本';
+  }
+  return btn;
 }
 
 /**
