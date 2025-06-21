@@ -474,7 +474,7 @@ async function loadAbout() {
  */
 async function loadFclDownWay2() {
   try {
-    const response = await fetch('http://111.170.11.164:11105/');
+    const response = await fetch('https://frostlynx.work/external/fcl/file_tree.json');
     if (!response.ok) throw new Error(`网络响应错误：${response.status}`);
     
     const fileTree = await response.json();
