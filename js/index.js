@@ -474,7 +474,7 @@ async function loadAbout() {
  */
 async function loadFclDownWay2() {
   try {
-    const response = await fetch('http://209.141.62.68:30008/');
+    const response = await fetch('http://111.170.11.164:11105/');
     if (!response.ok) throw new Error(`网络响应错误：${response.status}`);
     
     const fileTree = await response.json();
