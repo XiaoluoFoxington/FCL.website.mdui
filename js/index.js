@@ -240,25 +240,51 @@ function initEruda() {
 
 /**
  * 显示公告
+ * @param {boolean} [forceShow=false] 强制显示公告，忽略哈希检查
  */
-async function openNotice() {
-  const loadingDialog = showLoading()
+async function openNotice(forceShow = false) {
+  const loadingDialog = showLoading();
+  
   try {
     const noticeDoc = await fetchContent('/file/data/notice.html');
-    
     loadingDialog.close();
     
-    mdui.dialog({
+    const noticeContent = noticeDoc.body.innerHTML;
+    const hashCurrent = hashCode(noticeContent);
+    const hashStored = localStorage.getItem('notice_hash');
+    
+    const shouldSkipDisplay = !forceShow && (hashStored === hashCurrent);
+    
+    if (shouldSkipDisplay) {
+      console.log('公告：内容未变更，不显示');
+      return;
+    }
+    
+    const closeHandler = () => console.log('公告：已关闭');
+    
+    const dialog = mdui.dialog({
       title: '公告',
-      content: noticeDoc.body.innerHTML,
-      buttons: [{
-        text: '确认'
-      }],
-      onOpen: function() {
-        mdui.mutation();
-      },
+      content: noticeContent,
+      buttons: [
+        {
+          text: '不再显示当前公告',
+          onClick: () => {
+            localStorage.setItem('notice_hash', hashCurrent);
+            console.log('公告：不再显示，已存储内容标识');
+            return true;
+          }
+        },
+        {
+          text: '确认'
+        }
+      ],
+      onOpen: () => mdui.mutation(),
+      onClose: closeHandler,
       history: false
     });
+    
+    console.log(`公告：${forceShow ? '强制显示' : '显示新内容'}`);
+    
   } catch (error) {
     loadingDialog.close();
     
@@ -266,13 +292,38 @@ async function openNotice() {
     mdui.dialog({
       title: '公告：加载失败',
       content: error,
-      buttons: [
-      {
-        text: '关闭'
-      }],
+      buttons: [{ text: '关闭' }],
       history: false
     });
   }
+}
+
+/**
+ * 简易哈希函数生成内容标识
+ */
+function hashCode(str) {
+  let hash = 0;
+  if (str.length === 0) return '0';
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0; // 转换为32位整数
+  }
+  return hash.toString(16);
+}
+
+/**
+ * 简易哈希函数生成内容标识
+ */
+function hashCode(str) {
+  let hash = 0;
+  if (str.length === 0) return '0';
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0; // 转换为32位整数
+  }
+  return hash.toString(16);
 }
 
 /**
