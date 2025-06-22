@@ -7,6 +7,7 @@ let checksumsLoaded = false;
 let aboutLoaded = false;
 let showEpilepsyWarning = true;
 
+
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
   initApp();
@@ -27,6 +28,13 @@ window.addEventListener('DOMContentLoaded', function() {
  * 初始化各种玩意
  */
 function initApp() {
+  if (!localStorage.getItem('theme')) {
+    updateStatus('获取系统主题色偏好...');
+    localStorage.setItem('theme', window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches ? 'dark' : 'light');
+  }
+
   updateStatus('初始化Eruda…');
   initEruda();
   
