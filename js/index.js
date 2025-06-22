@@ -28,15 +28,15 @@ window.addEventListener('DOMContentLoaded', function() {
  * 初始化各种玩意
  */
 function initApp() {
+  updateStatus('初始化Eruda…');
+  initEruda();
+  
   if (!localStorage.getItem('theme')) {
     updateStatus('获取系统主题色偏好...');
     localStorage.setItem('theme', window.matchMedia(
       '(prefers-color-scheme: dark)'
     ).matches ? 'dark' : 'light');
   }
-
-  updateStatus('初始化Eruda…');
-  initEruda();
   
   updateStatus('初始化地址栏参数解析…');
   handleHashRouting();
@@ -267,7 +267,11 @@ async function openNotice(forceShow = false) {
     const shouldSkipDisplay = !forceShow && (hashStored === hashCurrent);
     
     if (shouldSkipDisplay) {
-      console.log('公告：内容未变更，不显示');
+      console.log('公告：内容未变，不显示');
+      mdui.snackbar({
+        message: `公告：内容未变`,
+        position: 'right-bottom',
+      });
       return;
     }
     
@@ -306,20 +310,6 @@ async function openNotice(forceShow = false) {
       history: false
     });
   }
-}
-
-/**
- * 简易哈希函数生成内容标识
- */
-function hashCode(str) {
-  let hash = 0;
-  if (str.length === 0) return '0';
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash |= 0; // 转换为32位整数
-  }
-  return hash.toString(16);
 }
 
 /**
@@ -634,12 +624,10 @@ function createArchButton(arch, link) {
  */
 function getRunTime() {
   const startDate = new Date(2025, 2, 19, 2, 19, 45); // 建站时间（月份0-based）
-  const now = Date.now(); // 使用时间戳更高效
+  const now = Date.now();
   
-  // 如果当前时间早于建站时间，返回0秒
   if (now < startDate) return "0秒";
   
-  // 定义时间单位常量（毫秒）和对应标签
   const UNITS = [
     { value: 24 * 60 * 60 * 1000, label: "天" },
     { value: 60 * 60 * 1000, label: "时" },
@@ -650,7 +638,6 @@ function getRunTime() {
   let diff = now - startDate;
   const parts = [];
   
-  // 遍历单位计算时间差
   for (const unit of UNITS) {
     const count = Math.floor(diff / unit.value);
     if (count > 0) {
@@ -659,12 +646,11 @@ function getRunTime() {
     }
   }
   
-  // 处理所有单位均为0的情况
   return parts.length > 0 ? parts.join('') : "0秒";
 }
 
 /**
- * 更新“此站已运行”信息
+ * 更新建站时间信息
  */
 function loadRunTime() {
   const timeString = getRunTime();
