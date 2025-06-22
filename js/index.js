@@ -14,6 +14,9 @@ window.addEventListener('DOMContentLoaded', function() {
   updateStatus('加载主题…');
   loadTheme();
   
+  updateStatus('加载运作时间…')
+  setInterval(loadRunTime, 1000);
+  
   updateStatus('打开公告…');
   openNotice();
   
@@ -266,18 +269,17 @@ async function openNotice(forceShow = false) {
       title: '公告',
       content: noticeContent,
       buttons: [
-        {
-          text: '不再显示当前公告',
-          onClick: () => {
-            localStorage.setItem('notice_hash', hashCurrent);
-            console.log('公告：不再显示，已存储内容标识');
-            return true;
-          }
-        },
-        {
-          text: '确认'
+      {
+        text: '不再显示当前公告',
+        onClick: () => {
+          localStorage.setItem('notice_hash', hashCurrent);
+          console.log('公告：不再显示，已存储内容标识');
+          return true;
         }
-      ],
+      },
+      {
+        text: '确认'
+      }],
       onOpen: () => mdui.mutation(),
       onClose: closeHandler,
       history: false
@@ -616,6 +618,53 @@ function createArchButton(arch, link) {
     btn.title = '未提供此架构版本';
   }
   return btn;
+}
+
+/**
+ * 获取当前时间与建站时间的时间差（精确到天）
+ * @returns {string} 格式化后的时间差字符串（非零单位：天、小时、分钟、秒）
+ */
+function getRunTime() {
+  const startDate = new Date(2025, 2, 19, 2, 19, 45); // 建站时间（月份0-based）
+  const now = Date.now(); // 使用时间戳更高效
+  
+  // 如果当前时间早于建站时间，返回0秒
+  if (now < startDate) return "0秒";
+  
+  // 定义时间单位常量（毫秒）和对应标签
+  const UNITS = [
+    { value: 24 * 60 * 60 * 1000, label: "天" },
+    { value: 60 * 60 * 1000, label: "时" },
+    { value: 60 * 1000, label: "分" },
+    { value: 1000, label: "秒" }
+  ];
+  
+  let diff = now - startDate;
+  const parts = [];
+  
+  // 遍历单位计算时间差
+  for (const unit of UNITS) {
+    const count = Math.floor(diff / unit.value);
+    if (count > 0) {
+      parts.push(`${count}${unit.label}`);
+      diff %= unit.value;
+    }
+  }
+  
+  // 处理所有单位均为0的情况
+  return parts.length > 0 ? parts.join('') : "0秒";
+}
+
+/**
+ * 更新“此站已运行”信息
+ */
+function loadRunTime() {
+  const timeString = getRunTime();
+  const displayElement = document.getElementById('runTime');
+  
+  if (displayElement) {
+    displayElement.textContent = timeString;
+  }
 }
 
 /**
