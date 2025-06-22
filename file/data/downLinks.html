@@ -33,15 +33,7 @@
 
 <div content>
   <div class="mdui-panel" mdui-panel>
-    <div class="mdui-panel-item mdui-panel-item-open">
-      <div class="mdui-panel-item-header mdui-ripple">
-        <div>赞助我们</div>
-        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-      </div>
-      <div class="mdui-panel-item-body">
-        <p class="mdui-typo">直链流量费用高昂，请不要滥用，目前下载站一直在亏损，我们除了赞助外无任何收益，属于公益性质。如果您条件允许，可点击顶部<a href="#tab=3">赞助站长</a>。</p>
-      </div>
-    </div>
+    <!-- 说明 -->
     <div class="mdui-panel-item mdui-panel-item-open">
       <div class="mdui-panel-item-header mdui-ripple">
         <div>说明</div>
@@ -50,11 +42,12 @@
       <div class="mdui-panel-item-body">
         <div class="mdui-typo">
           <p id="device-info"></p>
-          <p>站长会尽量在新版本发布后的<mark>12小时内</mark>检查是否有更新。</p>
+          <p>直链流量费用高昂，请不要滥用，目前下载站一直在亏损，如果您条件允许，可点击顶部<a href="#tab=3">赞助站长</a>。</p>
           <p>您想要下载什么？</p>
         </div>
       </div>
     </div>
+    <!-- FCL/ -->
     <div class="mdui-panel-item">
       <div class="mdui-panel-item-header mdui-ripple">
         <div>FCL</div>
@@ -67,6 +60,7 @@
           <p>您想要下载从哪个线路？</p>
         </div>
         <div class="mdui-panel" mdui-panel>
+          <!-- 线路1 -->
           <div class="mdui-panel-item">
             <div class="mdui-panel-item-header mdui-ripple">
               <div>线路1 [较稳定] [站长提供]</div>
@@ -74,6 +68,7 @@
             </div>
             <div class="mdui-panel-item-body">
               <div class="mdui-typo">
+              <p>站长会尽量在<mark>更新发布后的12小时内</mark>同步至此。</p>
                 <p>您想要下载哪个版本？</p>
               </div>
               <div class="mdui-panel" mdui-panel>
@@ -84,15 +79,6 @@
                     <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
                   </div>
                   <div class="mdui-panel-item-body">
-                    <p>更新内容：</p>
-                    <p>
-                    <ul>
-                      <li>通过点击内置文件浏览器路径直接输入路径</li>
-                      <li>下载界面版本过滤条件增加1.21.6版本</li>
-                      <li>调整启动器更新检测链接</li>
-                      <li>增加光影下载页面类别过滤条件的相关翻译</li>
-                    </ul>
-                    </p>
                     <p class="mdui-typo">您的系统架构是？</p>
                     <a href="https://pan.huang1111.cn/f/Bz5fD/FCL-release-1.2.3.4-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
                     <a href="https://pan.huang1111.cn/f/q9nc6/FCL-release-1.2.3.4-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
@@ -108,15 +94,6 @@
                     <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
                   </div>
                   <div class="mdui-panel-item-body">
-                    <p>更新内容：</p>
-                    <p>
-                    <ul>
-                      <li>为安卓12以下的设备适配SplashScreen</li>
-                      <li>修复引导错误显示的问题</li>
-                      <li>修复部分设备上主题相关UI超出屏幕的问题</li>
-                      <li>修复当启动器在运行时更新渲染器插件导致启动游戏后无法找到渲染器的问题</li>
-                    </ul>
-                    </p>
                     <p class="mdui-typo">您的系统架构是？</p>
                     <a href="https://pan.huang1111.cn/f/9gRix/FCL-release-1.2.3.3-all.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">我不知道</a>
                     <a href="https://pan.huang1111.cn/f/Q3OFO/FCL-release-1.2.3.3-arm64-v8a.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">arm64-v8a</a>
@@ -353,6 +330,7 @@
               </div>
             </div>
           </div>
+          <!-- 线路2 -->
           <div class="mdui-panel-item">
             <div class="mdui-panel-item-header mdui-ripple">
               <div>线路2 [更新快] [哈哈66623332提供]</div>
@@ -364,6 +342,7 @@
               </div>
             </div>
           </div>
+          <!-- 线路3 -->
           <div class="mdui-panel-item">
             <div class="mdui-panel-item-header mdui-ripple">
               <div>线路3 [fishcpy提供]</div>
@@ -448,9 +427,52 @@
               </div>
             </div>
           </div>
+          <!-- 更新日志 -->
+          <div class="mdui-panel-item">
+            <div class="mdui-panel-item-header mdui-ripple">
+              <div>查看更新日志</div>
+              <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+            </div>
+            <div class="mdui-panel-item-body">
+              <div class="mdui-panel" mdui-panel>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple" id="fcl-latest">
+                    <div>1.2.3.4</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body mdui-typo">
+                    <ul>
+                      <li>通过点击内置文件浏览器路径直接输入路径</li>
+                      <li>下载界面版本过滤条件增加1.21.6版本</li>
+                      <li>调整启动器更新检测链接</li>
+                      <li>增加光影下载页面类别过滤条件的相关翻译</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="mdui-panel-item">
+                  <div class="mdui-panel-item-header mdui-ripple">
+                    <div>1.2.3.3</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <div class="mdui-panel-item-body mdui-typo">
+                    <ul>
+                      <li>为安卓12以下的设备适配SplashScreen</li>
+                      <li>修复引导错误显示的问题</li>
+                      <li>修复部分设备上主题相关UI超出屏幕的问题</li>
+                      <li>修复当启动器在运行时更新渲染器插件导致启动游戏后无法找到渲染器的问题</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
         </div>
       </div>
     </div>
+    <!-- 渲染器 -->
     <div class="mdui-panel-item">
       <div class="mdui-panel-item-header mdui-ripple">
         <div>渲染器插件</div>
@@ -467,6 +489,7 @@
         <a href="https://pan.huang1111.cn/f/8Wwi8/Legacy.Holy.GL4ES.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">Legacy.Holy.GL4ES</a>
       </div>
     </div>
+    <!-- 驱动 -->
     <div class="mdui-panel-item">
       <div class="mdui-panel-item-header mdui-ripple">
         <div>Vulkan驱动插件</div>
@@ -485,6 +508,7 @@
         <a href="https://pan.huang1111.cn/f/Vgytx/Turnip.24.3.4.R27C.SDK33.apk" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">Turnip.24.3.4.R27C.SDK33</a>
       </div>
     </div>
+    <!-- ZL/-->
     <div class="mdui-panel-item">
       <div class="mdui-panel-item-header mdui-ripple">
         <div>ZL (Zalith Launcher)</div>
@@ -495,7 +519,7 @@
           <p>您想要下载从哪个线路？</p>
         </div>
         <div class="mdui-panel" mdui-panel>
-          
+          <!-- 线路1 -->
           <div class="mdui-panel-item">
             <div class="mdui-panel-item-header mdui-ripple">
               <div>线路1 [站长提供]</div>
@@ -503,6 +527,7 @@
             </div>
             <div class="mdui-panel-item-body">
               <div class="mdui-typo">
+                <p>站长会尽量在<mark>更新发布后的12小时内</mark>同步至此。</p>
                 <p>您想要下载哪个版本？</p>
               </div>
               <div class="mdui-panel" mdui-panel>
@@ -519,7 +544,7 @@
               </div>
             </div>
           </div>
-          
+          <!-- 线路2 -->
           <div class="mdui-panel-item">
             <div class="mdui-panel-item-header mdui-ripple">
               <div>线路2 [fishcpy提供]</div>
@@ -552,6 +577,7 @@
         </div>
       </div>
     </div>
+    <!-- 说明 -->
     <div class="mdui-panel-item mdui-panel-item-open">
       <div class="mdui-panel-item-header mdui-ripple">
         <div>说明</div>
@@ -564,6 +590,7 @@
         </div>
       </div>
     </div>
+    <!-- 如何使用插件 -->
     <div class="mdui-panel-item">
       <div class="mdui-panel-item-header mdui-ripple">
         <div>如何使用插件</div>
@@ -575,6 +602,7 @@
         </video>
       </div>
     </div>
+    <!-- 外链 -->
     <div class="mdui-panel-item">
       <div class="mdui-panel-item-header mdui-ripple">
         <div>站外链接</div>
