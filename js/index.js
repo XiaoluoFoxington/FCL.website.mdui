@@ -12,14 +12,17 @@ window.addEventListener('DOMContentLoaded', function() {
   'use strict';
   initApp();
   
+  updateStatus('打开公告…');
+  openNotice();
+  
   updateStatus('加载主题…');
   loadTheme();
   
   updateStatus('加载运作时间…')
   setInterval(loadRunTime, 1000);
   
-  updateStatus('打开公告…');
-  openNotice();
+  updateStatus('获取首页链接…')
+  setupIndexDownLinks();
   
   console.log('DOMContentLoaded：完成');
 });
@@ -658,6 +661,51 @@ function loadRunTime() {
   
   if (displayElement) {
     displayElement.textContent = timeString;
+  }
+}
+
+/**
+ * 获取并填充FCL下载线路2的最新版本的两个架构的链接到首页的开门见山中
+ */
+async function setupIndexDownLinks() {
+  try {
+    const response = await fetch('https://frostlynx.work/external/fcl/file_tree.json');
+    if (!response.ok) throw new Error(`HTTP错误：${response.status}`);
+    const fileTree = await response.json();
+    
+    if (!fileTree.latest || !fileTree.children || !Array.isArray(fileTree.children)) {
+      throw new Error('未找到最新版本目录');
+    }
+    const latestVersionDir = fileTree.children.find(
+      dir => dir.type === 'directory' && dir.name === fileTree.latest
+    ) || null;
+    if (!latestVersionDir) throw new Error('未找到最新版本目录');
+    
+    const findLink = (dir, arch) => {
+      if (!dir.children || !Array.isArray(dir.children)) return null;
+      const file = dir.children.find(child =>
+        child.type === 'file' && child.arch === arch
+      );
+      return file ? file.download_link : null;
+    };
+    
+    const setLink = (id, arch) => {
+      const link = findLink(latestVersionDir, arch);
+      const element = document.getElementById(id);
+      if (link && element) element.href = link;
+    };
+    
+    setLink('fclDownWay2AllLink', 'all');
+    setLink('fclDownWay2v8aLink', 'arm64-v8a');
+    
+  } catch (error) {
+    console.error('首页链接：获取错误：', error);
+    mdui.dialog({
+      title: `首页链接：获取错误：`,
+      content: error,
+      buttons: [{ text: '关闭' }],
+      history: false
+    });
   }
 }
 
