@@ -680,6 +680,7 @@ async function setupIndexDownLinks() {
     if (!fileTree.latest || !fileTree.children || !Array.isArray(fileTree.children)) {
       throw new Error('未找到最新版本目录');
     }
+    
     const latestVersionDir = fileTree.children.find(
       dir => dir.type === 'directory' && dir.name === fileTree.latest
     ) || null;
@@ -701,6 +702,8 @@ async function setupIndexDownLinks() {
     
     setLink('fclDownWay2AllLink', 'all');
     setLink('fclDownWay2v8aLink', 'arm64-v8a');
+    
+    document.getElementById('latestInfo').textContent = fileTree.latest;
     
   } catch (error) {
     console.error('首页链接：获取错误：', error);
