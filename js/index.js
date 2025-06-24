@@ -525,37 +525,79 @@ async function loadAbout() {
 }
 
 /**
+ * 加载FCL下载线路
+ * @async
+ * @function loadFclDownWay
+ * @param {string} url - 文件树JSON的URL
+ * @param {string} containerId - 容器元素的ID
+ * @param {string} lineName - 线路名称（用于日志标识）
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadFclDownWay(url, containerId, lineName) {
+  const container = document.getElementById(containerId);
+  if (!container) {
+    console.error(`${lineName}：找不到容器：${containerId}`);
+    return;
+  }
+  
+  try {
+    console.log(`${lineName}：${url}`);
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} ${response.statusText}`);
+    }
+    
+    const fileTree = await response.json();
+    container.innerHTML = '';
+    
+    const panel = document.createElement('div');
+    panel.className = 'mdui-panel';
+    panel.setAttribute('mdui-panel', '');
+    
+    const versionDirs = fileTree.children.filter(
+      child => child.type === 'directory' && child.name !== 'root'
+    );
+    
+    console.log(`${lineName}：找到版本目录数：${versionDirs.length}`);
+    versionDirs.forEach(versionDir => {
+      panel.appendChild(createPanelItem(versionDir));
+    });
+    
+    container.appendChild(panel);
+    new mdui.Panel(panel);
+    console.log(`${lineName}：完成`);
+  } catch (error) {
+    console.error(`${lineName}：错误`, error);
+    container.innerHTML = `<div class="mdui-typo">${lineName}错误：${error.message}</div>`;
+  }
+}
+
+/**
+ * 加载FCL下载线路1
+ * @async
+ * @function loadFclDownWay1
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadFclDownWay1() {
+  await loadFclDownWay(
+    '/file/data/fclDownWay1.json',
+    'fclDownWay1',
+    '加载FCL线1'
+  );
+}
+
+/**
  * 加载FCL下载线路2
  * @async
  * @function loadFclDownWay2
  * @returns {Promise<void>} 无返回值
  */
 async function loadFclDownWay2() {
-  try {
-    const response = await fetch('https://frostlynx.work/external/fcl/file_tree.json');
-    if (!response.ok) throw new Error(`网络响应错误：${response.status}`);
-    
-    const fileTree = await response.json();
-    const container = document.getElementById('fclDownWay2');
-    
-    container.innerHTML = '';
-    const panel = document.createElement('div');
-    panel.className = 'mdui-panel';
-    panel.setAttribute('mdui-panel', '');
-    
-    fileTree.children
-      .filter(child => child.type === 'directory' && child.name !== 'root')
-      .forEach(versionDir => {
-        const panelItem = createPanelItem(versionDir);
-        panel.appendChild(panelItem);
-      });
-    
-    container.appendChild(panel);
-    new mdui.Panel(panel);
-  } catch (error) {
-    console.error('加载FCL下载线路2：', error);
-    document.getElementById('fclDownWay2').innerHTML = `<div class="mdui-typo">错误：${error.message}</div>`;
-  }
+  await loadFclDownWay(
+    'https://frostlynx.work/external/fcl/file_tree.json',
+    'fclDownWay2',
+    '加载FCL线2'
+  );
 }
 
 /**
