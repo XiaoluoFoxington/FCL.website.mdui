@@ -21,6 +21,9 @@ window.addEventListener('DOMContentLoaded', function() {
   updateStatus('加载运作时间…')
   setInterval(loadRunTime, 1000);
   
+  updateStatus('加载FCL线路2流量…')
+  setInterval(loadFclDownWay2Info, 1000);
+  
   updateStatus('获取首页链接…')
   setupIndexDownLinks();
   
@@ -706,6 +709,35 @@ async function setupIndexDownLinks() {
       buttons: [{ text: '关闭' }],
       history: false
     });
+  }
+}
+
+/**
+ * 获取并填充FCL下载线路2的流量使用信息
+ */
+async function loadFclDownWay2Info() {
+  try {
+    const response = await fetch('https://frostlynx.work/api/fcl-traffic/');
+    
+    if (!response.ok) {
+      throw new Error(`HTTP错误：${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    const targetElement = document.getElementById('fclDownWay2Info');
+    
+    if (targetElement) {
+      targetElement.textContent = data.traffic_gib + 'GiB';
+    } else {
+      console.error('流量信息：未找到显示元素');
+    }
+  } catch (error) {
+    console.error('流量信息：', error);
+    const targetElement = document.getElementById('fclDownWay2Info');
+    if (targetElement) {
+      targetElement.textContent = error;
+    }
   }
 }
 
