@@ -2259,7 +2259,101 @@
       "download_link": "https://download.fishcpy.top/dl/fcl/1.1.3/FCL-release-1.1.3.apk",
       "arch": "点击下载"
     }]
-  }
-  
-  ]
+  },
+  {
+    "name": "1.1.2",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.1.2/FCL-release-1.1.2.apk",
+      "arch": "点击下载"
+    }]
+  },
+  {
+    "name": "1.1.1",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.1.1/FCL-release-1.1.1.apk",
+      "arch": "点击下载"
+    }]
+  },
+  {
+    "name": "1.1.0",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.1.0/FCL-release-1.1.0.apk",
+      "arch": "点击下载"
+    }]
+  },
+  {
+    "name": "1.0.7",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.0.7/FCL-release-1.0.7.apk",
+      "arch": "点击下载"
+    }]
+  },
+  {
+    "name": "1.0.6-patch1",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.0.6-patch1/FCL-release-1.0.6-patch1.apk",
+      "arch": "点击下载"
+    }]
+  },
+  {
+    "name": "1.0.6",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.0.6/FCL-release-1.0.6.apk",
+      "arch": "点击下载"
+    }]
+  },
+  {
+    "name": "1.0.5",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.0.5/FCL-release-1.0.5.apk",
+      "arch": "点击下载"
+    }]
+  },
+  {
+    "name": "1.0.2",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.0.2/FCL-release-1.0.2.apk",
+      "arch": "点击下载"
+    }]
+  },
+  {
+    "name": "1.0.1",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.0.1/FCL-release-1.0.1.apk",
+      "arch": "点击下载"
+    }]
+  },
+  {
+    "name": "我是彩蛋！",
+    "type": "directory",
+    "children": [
+    {}]
+  }]
 }
