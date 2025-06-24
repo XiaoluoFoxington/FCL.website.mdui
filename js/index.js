@@ -527,7 +527,6 @@ async function loadAbout() {
 /**
  * 加载FCL下载线路
  * @async
- * @function loadFclDownWay
  * @param {string} url - 文件树JSON的URL
  * @param {string} containerId - 容器元素的ID
  * @param {string} lineName - 线路名称（用于日志标识）
@@ -575,7 +574,6 @@ async function loadFclDownWay(url, containerId, lineName) {
 /**
  * 加载FCL下载线路1
  * @async
- * @function loadFclDownWay1
  * @returns {Promise<void>} 无返回值
  */
 async function loadFclDownWay1() {
@@ -589,7 +587,6 @@ async function loadFclDownWay1() {
 /**
  * 加载FCL下载线路2
  * @async
- * @function loadFclDownWay2
  * @returns {Promise<void>} 无返回值
  */
 async function loadFclDownWay2() {
@@ -597,6 +594,19 @@ async function loadFclDownWay2() {
     'https://frostlynx.work/external/fcl/file_tree.json',
     'fclDownWay2',
     '加载FCL线2'
+  );
+}
+
+/**
+ * 加载FCL下载线路3
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadFclDownWay3() {
+  await loadFclDownWay(
+    '/file/data/fclDownWay3.json',
+    'fclDownWay3',
+    '加载FCL线3'
   );
 }
 
