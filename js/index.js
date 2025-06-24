@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', function() {
   setInterval(loadRunTime, 1000);
   
   updateStatus('加载FCL线路2流量…')
-  setInterval(loadFclDownWay2Info, 1000);
+  setInterval(loadFclDownWay2Info, 60000);
   
   updateStatus('获取首页链接…')
   setupIndexDownLinks();
