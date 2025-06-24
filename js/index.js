@@ -22,6 +22,7 @@ window.addEventListener('DOMContentLoaded', function() {
   setInterval(loadRunTime, 1000);
   
   updateStatus('加载FCL线路2流量…')
+  loadFclDownWay2Info();
   setInterval(loadFclDownWay2Info, 60000);
   
   updateStatus('获取首页链接…')
