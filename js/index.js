@@ -557,7 +557,7 @@ async function loadFclDownWay(url, containerId, lineName) {
       child => child.type === 'directory' && child.name !== 'root'
     );
     
-    console.log(`${lineName}：找到版本目录数：${versionDirs.length}`);
+    console.log(`${lineName}：找到版本数：${versionDirs.length}`);
     versionDirs.forEach(versionDir => {
       panel.appendChild(createPanelItem(versionDir));
     });
@@ -566,9 +566,99 @@ async function loadFclDownWay(url, containerId, lineName) {
     new mdui.Panel(panel);
     console.log(`${lineName}：完成`);
   } catch (error) {
-    console.error(`${lineName}：错误`, error);
+    console.error(`${lineName}：错误：`, error);
     container.innerHTML = `<div class="mdui-typo">${lineName}错误：${error.message}</div>`;
   }
+}
+
+/**
+ * 创建单个版本的面板项
+ * @param {Object} versionDir - 版本目录对象
+ * @returns {HTMLElement} 创建好的面板项元素
+ */
+function createPanelItem(versionDir) {
+  const version = versionDir.name;
+  const archMap = createArchLinkMap(versionDir);
+  const allArchs = Object.keys(archMap);
+  
+  const panelItem = document.createElement('div');
+  panelItem.className = 'mdui-panel-item';
+  
+  const header = document.createElement('div');
+  header.className = 'mdui-panel-item-header mdui-ripple';
+  header.innerHTML = `
+        <div>${version}</div>
+        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+    `;
+  
+  const body = document.createElement('div');
+  body.className = 'mdui-panel-item-body';
+  
+  // 单架构不显示提示语
+  if (allArchs.length === 1) {
+    const arch = allArchs[0];
+    const btn = createArchButton(arch, archMap[arch]);
+    body.appendChild(btn);
+  }
+  else if (allArchs.length > 1) {
+    body.innerHTML = `<p class="mdui-typo">您的系统架构是？</p>`;
+    
+    // 优先创建"我不知道"按钮（后续将"all"显示为"我不知道"）
+    if (allArchs.includes('all')) {
+      const btn = createArchButton('all', archMap.all);
+      body.appendChild(btn);
+    }
+    
+    // 创建其他架构按钮（排除all）
+    allArchs
+      .filter(arch => arch !== 'all')
+      .forEach(arch => {
+        const btn = createArchButton(arch, archMap[arch]);
+        body.appendChild(btn);
+      });
+  }
+  else {
+    body.innerHTML = `<p class="mdui-typo">此版本无可用下载文件</p>`;
+  }
+  
+  panelItem.appendChild(header);
+  panelItem.appendChild(body);
+  return panelItem;
+}
+
+/**
+ * 创建架构链接映射
+ * @param {Object} versionDir - 版本目录对象
+ * @returns {Object} 架构到下载链接的映射
+ */
+function createArchLinkMap(versionDir) {
+  const map = {};
+  versionDir.children
+    .filter(child => child.type === 'file' && child.arch)
+    .forEach(file => {
+      map[file.arch] = file.download_link;
+    });
+  return map;
+}
+
+/**
+ * 创建架构下载按钮
+ * @param {string} arch - 架构名称
+ * @param {string} link - 下载链接
+ * @returns {HTMLAnchorElement} 按钮元素
+ */
+function createArchButton(arch, link) {
+  const btn = document.createElement('a');
+  btn.className = 'mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple';
+  
+  btn.textContent = arch === 'all' ? '我不知道' : arch;
+  btn.href = link || 'javascript:void(0);';
+  
+  if (!link) {
+    btn.classList.add('mdui-btn-disabled');
+    btn.title = '未提供此架构版本';
+  }
+  return btn;
 }
 
 /**
@@ -608,73 +698,6 @@ async function loadFclDownWay3() {
     'fclDownWay3',
     '加载FCL线3'
   );
-}
-
-/**
- * 创建单个版本的面板项
- * @param {Object} versionDir - 版本目录对象
- * @returns {HTMLElement} 创建好的面板项元素
- */
-function createPanelItem(versionDir) {
-  const version = versionDir.name;
-  const archMap = createArchLinkMap(versionDir);
-  
-  const panelItem = document.createElement('div');
-  panelItem.className = 'mdui-panel-item';
-  
-  const header = document.createElement('div');
-  header.className = 'mdui-panel-item-header mdui-ripple';
-  header.innerHTML = `
-        <div>${version}</div>
-        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-    `;
-  
-  const body = document.createElement('div');
-  body.className = 'mdui-panel-item-body';
-  body.innerHTML = `<p class="mdui-typo">您的系统架构是？</p>`;
-  
-  ['all', 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'].forEach(arch => {
-    const btn = createArchButton(arch, archMap[arch]);
-    body.appendChild(btn);
-  });
-  
-  panelItem.appendChild(header);
-  panelItem.appendChild(body);
-  return panelItem;
-}
-
-/**
- * 创建架构链接映射
- * @param {Object} versionDir - 版本目录对象
- * @returns {Object} 架构到下载链接的映射
- */
-function createArchLinkMap(versionDir) {
-  const map = {};
-  versionDir.children
-    .filter(child => child.type === 'file' && child.arch)
-    .forEach(file => {
-      map[file.arch] = file.download_link;
-    });
-  return map;
-}
-
-/**
- * 创建架构下载按钮
- * @param {string} arch - 架构名称
- * @param {string} link - 下载链接
- * @returns {HTMLAnchorElement} 按钮元素
- */
-function createArchButton(arch, link) {
-  const btn = document.createElement('a');
-  btn.className = 'mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple';
-  btn.textContent = arch === 'all' ? '我不知道' : arch;
-  btn.href = link || 'javascript:void(0);';
-  
-  if (!link) {
-    btn.classList.add('mdui-btn-disabled');
-    btn.title = '未提供此架构版本';
-  }
-  return btn;
 }
 
 /**
