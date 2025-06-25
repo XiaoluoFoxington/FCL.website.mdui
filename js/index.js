@@ -247,12 +247,22 @@ function handleHashRouting() {
  * 初始化Eruda
  */
 function initEruda() {
-  // const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+  const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
   const debugMode = new URLSearchParams(location.search).has('debug');
+  const debugTip = document.getElementById('debugTip');
   
   if (window.eruda && debugMode) {
     eruda.init();
     console.info('Eruda：启用');
+    
+    if (!isLocal && debugTip) {
+      console.log('调试：非localhost');
+      debugTip.classList.remove('hide');
+    } else {
+      debugTip.remove();
+    }
+  } else {
+    debugTip.remove();
   }
 }
 
