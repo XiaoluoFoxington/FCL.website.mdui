@@ -25,8 +25,11 @@ window.addEventListener('DOMContentLoaded', function() {
   loadFclDownWay2Info();
   setInterval(loadFclDownWay2Info, 60000);
   
-  updateStatus('获取首页链接…')
+  updateStatus('获取首页链接…');
   setupIndexDownLinks();
+  
+  updateStatus('获取系统信息…');
+  showDeviceInfo('deviceInfo');
   
   console.log('DOMContentLoaded：完成');
 });
