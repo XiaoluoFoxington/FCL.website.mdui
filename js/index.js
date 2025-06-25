@@ -831,6 +831,68 @@ async function loadFclDownWay2Info() {
 }
 
 /**
+ * 架构检测：设备信息检测工具函数
+ * @param {string} containerId - 要填充结果的容器元素ID
+ */
+async function showDeviceInfo(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) {
+    console.error('架构检测：找不到容器：' + containerId);
+    return;
+  }
+  
+  if (!navigator.userAgent) {
+    container.innerHTML = "抱歉，我们无法检测您的设备信息。";
+    return;
+  }
+  
+  try {
+    const browserHelper = (await import('/js/lib/browser-helper.min.js')).default;
+    const info = await browserHelper.getInfo();
+    
+    const archRules = {
+      regexes: [
+        /aarch64|arm64|armv8/i,
+        /armeabi-v7a|(arm$)|armv7/i,
+        /armeabi$/i,
+        /x86_64|x64|amd64/i,
+        /x86|i[36]86/i,
+        /win32/i
+      ],
+      names: [
+        'arm64-v8a',
+        'armeabi-v7a',
+        'armeabi',
+        'x86_64',
+        'x86',
+        `${info.architecture}_${info.bitness}`
+      ]
+    };
+    
+    const parseArch = (arch) => {
+      for (let i = 0; i < archRules.regexes.length; i++) {
+        if (archRules.regexes[i].test(arch)) {
+          return `${archRules.names[i]}(${arch})`;
+        }
+      }
+      return `${info.architecture}(${arch})`;
+    };
+    
+    console.log('架构检测：', info);
+    // 妈的，它就不能把onject的内容转为字符吗？直接摆烂输出[object Object]是故意的还是不小心的？
+    
+    const archDisplay = parseArch(info.platform) || `${info.architecture}(${info.platform})`;
+    const displayText = `浏览器报告您的系统信息为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>。`;
+    
+    container.innerHTML = displayText;
+
+  } catch (error) {
+    console.error('架构检测：错误：', error);
+    container.innerHTML = "架构检测：错误：" + error;
+  }
+}
+
+/**
  * 鉴权下载
  * @param {string} originalUrl 原始URL
  */
