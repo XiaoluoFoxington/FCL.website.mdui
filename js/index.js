@@ -12,25 +12,6 @@ window.addEventListener('DOMContentLoaded', function() {
   'use strict';
   initApp();
   
-  updateStatus('打开公告…');
-  openNotice();
-  
-  updateStatus('加载主题…');
-  loadTheme();
-  
-  updateStatus('加载运作时间…')
-  setInterval(loadRunTime, 1000);
-  
-  updateStatus('加载FCL线路2流量…')
-  loadFclDownWay2Info();
-  setInterval(loadFclDownWay2Info, 60000);
-  
-  updateStatus('获取首页链接…');
-  setupIndexDownLinks();
-  
-  updateStatus('获取系统信息…');
-  showDeviceInfo('deviceInfo');
-  
   console.log('DOMContentLoaded：完成');
 });
 
@@ -38,23 +19,71 @@ window.addEventListener('DOMContentLoaded', function() {
  * 初始化各种玩意
  */
 function initApp() {
-  updateStatus('初始化Eruda…');
-  initEruda();
-  
-  if (!localStorage.getItem('theme')) {
-    updateStatus('获取系统主题色偏好...');
-    localStorage.setItem('theme', window.matchMedia(
-      '(prefers-color-scheme: dark)'
-    ).matches ? 'dark' : 'light');
-  }
-  
-  updateStatus('初始化地址栏参数解析…');
-  handleHashRouting();
-  
-  updateStatus('添加事件监听…');
-  window.addEventListener('hashchange', handleHashRouting);
-  document.getElementById('loadChecksums').addEventListener('click', loadChecksums);
-  document.getElementById('loadAbout').addEventListener('click', loadAbout);
+  requestAnimationFrame(() => {
+    updateStatus('初始化Eruda…');
+    initEruda();
+    
+    requestAnimationFrame(() => {
+      updateStatus('获取系统主题色偏好...');
+      if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', window.matchMedia(
+          '(prefers-color-scheme: dark)'
+        ).matches ? 'dark' : 'light');
+      }
+      
+      requestAnimationFrame(() => {
+        updateStatus('加载主题…');
+        loadTheme();
+        
+        requestAnimationFrame(() => {
+          updateStatus('初始化地址栏参数解析…');
+          handleHashRouting();
+          
+          requestAnimationFrame(() => {
+            updateStatus('添加事件监听…');
+            window.addEventListener('hashchange', handleHashRouting);
+            document.getElementById('loadChecksums').addEventListener('click', loadChecksums);
+            document.getElementById('loadAbout').addEventListener('click', loadAbout);
+            
+            requestAnimationFrame(() => {
+              updateStatus('打开公告…');
+              openNotice();
+              
+              requestAnimationFrame(() => {
+                updateStatus('获取首页链接…');
+                setupIndexDownLinks();
+                
+                requestAnimationFrame(() => {
+                  updateStatus('获取系统信息…');
+                  showDeviceInfo('deviceInfo');
+                  
+                  requestAnimationFrame(() => {
+                    updateStatus('加载运作时间…');
+                    loadRunTime();
+                    
+                    requestAnimationFrame(() => {
+                      updateStatus('加载FCL线路2流量…');
+                      loadFclDownWay2Info();
+                      
+                      requestAnimationFrame(() => {
+                        updateStatus('添加定时器…');
+                        setInterval(loadRunTime, 1000);
+                        setInterval(loadFclDownWay2Info, 60000);
+                        
+                        requestAnimationFrame(() => {
+                          updateStatus('等待其它乱七八糟的东西…')
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
 }
 
 window.onload = function() {
@@ -888,7 +917,7 @@ async function showDeviceInfo(containerId) {
     const displayText = `浏览器报告您的系统信息为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>。`;
     
     container.innerHTML = displayText;
-
+    
   } catch (error) {
     console.error('架构检测：错误：', error);
     container.innerHTML = "架构检测：错误：" + error;
