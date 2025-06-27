@@ -1,7 +1,37 @@
 {
   "children": [
   {
-    "name": "1.2.3.5（最新版本）",
+    "name": "最新版本",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/latest/FCL-release-all.apk",
+      "arch": "all"
+    },
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/latest/FCL-release-arm64-v8a.apk",
+      "arch": "arm64-v8a"
+    },
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/latest/FCL-release-armeabi-v7a.apk",
+      "arch": "armeabi-v7a"
+    },
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/latest/FCL-release-x86.apk",
+      "arch": "x86"
+    },
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/latest/FCL-release-x86_64.apk",
+      "arch": "x86_64"
+    }]
+  },
+  {
+    "name": "1.2.3.5",
     "type": "directory",
     "children": [
     {
