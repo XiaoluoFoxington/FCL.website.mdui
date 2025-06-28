@@ -2384,6 +2384,7 @@
     "name": "我是彩蛋！",
     "type": "directory",
     "children": [
-    {}]
+      {}
+    ]
   }]
 }
