@@ -911,10 +911,10 @@ async function showDeviceInfo(containerId) {
     };
     
     console.log('架构检测：', info);
-    // 妈的，它就不能把onject的内容转为字符吗？直接摆烂输出[object Object]是故意的还是不小心的？
+    // 妈的，它就不能把object的内容转为字符吗？直接摆烂输出[object Object]是故意的还是不小心的？
     
     const archDisplay = parseArch(info.platform) || `${info.architecture}(${info.platform})`;
-    const displayText = `浏览器报告您的系统信息为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>。`;
+    const displayText = `浏览器报告您的系统信息为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
     
     container.innerHTML = displayText;
     
@@ -958,7 +958,9 @@ async function authAndDown(originalUrl) {
  */
 function updateStatus(statusText) {
   const container = document.getElementById('status');
-  container.innerHTML = statusText;
+  if (container) {
+    container.innerHTML = statusText;
+  }
 }
 
 // 那些盗用老子下载链接的人，我艹你们全家！老子拿自己的钱买的直链流量，以公益的性质搭建了这个下载站，就被你们这些缺德的没良心的傻逼给霍霍了！你们就不会考虑他人的感受吗？屎吃多了是吧？哈呀木！
