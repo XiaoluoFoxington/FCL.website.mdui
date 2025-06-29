@@ -1,7 +1,37 @@
 {
   "children": [
   {
-    "name": "1.2.3.5（最新版本）",
+    "name": "1.2.3.6（最新版本）",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/oP3CA/FCL-release-1.2.3.6-all.apk",
+      "arch": "all"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/DgZfD/FCL-release-1.2.3.6-arm64-v8a.apk",
+      "arch": "arm64-v8a"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/6LlC1/FCL-release-1.2.3.6-armeabi-v7a.apk",
+      "arch": "armeabi-v7a"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/7KGiX/FCL-release-1.2.3.6-x86.apk",
+      "arch": "x86"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/lwncM/FCL-release-1.2.3.6-x86_64.apk",
+      "arch": "x86_64"
+    }]
+  },
+  {
+    "name": "1.2.3.5",
     "type": "directory",
     "children": [
     {
