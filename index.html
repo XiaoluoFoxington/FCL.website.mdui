@@ -106,7 +106,68 @@
   <div class="mdui-appbar mdui-appbar-fixed">
     <!-- 工具栏 -->
     <div class="mdui-toolbar mdui-color-indigo mdui-color-theme">
-      <div class="mdui-btn mdui-btn-icon mdui-ripple" id="fclIcon" mdui-tooltip="{content: 'FCL_icon'}"><img src="/file/picture/FCL_icon.webp"></div>
+      <div mdui-menu="{target: '#toolbar-info'}" class="mdui-btn mdui-btn-icon mdui-ripple" id="fclIcon" mdui-tooltip="{content: 'FCL_icon'}"><img src="/file/picture/FCL_icon.webp"></div>
+      <ul class="mdui-menu mdui-menu-cascade" id="toolbar-info">
+        <li class="mdui-menu-item">
+          <a href="?debug" class="mdui-ripple">
+            CONTRIBUTORS
+          </a>
+        </li><!-- 简易贡献列表 -->
+        <li class="mdui-menu-item">
+          <a href="javascript: openEgg();" class="mdui-ripple">
+            <img src="https://cdn.mengze.vip/gh/XiaoluoFoxington/FCL.website.mdui/file/avatar/XiaoluoFoxington.webp" class="mdui-menu-item-icon mdui-icon">
+            XiaoluoFoxington
+          </a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://about.latedream.cn" target="_blank" class="mdui-ripple">
+            <img src="https://about.latedream.cn/assets/statics/avatar.webp" class="mdui-menu-item-icon mdui-icon">
+            LateDream
+          </a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="#tab=4" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">more_horiz</i>
+            (and 4 more)
+          </a>
+        </li>
+        <li class="mdui-divider"></li>
+        <li class="mdui-menu-item">
+          <a href="https://info.flagcounter.com/cxFC" class="mdui-ripple" target="_blank"><img src="https://s01.flagcounter.com/mini/cxFC/bg_FFFFFF/txt_000000/border_FFFFFF/flags_0/" alt="Flag Counter" border="0"></a>
+        </li>
+        <li class="mdui-divider"></li>
+        <li class="mdui-menu-item">
+          <a href="javascript:;" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">timer</i>
+            这坨屎山已经非常松弛地运行了
+          </a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="javascript:;" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons"></i>
+            <span id="runTime">正在加载</span>
+          </a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="javascript:;" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">timer</i>
+            FCL下载线路2 已使用流量
+          </a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="javascript:;" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons"></i>
+            <span id="fclDownWay2Info">正在加载</span>
+          </a>
+        </li>
+        <li class="mdui-divider"></li>
+        <li class="mdui-menu-item">
+          <a href="javascript:;" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">copyright</i>
+            洛狐XIAOLUOFOXINGTON 2025
+          </a>
+        </li>
+      </ul>
       <a href="javascript:;" class="mdui-typo-title">FCL下载站</a>
       <div class="mdui-toolbar-spacer mdui-ripple"></div>
       <a mdui-menu="{target: '#toolbar-theme'}" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '样式'}"><i class="mdui-icon material-icons">style</i></a>
@@ -187,62 +248,8 @@
         </li><!-- 指定千万别点 -->
         <li class="mdui-divider"></li>
         <li class="mdui-menu-item">
-          <a href="?debug" class="mdui-ripple">
-            CONTRIBUTORS
-          </a>
-        </li><!-- 简易贡献列表 -->
-        <li class="mdui-menu-item">
-          <a href="javascript: openEgg();" class="mdui-ripple">
-            <img src="https://cdn.mengze.vip/gh/XiaoluoFoxington/FCL.website.mdui/file/avatar/XiaoluoFoxington.webp" class="mdui-menu-item-icon mdui-icon">
-            XiaoluoFoxington
-          </a>
-        </li>
-        <li class="mdui-menu-item">
-          <a href="https://about.latedream.cn" target="_blank" class="mdui-ripple">
-            <img src="https://about.latedream.cn/assets/statics/avatar.webp" class="mdui-menu-item-icon mdui-icon">
-            LateDream
-          </a>
-        </li>
-        <li class="mdui-menu-item">
-          <a href="#tab=4" class="mdui-ripple">
-            <i class="mdui-menu-item-icon mdui-icon material-icons">more_horiz</i>
-            (and 4 more)
-          </a>
-        </li>
-        <li class="mdui-divider"></li>
-        <li class="mdui-menu-item">
-          <a href="https://info.flagcounter.com/cxFC" class="mdui-ripple" target="_blank"><img src="https://s01.flagcounter.com/mini/cxFC/bg_FFFFFF/txt_000000/border_FFFFFF/flags_0/" alt="Flag Counter" border="0"></a>
-        </li>
-        <li class="mdui-divider"></li>
-        <li class="mdui-menu-item">
           <a href="javascript:;" class="mdui-ripple">
-            <i class="mdui-menu-item-icon mdui-icon material-icons">timer</i>
-            这坨屎山已经非常松弛地运行了
-          </a>
-        </li>
-        <li class="mdui-menu-item">
-          <a href="javascript:;" class="mdui-ripple">
-            <i class="mdui-menu-item-icon mdui-icon material-icons"></i>
-            <span id="runTime">正在加载</span>
-          </a>
-        </li>
-        <li class="mdui-menu-item">
-          <a href="javascript:;" class="mdui-ripple">
-            <i class="mdui-menu-item-icon mdui-icon material-icons">timer</i>
-            FCL下载线路2 已使用流量
-          </a>
-        </li>
-        <li class="mdui-menu-item">
-          <a href="javascript:;" class="mdui-ripple">
-            <i class="mdui-menu-item-icon mdui-icon material-icons"></i>
-            <span id="fclDownWay2Info">正在加载</span>
-          </a>
-        </li>
-        <li class="mdui-divider"></li>
-        <li class="mdui-menu-item">
-          <a href="javascript:;" class="mdui-ripple">
-            <i class="mdui-menu-item-icon mdui-icon material-icons">copyright</i>
-            洛狐XIAOLUOFOXINGTON 2025
+            点击工具栏左侧FCL图标以查看网站信息
           </a>
         </li>
       </ul>
@@ -532,8 +539,8 @@
             <p>
               下载流量高昂，我们一直坚守使此站保持公益性质。如果您觉得此站对您有帮助，可考虑在下方赞助我。赞助后您可以在<a href="https://wj.qq.com/s2/20865225/25ca/" target="_blank">此处</a>填写您的赞助信息，我们看到后会显示在此页面。
             </p>
-              <p>启动器的开发者也不容易，<a href="https://afdian.com/@tungs" target="_blank">赞助FCL开发者</a>。</p>
-              <p>注意：<mark>赞助是纯自愿的，请结合您的经济状况实力再考虑是否要赞助！赞助后无法退款！这里赞助的是此下载站！</mark></p>
+            <p>启动器的开发者也不容易，<a href="https://afdian.com/@tungs" target="_blank">赞助FCL开发者</a>。</p>
+            <p>注意：<mark>赞助是纯自愿的，请结合您的经济状况实力再考虑是否要赞助！赞助后无法退款！这里赞助的是此下载站！</mark></p>
             <img class="___sponsor_qrcode" src="/file/picture/微信赞赏码.png">
           </div>
         </div>
