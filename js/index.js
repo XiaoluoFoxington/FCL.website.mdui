@@ -570,7 +570,7 @@ async function loadAbout() {
 }
 
 /**
- * 加载FCL下载线路
+ * 加载下载线路
  * @async
  * @param {string} url - 文件树JSON的URL
  * @param {string} containerId - 容器元素的ID
@@ -707,6 +707,19 @@ function createArchButton(arch, link) {
 }
 
 /**
+ * 加载所有下载线路
+ */
+async function loadAllFclDownWays() {
+  await Promise.all([
+    loadFclDownWay1(),
+    loadFclDownWay2(),
+    loadFclDownWay3(),
+    loadZlDownWay1(),
+    loadZlDownWay2()
+  ]);
+}
+
+/**
  * 加载FCL下载线路1
  * @async
  * @returns {Promise<void>} 无返回值
@@ -742,6 +755,32 @@ async function loadFclDownWay3() {
     '/file/data/fclDownWay3.json',
     'fclDownWay3',
     '加载FCL线3'
+  );
+}
+
+/**
+ * 加载ZL下载线路1
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadZlDownWay1() {
+  await loadFclDownWay(
+    '/file/data/zlDownWay1.json',
+    'zlDownWay1',
+    '加载ZL线1'
+  );
+}
+
+/**
+ * 加载ZL下载线路2
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadZlDownWay2() {
+  await loadFclDownWay(
+    '/file/data/zlDownWay2.json',
+    'zlDownWay2',
+    '加载ZL线2'
   );
 }
 
