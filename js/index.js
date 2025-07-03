@@ -10,9 +10,10 @@ let showEpilepsyWarning = true;
 
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
-  initApp();
-  
-  console.log('DOMContentLoaded：完成');
+  requestAnimationFrame(() => {
+    initApp();
+    console.log('DOMContentLoaded：完成');
+  });
 });
 
 /**
@@ -87,9 +88,11 @@ function initApp() {
 }
 
 window.onload = function() {
-  updateStatus('移除此提示…');
-  removeLoadTip();
-  console.log('window.onload：完成');
+  requestAnimationFrame(() => {
+    updateStatus('移除此提示…');
+    removeLoadTip();
+    console.log('window.onload：完成');
+  });
 }
 
 /**
