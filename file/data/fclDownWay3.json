@@ -31,6 +31,36 @@
     }]
   },
   {
+    "name": "1.2.3.7",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.2.3.7/FCL-release-1.2.3.7-all.apk",
+      "arch": "all"
+    },
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.2.3.7/FCL-release-1.2.3.7-arm64-v8a.apk",
+      "arch": "arm64-v8a"
+    },
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.2.3.7/FCL-release-1.2.3.7-armeabi-v7a.apk",
+      "arch": "armeabi-v7a"
+    },
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.2.3.7/FCL-release-1.2.3.7-x86.apk",
+      "arch": "x86"
+    },
+    {
+      "type": "file",
+      "download_link": "https://download.fishcpy.top/dl/fcl/1.2.3.7/FCL-release-1.2.3.7-x86_64.apk",
+      "arch": "x86_64"
+    }]
+  },
+  {
     "name": "1.2.3.6",
     "type": "directory",
     "children": [
