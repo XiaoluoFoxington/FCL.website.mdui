@@ -3,6 +3,11 @@
 // 洛狐XiaoluoFoxington
 // 晚梦LateDream
 
+let fclDownWay1Laoded = false;
+let fclDownWay2Laoded = false;
+let fclDownWay3Laoded = false;
+let zlDownWay1Laoded = false;
+let zlDownWay2Laoded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
 let showEpilepsyWarning = true;
@@ -725,11 +730,15 @@ async function loadAllFclDownWays() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadFclDownWay1() {
+  if (fclDownWay1Laoded) {
+    return;
+  }
   await loadFclDownWay(
     '/file/data/fclDownWay1.json',
     'fclDownWay1',
     '加载FCL线1'
   );
+  fclDownWay1Laoded = true;
 }
 
 /**
@@ -738,11 +747,15 @@ async function loadFclDownWay1() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadFclDownWay2() {
+  if (fclDownWay2Laoded) {
+    return;
+  }
   await loadFclDownWay(
     'https://frostlynx.work/external/fcl/file_tree.json',
     'fclDownWay2',
     '加载FCL线2'
   );
+  fclDownWay2Laoded = true;
 }
 
 /**
@@ -751,11 +764,15 @@ async function loadFclDownWay2() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadFclDownWay3() {
+  if (fclDownWay3Laoded) {
+    return;
+  }
   await loadFclDownWay(
     '/file/data/fclDownWay3.json',
     'fclDownWay3',
     '加载FCL线3'
   );
+  fclDownWay3Laoded = true;
 }
 
 /**
@@ -764,11 +781,15 @@ async function loadFclDownWay3() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadZlDownWay1() {
+  if (zlDownWay1Laoded) {
+    return;
+  }
   await loadFclDownWay(
     '/file/data/zlDownWay1.json',
     'zlDownWay1',
     '加载ZL线1'
   );
+  zlDownWay1Laoded = true;
 }
 
 /**
@@ -777,11 +798,15 @@ async function loadZlDownWay1() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadZlDownWay2() {
+  if (zlDownWay2Laoded) {
+    return;
+  }
   await loadFclDownWay(
     '/file/data/zlDownWay2.json',
     'zlDownWay2',
     '加载ZL线2'
   );
+  zlDownWay2Laoded = true;
 }
 
 /**
