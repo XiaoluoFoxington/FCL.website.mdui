@@ -908,7 +908,7 @@ async function setupIndexDownLinks() {
  */
 async function loadFclDownWay2Info() {
   try {
-    const response = await fetch('https://frostlynx.work/api/fcl-traffic/');
+    const response = await fetch('https://frostlynx.work/api/fcl-traffic/data');
 
     if (!response.ok) {
       throw new Error(`HTTP错误：${response.status}`);
