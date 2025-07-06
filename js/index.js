@@ -610,7 +610,14 @@ async function loadFclDownWay(url, containerId, lineName) {
       child => child.type === 'directory' && child.name !== 'root'
     );
     
-    console.log(`${lineName}：找到版本数：${versionDirs.length}`);
+    if (versionDirs.length === 0) {
+      console.warn(`${lineName}：找到版本数：${versionDirs.length}`);
+      container.innerHTML = `<div class="mdui-typo">${lineName}：警告：没有找到版本数据</div>`;
+    } else {
+      console.log(`${lineName}：找到版本数：${versionDirs.length}`);
+      
+    }
+    
     versionDirs.forEach(versionDir => {
       panel.appendChild(createPanelItem(versionDir));
     });
@@ -620,7 +627,7 @@ async function loadFclDownWay(url, containerId, lineName) {
     console.log(`${lineName}：完成`);
   } catch (error) {
     console.error(`${lineName}：错误：`, error);
-    container.innerHTML = `<div class="mdui-typo">${lineName}错误：${error.message}</div>`;
+    container.innerHTML = `<div class="mdui-typo">${lineName}：错误：${error.message}</div>`;
   }
 }
 
