@@ -1013,7 +1013,7 @@ async function showDeviceInfo(containerId) {
     // 妈的，它就不能把object的内容转为字符吗？直接摆烂输出[object Object]是故意的还是不小心的？
     
     const archDisplay = parseArch(info.platform) || `${info.architecture}(${info.platform})`;
-    const displayText = `浏览器报告您的系统信息为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
+    const displayText = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
     
     container.innerHTML = displayText;
     
