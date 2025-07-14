@@ -1,7 +1,37 @@
 {
   "children": [
   {
-    "name": "1.2.3.8（此源最新）",
+    "name": "1.2.3.9（此源最新）",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/QDKfO/FCL-release-1.2.3.9-all.apk",
+      "arch": "all"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/w2lF8/FCL-release-1.2.3.9-arm64-v8a.apk",
+      "arch": "arm64-v8a"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/kNGux/FCL-release-1.2.3.9-armeabi-v7a.apk",
+      "arch": "armeabi-v7a"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/MLYCv/FCL-release-1.2.3.9-x86.apk",
+      "arch": "x86"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/B4PHD/FCL-release-1.2.3.9-x86_64.apk",
+      "arch": "x86_64"
+    }]
+  },
+  {
+    "name": "1.2.3.8",
     "type": "directory",
     "children": [
     {
