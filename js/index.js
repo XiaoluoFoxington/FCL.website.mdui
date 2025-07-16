@@ -11,6 +11,7 @@ let zlDownWay2Laoded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
 let showEpilepsyWarning = true;
+let sysArch = 'all';
 
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -862,70 +863,81 @@ function loadRunTime() {
   }
 }
 
-/**
- * 获取并填充FCL下载线路2的最新版本的两个架构的链接到首页的开门见山中
+/** 
+ * 获取并填充FCL下载线路2的最新版本的两个架构的链接到首页的开门见山
  */
 async function setupIndexDownLinks() {
   try {
     const response = await fetch('https://frostlynx.work/external/fcl/file_tree.json');
-    if (!response.ok) throw new Error(`HTTP错误：${response.status}`);
-    const fileTree = await response.json();
+    if (!response.ok) throw new Error(`开门见山：HTTP错误：${response.status}`);
     
-    if (!fileTree.latest || !fileTree.children || !Array.isArray(fileTree.children)) {
-      throw new Error('未找到最新版本目录');
+    const fileTree = await response.json();
+    const { latest, children } = fileTree;
+    
+    if (!latest || !Array.isArray(children)) {
+      throw new Error('开门见山：无效的文件树结构');
     }
     
-    const latestVersionDir = fileTree.children.find(
-      dir => dir.type === 'directory' && dir.name === fileTree.latest
-    ) || null;
-    if (!latestVersionDir) throw new Error('未找到最新版本目录');
+    const latestVersionDir = children.find(
+      dir => dir.type === 'directory' && dir.name === latest
+    );
+    if (!latestVersionDir) throw new Error('开门见山：未找到最新版本目录');
+    console.log('开门见山：' + latestVersionDir.name);
     
     const findLink = (dir, arch) => {
-      if (!dir.children || !Array.isArray(dir.children)) return null;
-      const file = dir.children.find(child =>
-        child.type === 'file' && child.arch === arch
-      );
-      return file ? file.download_link : null;
+      return dir.children?.find(
+        child => child.type === 'file' && child.arch === arch
+      )?.download_link || null;
     };
     
     const setLink = (id, arch) => {
-      const link = findLink(latestVersionDir, arch);
       const element = document.getElementById(id);
-      if (link && element) element.href = link;
+      const link = findLink(latestVersionDir, arch);
+      
+      if (element && link) {
+        element.textContent = arch;
+        element.href = link;
+      }
     };
     
     setLink('fclDownWay2AllLink', 'all');
-    setLink('fclDownWay2v8aLink', 'arm64-v8a');
+    setLink('fclDownWay2v8aLink', sysArch);
     
-    document.getElementById('latestInfo').textContent = fileTree.latest;
+    const latestInfoEl = document.getElementById('latestInfo');
+    if (latestInfoEl) latestInfoEl.textContent = latest;
     
   } catch (error) {
-    console.error('首页链接：获取错误：', error);
-    document.getElementById('odlm').innerHTML = `
-            <div class="mdui-typo">
-              <p>抱歉，我们遇到了一个无法解决的问题。</p>
-              <p>${error}</p>
-              <p>点击“转到‘下载’TAB”将会跳转到“下载”选项卡，您可以在这里使用其它路线继续下载。</p>
-            </div>
-            <br>
-            <div class="mdui-row-xs-2">
-              <div class="mdui-col">
-                <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="#tab=1">转到“下载”TAB</a>
-              </div>
-              <div class="mdui-col">
-                <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="https://wj.qq.com/s2/22395480/df5b/">向站长反馈</a>
-              </div>
-            </div>
-            <br>
-            <div class="mdui-typo">
-              <p>下载站运营困难，不妨<a href="#tab=3">赞助此下载站</a>吧awa（不赞助也能下！）</p>
-              <p>启动器的开发者也不容易，<a href="https://afdian.com/@tungs" target="_blank">赞助FCL开发者</a>。</p>
-              <p>注意：<mark>赞助是纯自愿的，请结合您的经济状况实力再考虑是否要赞助！赞助后无法退款！</mark></p>
-            </div>
-    `
+    console.error('开门见山：失败:', error);
+    
+    const errorHtml = `
+      <div class="mdui-typo">
+        <p>抱歉，我们遇到了一个无法解决的问题。</p>
+        <p>${error.message}</p>
+        <p>点击“转到‘下载’TAB”将会跳转到“下载”选项卡，您可以在这里使用其它路线继续下载。</p>
+      </div>
+      <br>
+      <div class="mdui-row-xs-2">
+        <div class="mdui-col">
+          <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="#tab=1">转到“下载”TAB</a>
+        </div>
+        <div class="mdui-col">
+          <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="https://wj.qq.com/s2/22395480/df5b/">向站长反馈</a>
+        </div>
+      </div>
+      <br>
+      <div class="mdui-typo">
+        <p>下载站运营困难，不妨<a href="#tab=3">赞助此下载站</a>吧awa（不赞助也能下！）</p>
+        <p>启动器的开发者也不容易，<a href="https://afdian.com/@tungs" target="_blank">赞助FCL开发者</a>。</p>
+        <p>注意：<mark>赞助是纯自愿的，请结合您的经济状况实力再考虑是否要赞助！赞助后无法退款！</mark></p>
+      </div>
+    `;
+    
+    const odlm = document.getElementById('odlm');
+    if (odlm) odlm.innerHTML = errorHtml;
+    
     mdui.dialog({
-      title: `首页链接：获取错误：`,
-      content: error,
+      title: '开门见山：失败',
+      content: error.message,
       buttons: [{ text: '关闭' }],
       history: false
     });
@@ -968,58 +980,45 @@ async function loadFclDownWay2Info() {
 async function showDeviceInfo(containerId) {
   const container = document.getElementById(containerId);
   if (!container) {
-    console.error('架构检测：找不到容器：' + containerId);
+    console.error(`架构检测：找不到容器${containerId}`);
     return;
   }
   
   if (!navigator.userAgent) {
-    container.innerHTML = "抱歉，我们无法检测您的设备信息。";
+    container.innerHTML = "无法检测到您的设备信息";
     return;
   }
   
   try {
-    const browserHelper = (await import('/js/lib/browser-helper.min.js')).default;
+    const { default: browserHelper } = await import('/js/lib/browser-helper.min.js');
     const info = await browserHelper.getInfo();
     
-    const archRules = {
-      regexes: [
-        /aarch64|arm64|armv8/i,
-        /armeabi-v7a|(arm$)|armv7/i,
-        /armeabi$/i,
-        /x86_64|x64|amd64/i,
-        /x86|i[36]86/i,
-        /win32/i
-      ],
-      names: [
-        'arm64-v8a',
-        'armeabi-v7a',
-        'armeabi',
-        'x86_64',
-        'x86',
-        `${info.architecture}_${info.bitness}`
-      ]
-    };
+    const ARCH_RULES = [
+      { regex: /aarch64|arm64|armv8/i, name: 'arm64-v8a' },
+      { regex: /armeabi-v7a|(arm$)|armv7/i, name: 'armeabi-v7a' },
+      { regex: /armeabi$/i, name: 'armeabi' },
+      { regex: /x86_64|x64|amd64/i, name: 'x86_64' },
+      { regex: /x86|i[36]86/i, name: 'x86' },
+      { regex: /win32/i, name: `${info.architecture}_${info.bitness}` }
+    ];
     
-    const parseArch = (arch) => {
-      for (let i = 0; i < archRules.regexes.length; i++) {
-        if (archRules.regexes[i].test(arch)) {
-          return `${archRules.names[i]}(${arch})`;
-        }
+    const detectArch = () => {
+      const rule = ARCH_RULES.find(r => r.regex.test(info.platform));
+      if (rule) {
+        sysArch = rule.name;
+        return `${rule.name}(${info.platform})`;
       }
-      return `${info.architecture}(${arch})`;
+      sysArch = info.architecture;
+      return `${info.architecture}(${info.platform})`;
     };
     
-    console.log('架构检测：', info);
-    // 妈的，它就不能把object的内容转为字符吗？直接摆烂输出[object Object]是故意的还是不小心的？
-    
-    const archDisplay = parseArch(info.platform) || `${info.architecture}(${info.platform})`;
-    const displayText = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
-    
-    container.innerHTML = displayText;
+    console.log('架构检测：sysArch：' + sysArch);
+    const archDisplay = detectArch();
+    container.innerHTML = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
     
   } catch (error) {
-    console.error('架构检测：错误：', error);
-    container.innerHTML = "架构检测：错误：" + error;
+    console.error('架构检测：失败：', error);
+    container.innerHTML = `架构检测：失败：${error.message || error}`;
   }
 }
 
