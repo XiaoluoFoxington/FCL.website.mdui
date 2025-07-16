@@ -534,6 +534,17 @@ async function loadDownLinks() {
 }
 
 /**
+ * 加载FCL介绍
+ */
+async function loadIntroFcl() {
+  await loadContent({
+    url: '/file/data/introFcl.html',
+    targetId: 'introFcl',
+    context: 'introFcl'
+  });
+}
+
+/**
  * 加载赞表
  */
 async function loadSupportList() {
@@ -560,6 +571,7 @@ async function loadChecksums() {
     checksumsLoaded = true;
   }
 }
+
 
 /**
  * 加载关于
