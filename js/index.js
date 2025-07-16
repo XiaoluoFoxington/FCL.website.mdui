@@ -11,7 +11,7 @@ let zlDownWay2Laoded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
 let showEpilepsyWarning = true;
-let sysArch = 'all';
+let sysArch = undefined;
 
 
 window.addEventListener('DOMContentLoaded', function() {
