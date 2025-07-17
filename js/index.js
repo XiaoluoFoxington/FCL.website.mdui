@@ -327,9 +327,9 @@ async function openNotice(forceShow = false) {
     const shouldSkipDisplay = !forceShow && (hashStored === hashCurrent);
     
     if (shouldSkipDisplay) {
-      console.log('公告：内容未变，不显示');
+      console.log('公告：内容未变，不会显示');
       mdui.snackbar({
-        message: `公告：内容未变`,
+        message: `公告：内容未变，不会显示`,
         position: 'right-bottom',
       });
       return;
