@@ -57,12 +57,11 @@ function initApp() {
               openNotice();
               
               requestAnimationFrame(() => {
-                updateStatus('获取首页链接…');
-                setupIndexDownLinks();
-                
+                updateStatus('获取系统信息…');
+                showDeviceInfo('deviceInfo');
                 requestAnimationFrame(() => {
-                  updateStatus('获取系统信息…');
-                  showDeviceInfo('deviceInfo');
+                  updateStatus('获取首页链接…');
+                  setupIndexDownLinks();
                   
                   requestAnimationFrame(() => {
                     updateStatus('加载运作时间…');
