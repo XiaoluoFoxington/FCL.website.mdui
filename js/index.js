@@ -11,6 +11,7 @@ let zlDownWay2Laoded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
 let showEpilepsyWarning = true;
+let sysInfo = undefined;
 let sysArch = undefined;
 
 
@@ -58,7 +59,7 @@ function initApp() {
               
               requestAnimationFrame(() => {
                 updateStatus('获取系统信息…');
-                showDeviceInfo('deviceInfo');
+                showDeviceInfo();
                 
                 requestAnimationFrame(() => {
                   updateStatus('获取首页链接…');
@@ -888,12 +889,14 @@ function loadRunTime() {
   }
 }
 
-/** 
+/**
  * 获取并填充下载线路的最新版本到首页开门见山
  * @param {string} sourceKey - 数据源标识
  */
 async function setupIndexDownLinks(sourceKey) {
-  console.log('开门见山：加载：' + sourceKey);
+  console.log(`开门见山：加载：${sourceKey}`);
+  
+  // 数据源映射表
   const SOURCE_MAP = {
     F2: "https://frostlynx.work/external/fcl/file_tree.json",
     F1: "/file/data/fclDownWay1.json",
@@ -903,16 +906,18 @@ async function setupIndexDownLinks(sourceKey) {
   };
   
   try {
-    await loadOdlm(); // 初始化一遍元素内容
+    await loadOdlm();
     
-    if (sourceKey !== "F2") {
-      console.log('开门见山：隐藏防刷提示')
-      document.getElementById('fu').remove();
-    };
+    // 移除防刷提示（F2源除外）
+    const antiSpamEl = document.getElementById('fu');
+    if (sourceKey !== "F2" && antiSpamEl) {
+      console.log('开门见山：隐藏防刷提示');
+      antiSpamEl.remove();
+    }
     
     const jsonUrl = SOURCE_MAP[sourceKey];
     if (!jsonUrl) throw new Error(`开门见山：无效数据源标识："${sourceKey}"`);
-    console.log('开门见山：JSON：' + jsonUrl);
+    console.log(`开门见山：JSON：${jsonUrl}`);
     
     const response = await fetch(jsonUrl);
     if (!response.ok) throw new Error(`开门见山：HTTP出错：${response.status}`);
@@ -928,19 +933,19 @@ async function setupIndexDownLinks(sourceKey) {
       dir => dir.type === 'directory' && dir.name === latest
     );
     if (!latestVersionDir) throw new Error('开门见山：未找到最新版本目录');
-    console.log('开门见山：' + latestVersionDir.name);
+    console.log(`开门见山：${latestVersionDir.name}`);
     
-    const findLink = (dir, arch) => {
-      return dir.children?.find(
-        child => child.type === 'file' && child.arch === arch
+    const findLink = (dir, arch) =>
+      dir.children?.find(child =>
+        child.type === 'file' && child.arch === arch
       )?.download_link || null;
-    };
     
     const setLink = (id, arch) => {
       const element = document.getElementById(id);
-      const link = findLink(latestVersionDir, arch);
+      if (!element) return;
       
-      if (element && link) {
+      const link = findLink(latestVersionDir, arch);
+      if (link) {
         element.textContent = arch;
         element.href = link;
       }
@@ -950,37 +955,38 @@ async function setupIndexDownLinks(sourceKey) {
     setLink('odlmv8aLink', sysArch);
     
     const latestInfoEl = document.getElementById('latestInfo');
-    if (sourceKey === 'F2' && latestInfoEl) {
-      latestInfoEl.textContent = latest + '（此源最新）';
+    if (latestInfoEl) {
+      latestInfoEl.textContent = sourceKey === 'F2' ?
+        `${latest}（此源最新）` :
+        latest;
       // FCL线2的JSON中不会标明“（此源最新）”
-    } else if (latestInfoEl) {
-      latestInfoEl.textContent = latest;
     }
     
+    const diEl = document.getElementById('deviceInfo');
+    if (diEl) diEl.innerHTML = sysInfo;
   } catch (error) {
     console.error('开门见山：出错：', error);
-    
     const errorHtml = `
-      <div class="mdui-typo">
-        <p>抱歉，我们遇到了一个无法解决的问题。</p>
-        <p>${error.message}</p>
-        <p>点击“转到‘下载’TAB”将会跳转到“下载”选项卡，您可以在这里使用其它路线继续下载。</p>
+    <div class="mdui-typo">
+      <p>抱歉，我们遇到了一个无法解决的问题。</p>
+      <p>${error.message}</p>
+      <p>点击“转到‘下载’TAB”将会跳转到“下载”选项卡，您可以在这里使用其它路线继续下载。</p>
+    </div>
+    <br>
+    <div class="mdui-row-xs-2">
+      <div class="mdui-col">
+        <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="#tab=1">转到“下载”TAB</a>
       </div>
-      <br>
-      <div class="mdui-row-xs-2">
-        <div class="mdui-col">
-          <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="#tab=1">转到“下载”TAB</a>
-        </div>
-        <div class="mdui-col">
-          <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="https://wj.qq.com/s2/22395480/df5b/">向站长反馈</a>
-        </div>
+      <div class="mdui-col">
+        <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="https://wj.qq.com/s2/22395480/df5b/">向站长反馈</a>
       </div>
-      <br>
-      <div class="mdui-typo">
-        <p>下载站运营困难，不妨<a href="#tab=3">赞助此下载站</a>吧awa（不赞助也能下！）</p>
-        <p>启动器的开发者也不容易，<a href="https://afdian.com/@tungs" target="_blank">赞助FCL开发者</a>。</p>
-        <p>注意：<mark>赞助是纯自愿的，请结合您的经济状况实力再考虑是否要赞助！赞助后无法退款！</mark></p>
-      </div>
+    </div>
+    <br>
+    <div class="mdui-typo">
+      <p>下载站运营困难，不妨<a href="#tab=3">赞助此下载站</a>吧awa（不赞助也能下！）</p>
+      <p>启动器的开发者也不容易，<a href="https://afdian.com/@tungs" target="_blank">赞助FCL开发者</a>。</p>
+      <p>注意：<mark>赞助是纯自愿的，请结合您的经济状况实力再考虑是否要赞助！赞助后无法退款！</mark></p>
+    </div>
     `;
     
     const odlm = document.getElementById('odlm');
@@ -1064,8 +1070,11 @@ async function showDeviceInfo(containerId) {
     
     console.log('架构检测：sysArch：' + sysArch);
     
+    const optout = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
+    
+    sysInfo = optout;
     if (container) {
-      container.innerHTML = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
+      container.innerHTML = optout;
     }
     
   } catch (error) {
