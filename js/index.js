@@ -62,7 +62,7 @@ function initApp() {
                 
                 requestAnimationFrame(() => {
                   updateStatus('获取首页链接…');
-                  setupIndexDownLinks();
+                  setupIndexDownLinks('F2');
                   
                   requestAnimationFrame(() => {
                     updateStatus('加载运作时间…');
@@ -100,6 +100,11 @@ window.onload = function() {
     console.log('window.onload：完成');
   });
 }
+
+document.getElementById('odlmSelect').addEventListener('change', function() {
+  console.log('开门见山：选择器：' + this.value);
+  setupIndexDownLinks(this.value);
+});
 
 /**
  * 移除加载动画
@@ -482,16 +487,14 @@ async function loadContent({
   targetId = '',
   context = '内容'
 }) {
-  const loadingDialog = showLoading();
-  
-  try {
-    loadingDialog.open();
-    const htmlDoc = await fetchContent(url);
     const targetContainer = document.getElementById(targetId);
-    
+  try {
     if (!targetContainer) {
-      throw new Error(`${context}：加载：目标容器不存在 - ${targetId}`);
+      throw new Error(`${context}：加载：目标容器不存在：${targetId}`);
     }
+    targetContainer.innerHTML = '<div class="mdui-spinner"></div>正在加载';
+    
+    const htmlDoc = await fetchContent(url);
     
     // 插入内容
     const contentElement = htmlDoc.querySelector('[content]');
@@ -511,15 +514,25 @@ async function loadContent({
     mdui.mutation?.();
   } catch (error) {
     console.error(`${context}：加载：`, error);
+    if (targetContainer) targetContainer.innerHTML = error;
     mdui.dialog({
       title: `${context}：加载：出错：`,
       content: error.message,
       buttons: [{ text: '关闭' }],
       history: false
     });
-  } finally {
-    loadingDialog.close();
   }
+}
+
+/**
+ * 加载开门见山
+ */
+async function loadOdlm() {
+  await loadContent({
+    url: '/file/data/odlm.html',
+    targetId: 'odlm',
+    context: 'odlm'
+  });
 }
 
 /**
@@ -876,11 +889,27 @@ function loadRunTime() {
 }
 
 /** 
- * 获取并填充FCL下载线路2的最新版本的两个架构的链接到首页的开门见山
+ * 获取并填充下载线路的最新版本到首页开门见山
+ * @param {string} sourceKey - 数据源标识 (例如 "F2")
  */
-async function setupIndexDownLinks() {
+async function setupIndexDownLinks(sourceKey) {
+  console.log('开门见山：加载：' + sourceKey);
+  const SOURCE_MAP = {
+    F2: "https://frostlynx.work/external/fcl/file_tree.json",
+    F1: "/file/data/fclDownWay1.json",
+    F3: "/file/data/fclDownWay3.json",
+    Z1: "/file/data/zlDownWay1.json",
+    Z2: "/file/data/zlDownWay2.json"
+  };
+  
   try {
-    const response = await fetch('https://frostlynx.work/external/fcl/file_tree.json');
+    await loadOdlm(); // 初始化一遍元素内容
+    
+    const jsonUrl = SOURCE_MAP[sourceKey];
+    if (!jsonUrl) throw new Error(`开门见山：无效数据源标识："${sourceKey}"`);
+    console.log('开门见山：JSON：' + jsonUrl);
+    
+    const response = await fetch(jsonUrl);
     if (!response.ok) throw new Error(`开门见山：HTTP出错：${response.status}`);
     
     const fileTree = await response.json();
@@ -912,8 +941,8 @@ async function setupIndexDownLinks() {
       }
     };
     
-    setLink('fclDownWay2AllLink', 'all');
-    setLink('fclDownWay2v8aLink', sysArch);
+    setLink('odlmAllLink', 'all');
+    setLink('odlmv8aLink', sysArch);
     
     const latestInfoEl = document.getElementById('latestInfo');
     if (latestInfoEl) latestInfoEl.textContent = latest;
@@ -985,26 +1014,26 @@ async function loadFclDownWay2Info() {
   }
 }
 
+/** 架构匹配规则 */
+const ARCH_RULES = [
+  { regex: /aarch64|arm64|armv8/i, name: 'arm64-v8a' },
+  { regex: /armeabi-v7a|(arm$)|armv7/i, name: 'armeabi-v7a' },
+  { regex: /armeabi$/i, name: 'armeabi' },
+  { regex: /x86_64|x64|amd64/i, name: 'x86_64' },
+  { regex: /x86|i[36]86/i, name: 'x86' }
+];
+
 /**
  * 架构检测：设备信息检测工具函数
  * @param {string} containerId - 要填充结果的容器元素ID
  */
 async function showDeviceInfo(containerId) {
-  const ARCH_RULES = [
-    { regex: /aarch64|arm64|armv8/i, name: 'arm64-v8a' },
-    { regex: /armeabi-v7a|(arm$)|armv7/i, name: 'armeabi-v7a' },
-    { regex: /armeabi$/i, name: 'armeabi' },
-    { regex: /x86_64|x64|amd64/i, name: 'x86_64' },
-    { regex: /x86|i[36]86/i, name: 'x86' }
-  ];
-  const container = document.getElementById(containerId);
-  if (!container) {
-    console.error(`架构检测：找不到容器${containerId}`);
-    return;
-  }
+  const container = containerId ? document.getElementById(containerId) : null;
   
   if (!navigator.userAgent) {
-    container.innerHTML = "无法检测到您的设备信息";
+    const msg = "无法检测到您的设备信息";
+    container && (container.innerHTML = msg);
+    console.warn(msg);
     return;
   }
   
@@ -1018,19 +1047,21 @@ async function showDeviceInfo(containerId) {
       `${matchedRule.name}(${info.platform})` :
       `${info.architecture}(${info.platform})`;
     
-    // 处理Windows特殊架构标识
-    if (/win32/i.test(info.platform)) {
-      sysArch = `${info.architecture}_${info.bitness}`;
-    } else {
-      sysArch = archName;
-    }
+    // Windows平台特殊处理
+    sysArch = /win32/i.test(info.platform) ?
+      `${info.architecture}_${info.bitness}` :
+      archName;
     
     console.log('架构检测：sysArch：' + sysArch);
-    container.innerHTML = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
+    
+    if (container) {
+      container.innerHTML = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
+    }
     
   } catch (error) {
-    console.error('架构检测：出错：', error);
-    container.innerHTML = `架构检测：出错：${error.message || error}`;
+    const errorMsg = `架构检测：出错：${error.message || error}`;
+    console.error(errorMsg);
+    container && (container.innerHTML = errorMsg);
   }
 }
 

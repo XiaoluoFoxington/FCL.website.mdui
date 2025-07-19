@@ -372,29 +372,18 @@
             <div>开门见山</div>
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
           </div>
-          <div class="mdui-panel-item-body" id="odlm"><!--Open Door Look Moumtain-->
+          <div class="mdui-panel-item-body">
             <div class="mdui-typo">
-              <p>这里的按钮会使用线路2下载FCL最新（<span id="latestInfo"></span>）版本。</p>
-              <p>如果不知道应该点哪个按钮，请参考下面的信息或直接点“ALL”。</p>
-              <p><span id="deviceInfo"></span></p>
+              <p>这里的按钮将使用 <select id="odlmSelect" class="mdui-select">
+                  <option value="F2" selected>FCL线2</option>
+                  <option value="F1">FCL线1</option>
+                  <option value="F3">FCL线3</option>
+                  <option value="Z1">ZL线1</option>
+                  <option value="Z2">ZL线2</option>
+                </select> 下载最新（<span id="latestInfo">加载中</span>）版本。</p>
             </div>
             <br>
-            <div class="mdui-row-xs-2">
-              <div class="mdui-col">
-                <a id="fclDownWay2AllLink" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">all</a>
-              </div>
-              <div class="mdui-col">
-                <a id="fclDownWay2v8aLink" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">加载中</a>
-              </div>
-            </div>
-            <br>
-            <div class="mdui-typo">
-              <p>注意：此线路有防刷，如被误封请更换其它线路。</p>
-              <p>要想更换其它线路或下载其它东西，请转到<a href="#tab=1">“下载”TAB</a>。</p>
-              <p>对下载站有建议？发现BUG？<a href="https://wj.qq.com/s2/22395480/df5b/" target="_blank">填写问卷</a>。</p>
-              <p>下载站运营困难，不妨<a href="#tab=3">赞助此下载站</a>吧awa（不赞助也能下！）</p>
-              <p>启动器的开发者也不容易，<a href="https://afdian.com/@tungs" target="_blank">赞助FCL开发者</a>。</p>
-              <p>注意：<mark>赞助是纯自愿的，请结合您的经济状况实力再考虑是否要赞助！赞助后无法退款！</mark></p>
+            <div id="odlm">
             </div>
           </div>
         </div>
