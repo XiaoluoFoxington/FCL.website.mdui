@@ -196,9 +196,9 @@ async function runDoNotClickEvent(eventId) {
         runEvent(selectedEvent);
       }
     } else {
-      console.error(`千万别点：错误：无效的事件ID：${eventId}`);
+      console.error(`千万别点：出错：无效的事件ID：${eventId}`);
       mdui.dialog({
-        title: '千万别点：错误：',
+        title: '千万别点：出错：',
         content: `无效的事件ID：${eventId}`,
         buttons: [{
           text: '确定',
@@ -362,9 +362,9 @@ async function openNotice(forceShow = false) {
   } catch (error) {
     loadingDialog.close();
     
-    console.error('公告：加载失败：', error);
+    console.error('公告：加载出错：', error);
     mdui.dialog({
-      title: '公告：加载失败',
+      title: '公告：加载出错：',
       content: error,
       buttons: [{ text: '关闭' }],
       history: false
@@ -442,7 +442,7 @@ async function fetchContent(url) {
   
   const response = await fetch(url);
   if (!response.ok) {
-    throw new Error(`获取页面：HTTP错误: ${response.status} ${response.statusText}`);
+    throw new Error(`获取页面：HTTP出错：${response.status} ${response.statusText}`);
   }
   
   try {
@@ -450,7 +450,7 @@ async function fetchContent(url) {
     const domParser = new DOMParser();
     return domParser.parseFromString(html, 'text/html');
   } catch (error) {
-    throw new Error(`获取页面：HTML解析失败: ${error.message}`);
+    throw new Error(`获取页面：HTML解析出错：${error.message}`);
   }
 }
 
@@ -511,7 +511,7 @@ async function loadContent({
   } catch (error) {
     console.error(`${context}：加载：`, error);
     mdui.dialog({
-      title: `${context}：加载：错误：`,
+      title: `${context}：加载：出错：`,
       content: error.message,
       buttons: [{ text: '关闭' }],
       history: false
@@ -548,7 +548,7 @@ async function loadIntroFcl() {
  */
 async function loadSupportList() {
   await loadContent({
-    url: '/file/data/supportList.html',
+    url: '/file/data/support​List.html',
     targetId: 'supportList',
     context: '赞表'
   });
@@ -638,8 +638,8 @@ async function loadFclDownWay(url, containerId, lineName) {
     new mdui.Panel(panel);
     console.log(`${lineName}：完成`);
   } catch (error) {
-    console.error(`${lineName}：错误：`, error);
-    container.innerHTML = `<div class="mdui-typo">${lineName}：错误：${error.message}</div>`;
+    console.error(`${lineName}：出错：`, error);
+    container.innerHTML = `<div class="mdui-typo">${lineName}：出错：${error.message}</div>`;
   }
 }
 
@@ -880,7 +880,7 @@ function loadRunTime() {
 async function setupIndexDownLinks() {
   try {
     const response = await fetch('https://frostlynx.work/external/fcl/file_tree.json');
-    if (!response.ok) throw new Error(`开门见山：HTTP错误：${response.status}`);
+    if (!response.ok) throw new Error(`开门见山：HTTP出错：${response.status}`);
     
     const fileTree = await response.json();
     const { latest, children } = fileTree;
@@ -918,7 +918,7 @@ async function setupIndexDownLinks() {
     if (latestInfoEl) latestInfoEl.textContent = latest;
     
   } catch (error) {
-    console.error('开门见山：失败:', error);
+    console.error('开门见山：出错：', error);
     
     const errorHtml = `
       <div class="mdui-typo">
@@ -947,7 +947,7 @@ async function setupIndexDownLinks() {
     if (odlm) odlm.innerHTML = errorHtml;
     
     mdui.dialog({
-      title: '开门见山：失败',
+      title: '开门见山：出错：',
       content: error.message,
       buttons: [{ text: '关闭' }],
       history: false
@@ -963,7 +963,7 @@ async function loadFclDownWay2Info() {
     const response = await fetch('https://frostlynx.work/api/fcl-traffic/data');
     
     if (!response.ok) {
-      throw new Error(`HTTP错误：${response.status}`);
+      throw new Error(`HTTP出错：${response.status}`);
     }
     
     const data = await response.json();
@@ -1028,8 +1028,8 @@ async function showDeviceInfo(containerId) {
     container.innerHTML = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
     
   } catch (error) {
-    console.error('架构检测：失败：', error);
-    container.innerHTML = `架构检测：失败：${error.message || error}`;
+    console.error('架构检测：出错：', error);
+    container.innerHTML = `架构检测：出错：${error.message || error}`;
   }
 }
 
