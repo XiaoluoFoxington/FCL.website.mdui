@@ -487,7 +487,7 @@ async function loadContent({
   targetId = '',
   context = '内容'
 }) {
-    const targetContainer = document.getElementById(targetId);
+  const targetContainer = document.getElementById(targetId);
   try {
     if (!targetContainer) {
       throw new Error(`${context}：加载：目标容器不存在：${targetId}`);
@@ -890,7 +890,7 @@ function loadRunTime() {
 
 /** 
  * 获取并填充下载线路的最新版本到首页开门见山
- * @param {string} sourceKey - 数据源标识 (例如 "F2")
+ * @param {string} sourceKey - 数据源标识
  */
 async function setupIndexDownLinks(sourceKey) {
   console.log('开门见山：加载：' + sourceKey);
@@ -904,6 +904,11 @@ async function setupIndexDownLinks(sourceKey) {
   
   try {
     await loadOdlm(); // 初始化一遍元素内容
+    
+    if (sourceKey !== "F2") {
+      console.log('开门见山：隐藏防刷提示')
+      document.getElementById('fu').remove();
+    };
     
     const jsonUrl = SOURCE_MAP[sourceKey];
     if (!jsonUrl) throw new Error(`开门见山：无效数据源标识："${sourceKey}"`);
@@ -945,7 +950,12 @@ async function setupIndexDownLinks(sourceKey) {
     setLink('odlmv8aLink', sysArch);
     
     const latestInfoEl = document.getElementById('latestInfo');
-    if (latestInfoEl) latestInfoEl.textContent = latest;
+    if (sourceKey === 'F2' && latestInfoEl) {
+      latestInfoEl.textContent = latest + '（此源最新）';
+      // FCL线2的JSON中不会标明“（此源最新）”
+    } else if (latestInfoEl) {
+      latestInfoEl.textContent = latest;
+    }
     
   } catch (error) {
     console.error('开门见山：出错：', error);
