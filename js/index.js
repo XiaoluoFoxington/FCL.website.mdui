@@ -59,6 +59,7 @@ function initApp() {
               requestAnimationFrame(() => {
                 updateStatus('获取系统信息…');
                 showDeviceInfo('deviceInfo');
+                
                 requestAnimationFrame(() => {
                   updateStatus('获取首页链接…');
                   setupIndexDownLinks();
@@ -989,6 +990,13 @@ async function loadFclDownWay2Info() {
  * @param {string} containerId - 要填充结果的容器元素ID
  */
 async function showDeviceInfo(containerId) {
+  const ARCH_RULES = [
+    { regex: /aarch64|arm64|armv8/i, name: 'arm64-v8a' },
+    { regex: /armeabi-v7a|(arm$)|armv7/i, name: 'armeabi-v7a' },
+    { regex: /armeabi$/i, name: 'armeabi' },
+    { regex: /x86_64|x64|amd64/i, name: 'x86_64' },
+    { regex: /x86|i[36]86/i, name: 'x86' }
+  ];
   const container = document.getElementById(containerId);
   if (!container) {
     console.error(`架构检测：找不到容器${containerId}`);
@@ -1004,27 +1012,20 @@ async function showDeviceInfo(containerId) {
     const { default: browserHelper } = await import('/js/lib/browser-helper.min.js');
     const info = await browserHelper.getInfo();
     
-    const ARCH_RULES = [
-      { regex: /aarch64|arm64|armv8/i, name: 'arm64-v8a' },
-      { regex: /armeabi-v7a|(arm$)|armv7/i, name: 'armeabi-v7a' },
-      { regex: /armeabi$/i, name: 'armeabi' },
-      { regex: /x86_64|x64|amd64/i, name: 'x86_64' },
-      { regex: /x86|i[36]86/i, name: 'x86' },
-      { regex: /win32/i, name: `${info.architecture}_${info.bitness}` }
-    ];
+    const matchedRule = ARCH_RULES.find(r => r.regex.test(info.platform));
+    const archName = matchedRule ? matchedRule.name : info.architecture;
+    const archDisplay = matchedRule ?
+      `${matchedRule.name}(${info.platform})` :
+      `${info.architecture}(${info.platform})`;
     
-    const detectArch = () => {
-      const rule = ARCH_RULES.find(r => r.regex.test(info.platform));
-      if (rule) {
-        sysArch = rule.name;
-        return `${rule.name}(${info.platform})`;
-      }
-      sysArch = info.architecture;
-      return `${info.architecture}(${info.platform})`;
-    };
+    // 处理Windows特殊架构标识
+    if (/win32/i.test(info.platform)) {
+      sysArch = `${info.architecture}_${info.bitness}`;
+    } else {
+      sysArch = archName;
+    }
     
     console.log('架构检测：sysArch：' + sysArch);
-    const archDisplay = detectArch();
     container.innerHTML = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
     
   } catch (error) {
