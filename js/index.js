@@ -559,17 +559,6 @@ async function loadIntroFcl() {
 }
 
 /**
- * 加载赞表
- */
-async function loadSupportList() {
-  await loadContent({
-    url: '/file/data/support​List.html',
-    targetId: 'supportList',
-    context: '赞表'
-  });
-}
-
-/**
  * 加载校验
  */
 async function loadChecksums() {
@@ -601,6 +590,66 @@ async function loadAbout() {
       context: '关于'
     });
     aboutLoaded = true;
+  }
+}
+
+/**
+ * 获取赞助者数据并渲染为HTML表格
+ * @async
+ * @function loadSponsorList
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadSponsorList() {
+  try {
+    const response = await fetch('/file/data/sponsorList.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    
+    const tableHeaders = ['昵称', '¥', '留言', '邮箱', 'GH', '备注'];
+    
+    let html = `
+<div class="mdui-table-fluid">
+  <table class="mdui-table">
+    <thead>
+      <tr>
+        ${tableHeaders.map(header => `<th>${header}</th>`).join('')}
+      </tr>
+    </thead>
+    <tbody>`;
+    
+    for (const [nickname, info] of Object.entries(data)) {
+      const ghCell = info.GH ?
+        `<td class="mdui-typo"><a href="${info.GH}" target="_blank">${info.GH.split('/').pop() || '链接'}</a></td>` :
+        '<td></td>';
+      
+      html += `
+      <tr>
+        <td>${nickname}</td>
+        <td>${info.金额 ?? ''}</td>
+        <td>${info.留言 ?? ''}</td>
+        <td>${info.邮箱 ?? ''}</td>
+        ${ghCell}
+        <td>${info.备注 ?? ''}</td>
+      </tr>`;
+    }
+    
+    html += `
+    </tbody>
+  </table>
+</div>`;
+    
+    const container = document.getElementById('sponsorList');
+    if (container) {
+      container.innerHTML = html;
+    }
+  } catch (error) {
+    console.error('赞表：加载：出错：', error);
+    const container = document.getElementById('sponsorList');
+    if (container) {
+      container.innerHTML = error;
+    }
   }
 }
 
