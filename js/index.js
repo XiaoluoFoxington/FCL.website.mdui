@@ -644,6 +644,7 @@ async function loadSponsorList() {
     if (container) {
       container.innerHTML = html;
     }
+    mdui.mutation();
   } catch (error) {
     console.error('赞表：加载：出错：', error);
     const container = document.getElementById('sponsorList');
