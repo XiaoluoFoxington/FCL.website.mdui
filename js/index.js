@@ -80,7 +80,7 @@ function initApp() {
                       requestAnimationFrame(() => {
                         updateStatus('添加定时器…');
                         setInterval(loadRunTime, 1000);
-                        setInterval(loadFclDownWay2Info, 60000);
+                        // setInterval(loadFclDownWay2Info, 60000);
 
                         requestAnimationFrame(() => {
                           updateStatus('添加按钮冷却...');
@@ -1087,7 +1087,7 @@ async function setupIndexDownLinks(sourceKey) {
  */
 async function loadFclDownWay2Info() {
   try {
-    const response = await fetch('https://frostlynx.work/api/fcl-traffic/data');
+    const response = await fetch('https://frostlynx.work/external/fcl/file_tree.json');
 
     if (!response.ok) {
       throw new Error(`HTTP出错：${response.status}`);
@@ -1098,7 +1098,7 @@ async function loadFclDownWay2Info() {
     const targetElement = document.getElementById('fclDownWay2Info');
 
     if (targetElement) {
-      targetElement.textContent = data.traffic_gib + 'GiB';
+      targetElement.textContent = data.traffic + 'GiB';
     } else {
       console.error('流量信息：未找到显示元素');
     }
