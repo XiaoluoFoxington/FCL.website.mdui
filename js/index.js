@@ -6,6 +6,7 @@
 let fclDownWay1Laoded = false;
 let fclDownWay2Laoded = false;
 let fclDownWay3Laoded = false;
+let fclDownWay4Laoded = false;
 let zlDownWay1Laoded = false;
 let zlDownWay2Laoded = false;
 let checksumsLoaded = false;
@@ -62,8 +63,11 @@ function initApp() {
                 showDeviceInfo();
 
                 requestAnimationFrame(() => {
-                  updateStatus('获取首页链接…');
-                  setupIndexDownLinks('F2');
+                  updateStatus('获取开门见山链接…');
+                  const odlm = document.getElementById('odlmSelect');
+                  if (odlm) {
+                    setupIndexDownLinks(odlm.value);
+                  }
 
                   requestAnimationFrame(() => {
                     updateStatus('加载运作时间…');
@@ -869,6 +873,23 @@ async function loadFclDownWay3() {
 }
 
 /**
+ * 加载FCL下载线路4
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadFclDownWay4() {
+  if (fclDownWay4Laoded) {
+    return;
+  }
+  await loadFclDownWay(
+    '/file/data/fclDownWay4.json',
+    'fclDownWay4',
+    '加载FCL线4'
+  );
+  fclDownWay4Laoded = true;
+}
+
+/**
  * 加载ZL下载线路1
  * @async
  * @returns {Promise<void>} 无返回值
@@ -954,9 +975,10 @@ async function setupIndexDownLinks(sourceKey) {
 
   // 数据源映射表
   const SOURCE_MAP = {
-    F2: "https://frostlynx.work/external/fcl/file_tree.json",
     F1: "/file/data/fclDownWay1.json",
+    F2: "https://frostlynx.work/external/fcl/file_tree.json",
     F3: "/file/data/fclDownWay3.json",
+    F4: "/file/data/fclDownWay4.json",
     Z1: "/file/data/zlDownWay1.json",
     Z2: "/file/data/zlDownWay2.json"
   };
