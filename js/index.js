@@ -14,6 +14,7 @@ let aboutLoaded = false;
 let showEpilepsyWarning = true;
 let sysInfo = undefined;
 let sysArch = undefined;
+let androidVer = 0;
 
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -1075,6 +1076,8 @@ async function setupIndexDownLinks(sourceKey) {
     const diEl = document.getElementById('deviceInfo');
     if (diEl) diEl.innerHTML = sysInfo;
 
+    testAndroidVersion(8, 'FCL');
+
     console.log('开门见山：setCoolDown()!!!');
     setCoolDown();
   } catch (error) {
@@ -1180,18 +1183,27 @@ async function showDeviceInfo(containerId) {
       `${matchedRule.name}(${info.platform})` :
       `${info.architecture}(${info.platform})`;
 
+    if (info.system && /android/i.test(info.system)) {
+      androidVer = info.systemVersion || '';
+    } else {
+      androidVer = 0;
+    }
+
+    console.log(`架构检测：androidVer：${androidVer}`);
+
     // Windows平台特殊处理
-    sysArch = /win32/i.test(info.platform) ?
-      `${info.architecture}_${info.bitness}` :
+    const isWindows = /win32/i.test(info.platform);
+    sysArch = isWindows ?
+      (info.bitness ? `${info.architecture}_${info.bitness}` : info.architecture) :
       archName;
 
-    console.log('架构检测：sysArch：' + sysArch);
+    console.log(`架构检测：sysArch：${sysArch}`);
 
-    const optout = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
+    const output = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
+    sysInfo = output;
 
-    sysInfo = optout;
     if (container) {
-      container.innerHTML = optout;
+      container.innerHTML = output;
     }
 
   } catch (error) {
@@ -1199,6 +1211,48 @@ async function showDeviceInfo(containerId) {
     console.error(errorMsg);
     container && (container.innerHTML = errorMsg);
   }
+}
+
+/** 架构匹配规则 */
+/**
+ * 安卓版本检测：检测当前安卓版本是否大于等于给定的安卓版本
+ * @param {number} version - 要比较的安卓版本号（支持小数）
+ * @param {string} lineName - 附加信息
+ * @returns {boolean} 是否通过检测
+ */
+function testAndroidVersion(version, lineName) {
+  if (typeof version !== 'number' || isNaN(version)) {
+    console.error('安卓版本检测：无效版本参数', version);
+    return false;
+  }
+  
+  const reqVersion = parseFloat(version);
+  const currentVersion = parseFloat(androidVer);
+  
+  if (currentVersion === 0) {
+    console.log('安卓版本检测：非安卓');
+    mdui.dialog({
+      title: '安卓版本检测：非安卓',
+      content: `您不是Android系统，而${lineName}最低要求 Android ${reqVersion} 。（仅供参考，不一定准）`,
+      buttons: [{ text: '关闭' }],
+      history: false
+    });
+    return false;
+  }
+  
+  if (currentVersion < reqVersion) {
+    console.log(`安卓版本检测：版本过低`);
+    mdui.dialog({
+      title: '安卓版本检测：版本过低',
+      content: `您的Android版本为 ${currentVersion} ，而${lineName}最低要求 Android ${reqVersion} 。（仅供参考，不一定准）`,
+      buttons: [{ text: '关闭' }],
+      history: false
+    });
+    return false;
+  }
+  
+  console.log(`安卓版本检测：通过`);
+  return true;
 }
 
 /**
