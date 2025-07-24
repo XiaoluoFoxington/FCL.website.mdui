@@ -692,10 +692,20 @@ async function loadFclDownWay(url, containerId, lineName) {
     const panel = document.createElement('div');
     panel.className = 'mdui-panel';
     panel.setAttribute('mdui-panel', '');
+
+    let versionDirs = null;
     
-    const versionDirs = fileTree.children.filter(
-      child => child.type === 'directory' && child.name !== 'root'
-    );
+    if (url === 'https://frostlynx.work/external/fcl/file_tree.json') {
+      // FCL线2又在根children里包了一个“fcl”，需要再进入这个的children里寻找
+      console.log('开门见山：FCL线2特殊处理');
+      versionDirs = fileTree.children[0].children.filter(
+        child => child.type === 'directory' && child.name !== 'root'
+      );
+    } else {
+      versionDirs = fileTree.children.filter(
+        child => child.type === 'directory' && child.name !== 'root'
+      );
+    }
     
     if (versionDirs.length === 0) {
       console.warn(`${lineName}：找到版本数：${versionDirs.length}`);
