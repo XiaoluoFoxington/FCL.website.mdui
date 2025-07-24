@@ -1004,17 +1004,17 @@ async function setupIndexDownLinks(sourceKey) {
     }
     
     const jsonUrl = SOURCE_MAP[sourceKey];
-    if (!jsonUrl) throw new Error(`开门见山：无效数据源标识："${sourceKey}"`);
+    if (!jsonUrl) throw new Error(`无效数据源标识："${sourceKey}"`);
     console.log(`开门见山：JSON：${jsonUrl}`);
     
     const response = await fetch(jsonUrl);
-    if (!response.ok) throw new Error(`开门见山：HTTP出错：${response.status}`);
+    if (!response.ok) throw new Error(`HTTP出错：${response.status}`);
     
     const fileTree = await response.json();
     const { latest, children } = fileTree;
     
     if (!latest || !Array.isArray(children)) {
-      throw new Error('开门见山：无效的文件树结构');
+      throw new Error('无效的文件树结构');
     }
     
     let latestVersionDir;
@@ -1022,8 +1022,10 @@ async function setupIndexDownLinks(sourceKey) {
     if (sourceKey === "F2") {
       // FCL线2又在根children里包了一个“fcl”，需要再进入这个的children里寻找
       console.log('开门见山：FCL线2特殊处理');
-      const fclDir = children.find(dir => dir.children);
-      latestVersionDir = fclDir?.children.find(
+      const fclDir = children.find(dir => dir.name === "fcl" && dir.children);
+      if (!fclDir) throw new Error('开门见山：FCL线2特殊处理：未找到“fcl”目录');
+      
+      latestVersionDir = fclDir.children.find(
         dir => dir.type === 'directory' && dir.name === latest
       );
     } else {
@@ -1032,8 +1034,8 @@ async function setupIndexDownLinks(sourceKey) {
       );
     }
     
-    if (!latestVersionDir) throw new Error('开门见山：未找到最新版本目录');
-    console.log(`开门见山：${latestVersionDir.name}`);
+    if (!latestVersionDir) throw new Error(`未找到最新版本目录: ${latest}`);
+    console.log(`开门见山：最新版本：${latestVersionDir.name}`);
     
     const findLink = (dir, arch) =>
       dir.children?.find(child =>
@@ -1042,38 +1044,46 @@ async function setupIndexDownLinks(sourceKey) {
     
     const setLink = (id, arch) => {
       const element = document.getElementById(id);
-      if (!element) return;
+      if (!element) {
+        console.warn(`找不到元素: ${id}`);
+        return;
+      }
       
       const link = findLink(latestVersionDir, arch);
       if (link) {
         element.textContent = arch;
         element.href = link;
+      } else {
+        console.warn(`无效架构: ${arch}`);
+        element.textContent = '无效架构';
+        element.href = `javascript:mdui.dialog({title:'开门见山：无效架构',content:'<p class="mdui-typo">您的系统架构为 ${arch}？如是，您的设备可能不支持运行。如不是，请转到<a href="#tab=1">下载</a>选项卡，下载符合您架构的安装包。</p>',buttons:[{text:'确定'}],history:false,onOpen:()=>mdui.mutation()});`;
       }
     };
     
     setLink('odlmAllLink', 'all');
+    console.log(`开门见山：系统架构：${sysArch}`);
     setLink('odlmv8aLink', sysArch);
     
     const latestInfoEl = document.getElementById('latestInfo');
     if (latestInfoEl) {
       // FCL线2的版本目录中不会标明“此源最新”，需要手动添加
-      latestInfoEl.textContent = sourceKey === 'F2' ?
-        `${latest}（此源最新）` :
+      latestInfoEl.textContent = sourceKey === 'F2' ? 
+        `${latest}（此源最新）` : 
         latest;
     }
     
     const diEl = document.getElementById('deviceInfo');
     if (diEl) diEl.innerHTML = sysInfo;
     
-    console.log('开门见山：setCoolDown!!!');
+    console.log('开门见山：setCoolDown()!!!');
     setCoolDown();
   } catch (error) {
-    console.error(`开门见山：出错：${error.message}`);
+    console.error(`开门见山：出错：${error.message}`, error);
     
     const errorHtml = `
     <div class="mdui-typo">
       <p>抱歉，我们遇到了一个无法解决的问题。</p>
-      <p>${error.message}</p>
+      <p><strong>${error.message}</strong></p>
       <p>点击“转到‘下载’TAB”将会跳转到“下载”选项卡，您可以在这里使用其它路线继续下载。</p>
     </div>
     <br>
@@ -1094,7 +1104,10 @@ async function setupIndexDownLinks(sourceKey) {
     `;
     
     const odlm = document.getElementById('odlm');
-    if (odlm) odlm.innerHTML = errorHtml;
+    if (odlm) {
+      odlm.innerHTML = errorHtml;
+      mdui.mutation();
+    }
     
     mdui.dialog({
       title: '开门见山：出错',
@@ -1104,7 +1117,6 @@ async function setupIndexDownLinks(sourceKey) {
     });
   }
 }
-
 /**
  * 获取并填充FCL下载线路2的流量使用信息
  */
