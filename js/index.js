@@ -1312,20 +1312,23 @@ function setCoolDown() {
       return;
     }
 
-    button.addEventListener('click', function handleClick() {
+    button.addEventListener('click', function handleClick(event) {
       console.log(`CD：按钮被点击：`, button);
 
       if (button.hasAttribute('data-cd-active')) {
         console.warn(`CD：冷却中按钮被点击：`, button);
+        event.preventDefault();
+        event.stopPropagation();
         return;
       }
 
       const originalHTML = button.innerHTML;
       const originalDisabled = button.disabled;
+      const originalWidth = button.offsetWidth;
 
       button.setAttribute('data-cd-active', 'true');
       button.disabled = true;
-      button.style.minWidth = `${button.offsetWidth}px`;
+      button.style.minWidth = `${originalWidth}px`;
       mdui.mutation();
 
       const startTime = Date.now();
@@ -1337,6 +1340,7 @@ function setCoolDown() {
         if (!document.body.contains(button)) {
           console.warn('CD：按钮已消失，停止冷却');
           clearInterval(button._cdTimer);
+          button._cdTimer = null;
           return;
         }
 
@@ -1345,13 +1349,17 @@ function setCoolDown() {
 
         if (remaining <= 0) {
           clearInterval(button._cdTimer);
+          button._cdTimer = null;
+          
           button.innerHTML = originalHTML;
           button.disabled = originalDisabled;
           button.removeAttribute('data-cd-active');
           button.style.minWidth = '';
-          console.log(`CD：CD已过：`, button);
+          
+          console.log(`CD：冷却结束：`, button);
           mdui.mutation();
-        } else {
+        } 
+        else {
           button.innerHTML = `${originalHTML} (冷却中${(remaining / 1000).toFixed(1)}s)`;
         }
       }, 100);
