@@ -1225,10 +1225,10 @@ function testAndroidVersion(version, lineName) {
     console.error('安卓版本检测：无效版本参数', version);
     return false;
   }
-  
+
   const reqVersion = parseFloat(version);
   const currentVersion = parseFloat(androidVer);
-  
+
   if (currentVersion === 0) {
     console.log('安卓版本检测：非安卓');
     mdui.dialog({
@@ -1239,7 +1239,7 @@ function testAndroidVersion(version, lineName) {
     });
     return false;
   }
-  
+
   if (currentVersion < reqVersion) {
     console.log(`安卓版本检测：版本过低`);
     mdui.dialog({
@@ -1250,7 +1250,7 @@ function testAndroidVersion(version, lineName) {
     });
     return false;
   }
-  
+
   console.log(`安卓版本检测：通过`);
   return true;
 }
