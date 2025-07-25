@@ -1057,7 +1057,7 @@ async function setupIndexDownLinks(sourceKey) {
       } else {
         console.warn(`无效架构: ${arch}`);
         element.textContent = '无效架构';
-        element.href = `javascript:mdui.dialog({title:'开门见山：无效架构',content:'<p class="mdui-typo">您的系统架构为 ${arch}？如是，您的设备可能不支持运行。如不是，请转到<a href="#tab=1">下载</a>选项卡，下载符合您架构的安装包。</p>',buttons:[{text:'确定'}],history:false,onOpen:()=>mdui.mutation()});`;
+        element.href = `javascript:mdui.dialog({title:'开门见山：无效架构',content:'您的系统架构为 ${arch} ，可能不支持运行。（仅供参考，不一定准）',buttons:[{text:'确定'}],history:false,onOpen:()=>mdui.mutation()});`;
       }
     };
 
