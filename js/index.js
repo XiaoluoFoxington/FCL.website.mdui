@@ -1118,7 +1118,7 @@ async function setupIndexDownLinks(sourceKey) {
     const errorHtml = `
     <div class="mdui-typo">
       <p>抱歉，我们遇到了一个无法解决的问题。</p>
-      <p><strong>${error.message}</strong></p>
+      <p>${error.message}</p>
       <p>点击"转到'下载'TAB"将会跳转到"下载"选项卡，您可以在这里使用其它路线继续下载。</p>
     </div>
     <br>
