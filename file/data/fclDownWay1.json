@@ -1,8 +1,38 @@
 {
-  "latest": "1.2.4.3（此源最新）",
+  "latest": "1.2.4.4（此源最新）",
   "children": [
   {
-    "name": "1.2.4.3（此源最新）",
+    "name": "1.2.4.4（此源最新）",
+    "type": "directory",
+    "children": [
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/Ev1T3/FCL-release-1.2.4.4-all.apk",
+      "arch": "all"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/8XRc8/FCL-release-1.2.4.4-arm64-v8a.apk",
+      "arch": "arm64-v8a"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/GGniz/FCL-release-1.2.4.4-armeabi-v7a.apk",
+      "arch": "armeabi-v7a"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/KojcZ/FCL-release-1.2.4.4-x86.apk",
+      "arch": "x86"
+    },
+    {
+      "type": "file",
+      "download_link": "https://pan.huang1111.cn/f/LDdtj/FCL-release-1.2.4.4-x86_64.apk",
+      "arch": "x86_64"
+    }]
+  },
+  {
+    "name": "1.2.4.3",
     "type": "directory",
     "children": [
     {
