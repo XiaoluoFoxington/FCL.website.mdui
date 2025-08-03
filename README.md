@@ -4,13 +4,13 @@
 
 项目网站：[https://foldcraftlauncher.cn](https://foldcraftlauncher.cn)。
 
-这里是由玩家社区自行搭建的[《Fold Craft Launcher》](https://github.com/FCL-Team/FoldCraftLauncher)非官方公益下载站，可以在这里下载到FCL的最新发行版、部分旧版本和插件。
+这里是由玩家社区自行搭建的[《Fold Craft Launcher》](https://github.com/FCL-Team/FoldCraftLauncher)非官方公益下载站，可以在这里下载到FCL的最新发行版、全部旧版本、ZL最新发行版、ZL部分旧版本、插件、驱动、Java和Pojav FFmpeg Plugin。
 
 这是一个静态网站，不需要后端。使用MDUI样式。适合部署在任意静态托管服务上。
 
 此项目有个旧版样式，由于被太多人吐槽难看于是弃用了：[fcl-docs/FCL.website](https://github.com/fcl-docs/FCL.website)。
 
-至于为啥，详见：[https://old.foldcraftlauncher.cn/page/other/perfect](https://old.foldcraftlauncher.cn/page/other/perfect)。
+洛狐对“现代化审美”的一些看法：[https://old.foldcraftlauncher.cn/page/other/perfect](https://old.foldcraftlauncher.cn/page/other/perfect)。
 
 ## 项目特点
 
@@ -42,15 +42,15 @@
 
 ## ~~贡献项目~~ 规则怪谈
 
-### 赞助
-
 ~~有这功夫，还不如直接赞助呢（（（~~
+
+### 赞助
 
 ![微信赞赏码](/file/picture/微信赞赏码.png)
 
 ### JavaScript 规范
 
-- 所有函数必须使用 `function` 关键字定义。
+- ~~所有函数必须使用 `function` 关键字定义。~~
 
 - 所有函数需附带JSDoc注释。
 
