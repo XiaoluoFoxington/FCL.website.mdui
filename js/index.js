@@ -993,39 +993,39 @@ const SOURCE_MAP = {
  */
 async function setupIndexDownLinks(sourceKey) {
   console.log(`开门见山：加载：${sourceKey}`);
-
+  
   try {
     await loadOdlm();
-
+    
     // 对FCL线2添加防刷提示
     const antiSpamEl = document.getElementById('fu');
     if (sourceKey !== "F2" && antiSpamEl) {
       console.log('开门见山：隐藏防刷提示');
       antiSpamEl.remove();
     }
-
+    
     const jsonUrl = SOURCE_MAP[sourceKey];
     if (!jsonUrl) throw new Error(`无效数据源标识："${sourceKey}"`);
     console.log(`开门见山：JSON：${jsonUrl}`);
-
+    
     const response = await fetch(jsonUrl);
     if (!response.ok) throw new Error(`HTTP出错：${response.status}`);
-
+    
     const fileTree = await response.json();
     const { latest, children } = fileTree;
-
+    
     if (!latest || !Array.isArray(children)) {
       throw new Error('无效的文件树结构');
     }
-
+    
     let latestVersionDir;
-
+    
     if (sourceKey === "F2") {
-      // FCL线2又在根children里包了一个“fcl”，需要再进入这个的children里寻找
+      // FCL线2又在根children里包了一个"fcl"，需要再进入这个的children里寻找
       console.log('开门见山：FCL线2特殊处理');
       const fclDir = children.find(dir => dir.name === "fcl" && dir.children);
-      if (!fclDir) throw new Error('开门见山：FCL线2特殊处理：未找到“fcl”目录');
-
+      if (!fclDir) throw new Error('开门见山：FCL线2特殊处理：未找到"fcl"目录');
+      
       latestVersionDir = fclDir.children.find(
         dir => dir.type === 'directory' && dir.name === latest
       );
@@ -1034,22 +1034,22 @@ async function setupIndexDownLinks(sourceKey) {
         dir => dir.type === 'directory' && dir.name === latest
       );
     }
-
+    
     if (!latestVersionDir) throw new Error(`未找到最新版本目录: ${latest}`);
     console.log(`开门见山：最新版本：${latestVersionDir.name}`);
-
+    
     const findLink = (dir, arch) =>
       dir.children?.find(child =>
         child.type === 'file' && child.arch === arch
       )?.download_link;
-
+    
     const setLink = (id, arch) => {
       const element = document.getElementById(id);
       if (!element) {
         console.warn(`找不到元素: ${id}`);
         return;
       }
-
+      
       const link = findLink(latestVersionDir, arch);
       if (link) {
         element.textContent = arch;
@@ -1057,42 +1057,53 @@ async function setupIndexDownLinks(sourceKey) {
       } else {
         console.warn(`无效架构: ${arch}`);
         element.textContent = '无效架构';
-        element.href = `javascript:mdui.dialog({title:'开门见山：无效架构',content:'您的系统架构为 ${arch} ，可能不支持运行。（仅供参考，不一定准）',buttons:[{text:'确定'}],history:false,onOpen:()=>mdui.mutation()});`;
+        // Gecko浏览器点击无效架构会显示[object Object]
+        element.onclick = () => {
+          mdui.dialog({
+            title: '开门见山：无效架构',
+            content: `您的系统架构为${arch}（仅供参考，不一定准），而此源未提供此架构。`,
+            buttons: [{ text: '确定' }],
+            history: false,
+            onOpen: () => mdui.mutation()
+          });
+          return false;
+        };
+        element.href = 'javascript:void(0)';
       }
     };
-
+    
     setLink('odlmAllLink', 'all');
     console.log(`开门见山：系统架构：${sysArch}`);
     setLink('odlmv8aLink', sysArch);
-
+    
     const latestInfoEl = document.getElementById('latestInfo');
     if (latestInfoEl) {
-      // FCL线2的版本目录中不会标明“此源最新”，需要手动添加
+      // FCL线2的版本目录中不会标明"此源最新"，需要手动添加
       latestInfoEl.textContent = sourceKey === 'F2' ?
         `${latest}（此源最新）` :
         latest;
     }
-
+    
     const diEl = document.getElementById('deviceInfo');
     if (diEl) diEl.innerHTML = sysInfo;
-
+    
     testAndroidVersion(8, 'FCL');
-
+    
     console.log('开门见山：setCoolDown()!!!');
     setCoolDown();
   } catch (error) {
     console.error(`开门见山：出错：${error.message}`, error);
-
+    
     const errorHtml = `
     <div class="mdui-typo">
       <p>抱歉，我们遇到了一个无法解决的问题。</p>
       <p><strong>${error.message}</strong></p>
-      <p>点击“转到‘下载’TAB”将会跳转到“下载”选项卡，您可以在这里使用其它路线继续下载。</p>
+      <p>点击"转到'下载'TAB"将会跳转到"下载"选项卡，您可以在这里使用其它路线继续下载。</p>
     </div>
     <br>
     <div class="mdui-row-xs-2">
       <div class="mdui-col">
-        <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="#tab=1">转到“下载”TAB</a>
+        <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="#tab=1">转到"下载"TAB</a>
       </div>
       <div class="mdui-col">
         <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="https://wj.qq.com/s2/22395480/df5b/">向站长反馈</a>
@@ -1105,13 +1116,13 @@ async function setupIndexDownLinks(sourceKey) {
       <p>注意：<mark>赞助是纯自愿的，请结合您的经济状况实力再考虑是否要赞助！赞助后无法退款！</mark></p>
     </div>
     `;
-
+    
     const odlm = document.getElementById('odlm');
     if (odlm) {
       odlm.innerHTML = errorHtml;
       mdui.mutation();
     }
-
+    
     mdui.dialog({
       title: '开门见山：出错',
       content: error.message,
