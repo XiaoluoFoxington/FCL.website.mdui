@@ -1099,8 +1099,8 @@ async function setupIndexDownLinks(sourceKey) {
     
     const latestInfoEl = document.getElementById('latestInfo');
     if (latestInfoEl) {
-      // FCL线2的版本目录中不会标明"此源最新"，需要手动添加
-      latestInfoEl.textContent = sourceKey === 'F2' ?
+      // FCL线2和FCL线5的版本目录中不会标明"此源最新"，需要手动添加
+      latestInfoEl.textContent = sourceKey === 'F2' || sourceKey === 'F5' ?
         `${latest}（此源最新）` :
         latest;
     }
