@@ -7,6 +7,7 @@ let fclDownWay1Laoded = false;
 let fclDownWay2Laoded = false;
 let fclDownWay3Laoded = false;
 let fclDownWay4Laoded = false;
+let fclDownWay5Laoded = false;
 let zlDownWay1Laoded = false;
 let zlDownWay2Laoded = false;
 let checksumsLoaded = false;
@@ -827,6 +828,8 @@ async function loadAllFclDownWays() {
     loadFclDownWay1(),
     loadFclDownWay2(),
     loadFclDownWay3(),
+    loadFclDownWay4(),
+    loadFclDownWay5(),
     loadZlDownWay1(),
     loadZlDownWay2()
   ]);
@@ -898,6 +901,23 @@ async function loadFclDownWay4() {
     '加载FCL线4'
   );
   fclDownWay4Laoded = true;
+}
+
+/**
+ * 加载FCL下载线路5
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadFclDownWay5() {
+  if (fclDownWay5Laoded) {
+    return;
+  }
+  await loadFclDownWay(
+    'https://fcl.switch.api.072211.xyz/?from=foldcraftlauncher&isDev=1',
+    'fclDownWay5',
+    '加载FCL线5'
+  );
+  fclDownWay5Laoded = true;
 }
 
 /**
@@ -983,6 +1003,7 @@ const SOURCE_MAP = {
   F2: "https://frostlynx.work/external/fcl/file_tree.json",
   F3: "/file/data/fclDownWay3.json",
   F4: "/file/data/fclDownWay4.json",
+  F5: "https://fcl.switch.api.072211.xyz/?from=foldcraftlauncher&isDev=1",
   Z1: "/file/data/zlDownWay1.json",
   Z2: "/file/data/zlDownWay2.json"
 };
