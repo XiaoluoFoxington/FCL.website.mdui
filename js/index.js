@@ -423,6 +423,52 @@ function openEgg() {
 }
 
 /**
+ * 显示封神榜
+ */
+async function openBlockedIps() {
+  try {
+    const blockedIps = await fetch('/file/data/blocked_ips.txt');
+    if (!blockedIps.ok) {
+      console.error("封神榜：加载：HTTP出错：" + blockedIps.status + " " + blockedIps.statusText);
+      mdui.dialog({
+        title: '封神榜：加载：HTTP出错：',
+        content: blockedIps.status + " " + blockedIps.statusText,
+        buttons: [
+          {
+            text: '关闭'
+          }
+        ],
+        history: false
+      });
+      return;
+    }
+    const blockedIpsText = (await blockedIps.text()).replace(/\n/g, '<br>');
+    mdui.dialog({
+      title: '封神榜',
+      content: blockedIpsText,
+      buttons: [
+        {
+          text: '关闭'
+        }
+      ],
+      history: false
+    });
+  } catch (e) {
+    console.error("封神榜：加载：出错：" + e);
+    mdui.dialog({
+      title: '封神榜：加载：出错：',
+      content: e,
+      buttons: [
+        {
+          text: '关闭'
+        }
+      ],
+      history: false
+    });
+  }
+}
+
+/**
  * 主题切换
  */
 function toggleTheme() {
