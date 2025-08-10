@@ -1243,47 +1243,43 @@ const ARCH_RULES = [
  */
 async function showDeviceInfo(containerId) {
   const container = containerId ? document.getElementById(containerId) : null;
-
+  
   if (!navigator.userAgent) {
     const msg = "无法检测到您的设备信息";
     container && (container.innerHTML = msg);
     console.warn(msg);
     return;
   }
-
+  
   try {
     const { default: browserHelper } = await import('/js/lib/browser-helper.min.js');
     const info = await browserHelper.getInfo();
-
+    
     const matchedRule = ARCH_RULES.find(r => r.regex.test(info.platform));
     const archName = matchedRule ? matchedRule.name : info.architecture;
     const archDisplay = matchedRule ?
       `${matchedRule.name}(${info.platform})` :
       `${info.architecture}(${info.platform})`;
-
+    
     if (info.system && /android/i.test(info.system)) {
       androidVer = info.systemVersion || '';
     } else {
       androidVer = 0;
     }
-
+    
     console.log(`架构检测：androidVer：${androidVer}`);
-
-    // Windows平台特殊处理
-    const isWindows = /win32/i.test(info.platform);
-    sysArch = isWindows ?
-      (info.bitness ? `${info.architecture}_${info.bitness}` : info.architecture) :
-      archName;
-
+    
+    sysArch = archName;
+    
     console.log(`架构检测：sysArch：${sysArch}`);
-
+    
     const output = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
     sysInfo = output;
-
+    
     if (container) {
       container.innerHTML = output;
     }
-
+    
   } catch (error) {
     const errorMsg = `架构检测：出错：${error.message || error}`;
     console.error(errorMsg);
@@ -1291,7 +1287,6 @@ async function showDeviceInfo(containerId) {
   }
 }
 
-/** 架构匹配规则 */
 /**
  * 安卓版本检测：检测当前安卓版本是否大于等于给定的安卓版本
  * @param {number} version - 要比较的安卓版本号（支持小数）
