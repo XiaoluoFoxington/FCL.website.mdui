@@ -1242,11 +1242,22 @@ const ARCH_RULES = [
  * @param {string} containerId - 要填充结果的容器元素ID
  */
 async function showDeviceInfo(containerId) {
-  const container = containerId ? document.getElementById(containerId) : null;
+  let container = null;
+  if (containerId) {
+    container = document.getElementById(containerId);
+    if (!container) {
+      console.warn('架构检测：出错：没有容器：' + containerId);
+      return;
+    }
+  }
+  
+  const updateContainer = content => {
+    if (container) container.innerHTML = content;
+  };
   
   if (!navigator.userAgent) {
-    const msg = "无法检测到您的设备信息";
-    container && (container.innerHTML = msg);
+    const msg = "架构检测：无法检测到您的设备信息";
+    updateContainer(msg);
     console.warn(msg);
     return;
   }
@@ -1276,14 +1287,12 @@ async function showDeviceInfo(containerId) {
     const output = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
     sysInfo = output;
     
-    if (container) {
-      container.innerHTML = output;
-    }
+    updateContainer(output);
     
   } catch (error) {
     const errorMsg = `架构检测：出错：${error.message || error}`;
     console.error(errorMsg);
-    container && (container.innerHTML = errorMsg);
+    updateContainer(errorMsg);
   }
 }
 
