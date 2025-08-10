@@ -1043,15 +1043,37 @@ function loadRunTime() {
   }
 }
 
-// 数据源映射表
+// 数据源映射表（优化点3：特殊源逻辑解耦）
 const SOURCE_MAP = {
-  F1: "/file/data/fclDownWay1.json",
-  F2: "https://frostlynx.work/external/fcl/file_tree.json",
-  F3: "/file/data/fclDownWay3.json",
-  F4: "/file/data/fclDownWay4.json",
-  F5: "https://fcl.switch.api.072211.xyz/?from=foldcraftlauncher&isDev=1",
-  Z1: "/file/data/zlDownWay1.json",
-  Z2: "/file/data/zlDownWay2.json"
+  F1: {
+    path: "/file/data/fclDownWay1.json",
+    markLatest: false
+  },
+  F2: {
+    path: "https://frostlynx.work/external/fcl/file_tree.json",
+    markLatest: true,
+    nestedPath: ["fcl"] // 特殊嵌套路径
+  },
+  F3: {
+    path: "/file/data/fclDownWay3.json",
+    markLatest: false
+  },
+  F4: {
+    path: "/file/data/fclDownWay4.json",
+    markLatest: false
+  },
+  F5: {
+    path: "https://fcl.switch.api.072211.xyz/?from=foldcraftlauncher&isDev=1",
+    markLatest: true
+  },
+  Z1: {
+    path: "/file/data/zlDownWay1.json",
+    markLatest: false
+  },
+  Z2: {
+    path: "/file/data/zlDownWay2.json",
+    markLatest: false
+  }
 };
 
 /**
@@ -1064,15 +1086,16 @@ async function setupIndexDownLinks(sourceKey) {
   try {
     await loadOdlm();
     
-    // 对FCL线2添加防刷提示
     const antiSpamEl = document.getElementById('fu');
     if (sourceKey !== "F2" && antiSpamEl) {
       console.log('开门见山：隐藏防刷提示');
       antiSpamEl.remove();
     }
     
-    const jsonUrl = SOURCE_MAP[sourceKey];
-    if (!jsonUrl) throw new Error(`无效数据源标识："${sourceKey}"`);
+    const sourceConfig = SOURCE_MAP[sourceKey];
+    if (!sourceConfig) throw new Error(`无效数据源标识："${sourceKey}"`);
+    
+    const jsonUrl = sourceConfig.path;
     console.log(`开门见山：JSON：${jsonUrl}`);
     
     const response = await fetch(jsonUrl);
@@ -1085,30 +1108,17 @@ async function setupIndexDownLinks(sourceKey) {
       throw new Error('无效的文件树结构');
     }
     
-    let latestVersionDir;
-    
-    if (sourceKey === "F2") {
-      // FCL线2又在根children里包了一个"fcl"，需要再进入这个的children里寻找
-      console.log('开门见山：FCL线2特殊处理');
-      const fclDir = children.find(dir => dir.name === "fcl" && dir.children);
-      if (!fclDir) throw new Error('开门见山：FCL线2特殊处理：未找到"fcl"目录');
-      
-      latestVersionDir = fclDir.children.find(
-        dir => dir.type === 'directory' && dir.name === latest
-      );
-    } else {
-      latestVersionDir = children.find(
-        dir => dir.type === 'directory' && dir.name === latest
-      );
-    }
-    
+    let latestVersionDir = findNestedDirectory(children, latest, sourceConfig.nestedPath);
     if (!latestVersionDir) throw new Error(`未找到最新版本目录: ${latest}`);
+    
     console.log(`开门见山：最新版本：${latestVersionDir.name}`);
     
-    const findLink = (dir, arch) =>
-      dir.children?.find(child =>
-        child.type === 'file' && child.arch === arch
-      )?.download_link;
+    const archLinks = latestVersionDir.children?.reduce((map, child) => {
+      if (child.type === 'file' && child.arch) {
+        map[child.arch] = child.download_link;
+      }
+      return map;
+    }, {}) || {};
     
     const setLink = (id, arch) => {
       const element = document.getElementById(id);
@@ -1117,14 +1127,13 @@ async function setupIndexDownLinks(sourceKey) {
         return;
       }
       
-      const link = findLink(latestVersionDir, arch);
+      const link = archLinks[arch];
       if (link) {
         element.textContent = arch;
         element.href = link;
       } else {
         console.warn(`无效架构: ${arch}`);
         element.textContent = '无效架构';
-        // Gecko浏览器点击无效架构会显示[object Object]
         element.onclick = () => {
           mdui.dialog({
             title: '开门见山：无效架构',
@@ -1145,8 +1154,7 @@ async function setupIndexDownLinks(sourceKey) {
     
     const latestInfoEl = document.getElementById('latestInfo');
     if (latestInfoEl) {
-      // FCL线2和FCL线5的版本目录中不会标明"此源最新"，需要手动添加
-      latestInfoEl.textContent = sourceKey === 'F2' || sourceKey === 'F5' ?
+      latestInfoEl.textContent = sourceConfig.markLatest ?
         `${latest}（此源最新）` :
         latest;
     }
@@ -1197,6 +1205,29 @@ async function setupIndexDownLinks(sourceKey) {
       history: false
     });
   }
+}
+
+/**
+ * 递归查找嵌套目录（支持多级嵌套）
+ * @param {Array} children - 目录子项数组
+ * @param {string} targetName - 目标目录名
+ * @param {Array} [nestedPath] - 嵌套路径数组
+ */
+function findNestedDirectory(children, targetName, nestedPath = []) {
+  let currentChildren = children;
+  if (nestedPath) {
+    for (const dirName of nestedPath) {
+      const dir = currentChildren.find(
+        d => d.name === dirName && d.type === 'directory'
+      );
+      if (!dir || !dir.children) return null;
+      currentChildren = dir.children;
+    }
+  }
+  
+  return currentChildren.find(
+    dir => dir.type === 'directory' && dir.name === targetName
+  );
 }
 
 /**
