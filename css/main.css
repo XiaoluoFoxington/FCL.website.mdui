@@ -58,6 +58,22 @@ img {
   box-shadow: 0 2px 4px #000;
 }
 
+.mdui-panel-item-header {
+  padding: 0 12px;
+}
+
+.mdui-panel-item-open>.mdui-panel-item-header {
+  height: 48px;
+}
+
+.mdui-panel-item-open>.mdui-panel-item-header .mdui-panel-item-arrow {
+  top: unset;
+}
+
+.mdui-panel-item-body {
+  padding: 0 12px;
+}
+
 .mdui-select {
   height: unset;
   font-size: unset;
