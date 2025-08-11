@@ -67,7 +67,8 @@ img {
 }
 
 .mdui-panel-item-open>.mdui-panel-item-header .mdui-panel-item-arrow {
-  top: unset;
+  top: 12px;
+  right: 12px;
 }
 
 .mdui-panel-item-body {
