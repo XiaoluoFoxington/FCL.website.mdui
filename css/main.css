@@ -53,6 +53,21 @@ img {
   }
 }
 
+.mdui-btn-raised {
+  -webkit-box-shadow: 0 2px 4px #000;
+  box-shadow: 0 2px 4px #000;
+}
+
+.mdui-btn-raised:hover {
+  -webkit-box-shadow: 0 2px 6px #000;
+  box-shadow: 0 2px 12px #000;
+}
+
+.mdui-btn-raised:active {
+  -webkit-box-shadow: 0 2px 8px #000;
+  box-shadow: 0 2px 20px #000;
+}
+
 .mdui-panel-item {
   -webkit-box-shadow: 0 2px 4px #000;
   box-shadow: 0 2px 4px #000;
