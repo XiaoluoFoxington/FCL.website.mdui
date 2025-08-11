@@ -1261,9 +1261,13 @@ const ARCH_RULES = [
   { regex: /aarch64|arm64|armv8/i, name: 'arm64-v8a' },
   { regex: /armeabi-v7a|(arm$)|armv7/i, name: 'armeabi-v7a' },
   { regex: /armeabi$/i, name: 'armeabi' },
-  { regex: /x86_64|x64|amd64|win64/i, name: 'x86_64' },
-  { regex: /x86|i[36]86|win32/i, name: 'x86' }
+  { regex: /x86_64|x64|amd64/i, name: 'x86_64' },
+  { regex: /x86|i[36]86/i, name: 'x86' }
   ];
+  // windows 系统不要根据平台来判断架构!!!
+  // windows 系统不管是 64 位还是 32 位始终为 win32 平台
+  // 再乱改我就炸了!!!
+  //                                            晚梦
 
 /**
  * 架构检测：设备信息检测工具函数
@@ -1292,20 +1296,15 @@ async function showDeviceInfo(containerId) {
   
   try {
     const { default: browserHelper } = await import('/js/lib/browser-helper.min.js');
+    /** @type {BrowserInfo} */
     const info = await browserHelper.getInfo();
     
-    const archSource = [info.platform, info.architecture].filter(Boolean).join(" ").toLowerCase();
-    const matchedRule = ARCH_RULES.find(r => r.regex.test(archSource));
-    
-    const archName = matchedRule ? matchedRule.name : archSource;
+    const matchedRule = ARCH_RULES.find(r => r.regex.test(info.platform));
+    const archName = matchedRule ? matchedRule.name : `${info.architecture}${info?.bitness >> 6 && '_64' || ''}`;
+    // 64 >> 6 === 1
     const archDisplay = matchedRule ?
-      `${matchedRule.name}(${archSource})` :
-      `${archSource}(${info.platform})`;
-    
-    console.log('架构检测：info.platform：' + info.platform);
-    console.log('架构检测：info.architecture：' + info.architecture);
-    console.log('架构检测：archName：' + archName);
-    console.log('架构检测：archDisplay：' + archDisplay);
+      `${matchedRule.name}(${info.platform})` :
+      `${archName}(${info.platform})`;
     
     if (info.system && /android/i.test(info.system)) {
       androidVer = info.systemVersion || '';
