@@ -1,0 +1,65 @@
+@font-face {
+  font-family: 'mojangles';
+  src: url('/file/font/Mojangles.ttf');
+}
+
+body {
+  font-family: 'mojangles', sans-serif;
+}
+
+img {
+  width: 100%;
+}
+
+.loadContainer {
+  background-color: #00000080;
+  z-index: 114514;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+}
+
+.scale-out {
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+
+.hide {
+  display: none;
+}
+
+.exorcist-mode * {
+  animation: shake 0.1s infinite;
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translate(0)
+  }
+
+  25% {
+    transform: translate(-2px, -2px)
+  }
+
+  75% {
+    transform: translate(2px, 2px)
+  }
+}
+
+.mdui-panel-item {
+  -webkit-box-shadow: 0 2px 4px #000;
+  box-shadow: 0 2px 4px #000;
+}
+
+.mdui-select {
+  height: unset;
+  font-size: unset;
+  font-family: unset;
+}
