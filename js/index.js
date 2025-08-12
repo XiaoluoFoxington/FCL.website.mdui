@@ -10,6 +10,7 @@ let fclDownWay4Laoded = false;
 let fclDownWay5Laoded = false;
 let zlDownWay1Laoded = false;
 let zlDownWay2Laoded = false;
+let downLinksLoaded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
 let showEpilepsyWarning = true;
@@ -53,6 +54,7 @@ function initApp() {
           requestAnimationFrame(() => {
             updateStatus('添加事件监听…');
             window.addEventListener('hashchange', handleHashRouting);
+            document.getElementById('loadDownLinks').addEventListener('click', loadDownLinks);
             document.getElementById('loadChecksums').addEventListener('click', loadChecksums);
             document.getElementById('loadAbout').addEventListener('click', loadAbout);
             
@@ -591,16 +593,6 @@ async function loadOdlm() {
   });
 }
 
-/**
- * 加载直链
- */
-async function loadDownLinks() {
-  await loadContent({
-    url: '/file/data/downLinks.html',
-    targetId: 'tab2',
-    context: '直链'
-  });
-}
 
 /**
  * 加载FCL介绍
@@ -613,6 +605,22 @@ async function loadIntroFcl() {
   });
 }
 
+/**
+ * 加载直链
+ */
+async function loadDownLinks() {
+  console.log('下载：是否不加载：' + downLinksLoaded);
+  if (downLinksLoaded) {
+    return;
+  } else {
+    await loadContent({
+     url: '/file/data/downLinks.html',
+      targetId: 'tab2',
+      context: '直链'
+    });
+    downLinksLoaded = true;
+  }
+}
 /**
  * 加载校验
  */
