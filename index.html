@@ -258,14 +258,14 @@
     </div>
     <!-- TAB栏 -->
     <div class="mdui-tab mdui-color-indigo  mdui-color-theme">
-      <a href="#tab1" class="mdui-ripple mdui-ripple-white mdui-ripple">
-        <i class="mdui-icon material-icons">home</i>
-        <label>首页</label>
-      </a><!-- 首页 -->
       <a href="#tab2" class="mdui-ripple mdui-ripple-whitemdui-ripple" id="loadDownLinks">
         <i class="mdui-icon material-icons">file_download</i>
         <label>下载</label>
       </a><!-- 下载 -->
+      <a href="#tab1" class="mdui-ripple mdui-ripple-white mdui-ripple">
+        <i class="mdui-icon material-icons">home</i>
+        <label>主页</label>
+      </a><!-- 主页 -->
       <a href="#tab3" class="mdui-ripple mdui-ripple-whitemdui-ripple" id="loadChecksums">
         <i class="mdui-icon material-icons">playlist_add_check</i>
         <label>校验</label>
@@ -283,7 +283,7 @@
   
   <!-- 主容器 -->
   <div class="mdui-container-fluid mdui-m-t-1">
-    <!-- 介绍 -->
+    <!-- 主页 -->
     <div id="tab1">
       <div class="mdui-panel" mdui-panel>
         
@@ -435,20 +435,7 @@
     </div>
     <!-- 下载 -->
     <div id="tab2">
-      <div class="mdui-panel" mdui-panel>
-        <div class="mdui-panel-item mdui-panel-item-open">
-          <div class="mdui-panel-item-header mdui-ripple">
-            <div>Load Off</div>
-            <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-          </div>
-          <div class="mdui-panel-item-body">
-            <div class="mdui-typo">
-              <p>点击下方按钮以显示下载链接。</p>
-            </div>
-            <a class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple" href="javascript: loadDownLinks();">显示下载链接</a>
-          </div>
-        </div>
-      </div>
+      <a class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple" href="javascript: loadDownLinks();">显示下载链接</a>
     </div>
     <!-- 校验 -->
     <div id="tab3">

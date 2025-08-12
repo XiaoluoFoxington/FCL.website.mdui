@@ -62,43 +62,48 @@ function initApp() {
               updateStatus('打开公告…');
               openNotice();
               
-              requestAnimationFrame(() => {
+              requestAnimationFrame(async () => {
                 updateStatus('获取系统信息…');
-                showDeviceInfo();
-                
+                await showDeviceInfo();
+
                 requestAnimationFrame(() => {
-                  updateStatus('获取开门见山链接…');
-                  const odlm = document.getElementById('odlmSelect');
-                  if (odlm) {
-                    setupIndexDownLinks(odlm.value);
-                  }
+                  updateStatus('获取下载TAB内容...');
+                  loadDownLinks();
                   
                   requestAnimationFrame(() => {
-                    updateStatus('加载运作时间…');
-                    loadRunTime();
+                    updateStatus('获取开门见山链接…');
+                    const odlm = document.getElementById('odlmSelect');
+                    if (odlm) {
+                      setupIndexDownLinks(odlm.value);
+                    }
                     
                     requestAnimationFrame(() => {
-                      updateStatus('加载FCL线路2流量…');
-                      loadFclDownWay2Info();
+                      updateStatus('加载运作时间…');
+                      loadRunTime();
                       
                       requestAnimationFrame(() => {
-                        updateStatus('添加定时器…');
-                        setInterval(loadRunTime, 1000);
-                        // setInterval(loadFclDownWay2Info, 60000);
+                        updateStatus('加载FCL线路2流量…');
+                        loadFclDownWay2Info();
                         
                         requestAnimationFrame(() => {
-                          updateStatus('添加按钮冷却...');
-                          setCoolDown();
+                          updateStatus('添加定时器…');
+                          setInterval(loadRunTime, 1000);
+                          // setInterval(loadFclDownWay2Info, 60000);
                           
                           requestAnimationFrame(() => {
-                            updateStatus('等待其它乱七八糟的东西…')
+                            updateStatus('添加按钮冷却...');
+                            setCoolDown();
+                            
+                            requestAnimationFrame(() => {
+                              updateStatus('等待其它乱七八糟的东西…')
+                            });
+                            
                           });
-                          
                         });
                       });
                     });
                   });
-                });
+                })
               });
             });
           });
