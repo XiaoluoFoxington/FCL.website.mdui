@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+  <meta name="renderer" content="webkit">
+  <link rel="stylesheet" href="/css/mdui.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" href="/file/picture/FCL_icon.webp">
+  <meta name="keywords" content="fcl, foldcraftlauncher, fcl启动器, fcl官网, 官方原版, 下载, 最新版, fcl渲染器, fcl插件, fclava, pojav ffmpeg plugin, zl, zalithlauncher, zl启动器">
+  <meta name="description" content="这里是由FCL玩家社区自行搭建的公益下载站。可以在此页面下载《Fold Craft Launcher》（简称FCL），这里提供了FCL最新版、FCL单架构版、FCL历史版本、FCL渲染器、FCL插件、Java和Pojav FFmpeg Plugin，甚至还有ZL启动器。有直链、官方HG、网盘等多个可靠下载源。此网站没有烦人的广告，没有乱七八糟的套路，玩家能够方便快捷地下载到最新版FCL。">
+  <title>Fold Craft Launcher 下载站</title>
+</head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-teal mdui-theme-accent-green mdui-theme-layout-dark">
+  
+  <!-- 应用栏 -->
+  <div class="mdui-appbar mdui-appbar-fixed">
+    <!-- 工具栏 -->
+    <div class="mdui-toolbar mdui-color-indigo mdui-color-theme">
+      <a href="/" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '返回'}"><i class="mdui-icon material-icons">arrow_back</i></a>
+      <div class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: 'FCL_icon'}"><img src="/file/picture/FCL_icon.webp"></div>
+      <a href="javascript:;" class="mdui-typo-title">所有下载列表</a>
+      <div class="mdui-toolbar-spacer mdui-ripple"></div>
+      <a mdui-menu="{target: '#toolbar-more'}" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '更多'}"><i class="mdui-icon material-icons">more_vert</i></a>
+      <ul class="mdui-menu mdui-menu-cascade" id="toolbar-more">
+        <li class="mdui-menu-item">
+          <a href="https://foldcraftlauncher.cn" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">links</i>
+            主域名
+          </a>
+        </li><!-- 主域名 -->
+        <li class="mdui-menu-item">
+          <a href="javascript: location.reload(true);" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">refresh</i>
+            刷新
+          </a>
+        </li><!-- 刷新 -->
+      </ul>
+    </div>
+  </div>
+  
+  <!-- 主容器 -->
+  <div class="mdui-container-fluid mdui-m-t-1">
+    <div class="mdui-panel" mdui-panel>
+      <!-- 过滤器 -->
+      <div class="mdui-panel-item mdui-panel-item-open">
+        <div class="mdui-panel-item-header mdui-ripple">
+          <div>过滤器</div>
+          <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+        <div class="mdui-panel-item-body mdui-typo">
+          <p>
+            <span>类型</span>
+            <select class="mdui-select"></select>
+          </p>
+          <p>待开发</p>
+        </div>
+      </div>
+      <!-- 主列表 -->
+      <div class="mdui-panel-item mdui-panel-item-open">
+        <div class="mdui-panel-item-header mdui-ripple">
+          <div>主列表</div>
+          <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+        <div class="mdui-panel-item-body">
+          <div class="mdui-panel" id="mainList" mdui-panel>
+            
+            <div class="mdui-panel-item mdui-panel-item-open">
+              <div class="mdui-panel-item-header">示例项1</div>
+              <div class="mdui-panel-item-body mdui-typo">
+                <p>
+                <div class="mdui-chip">
+                  <span class="mdui-chip-title">标签1</span>
+                </div>
+                <div class="mdui-chip">
+                  <span class="mdui-chip-title">标签2</span>
+                </div>
+                </p>
+                <p>
+                  <a class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple" href="#">下载</a>
+                </p>
+              </div>
+            </div>
+            
+            <div class="mdui-panel-item mdui-panel-item-open">
+              <div class="mdui-panel-item-header">示例项2</div>
+              <div class="mdui-panel-item-body mdui-typo">
+                <p>
+                <div class="mdui-chip">
+                  <span class="mdui-chip-title">标签1</span>
+                </div>
+                <div class="mdui-chip">
+                  <span class="mdui-chip-title">标签3</span>
+                </div>
+                </p>
+                <p>
+                  <a class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple" href="#">下载</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="/js/mdui.min.js"></script>
+    <script src="/page/downloads/main.js"></script>
+</body>
+
+</html>
