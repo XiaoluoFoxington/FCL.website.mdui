@@ -3,13 +3,14 @@
 // 洛狐XiaoluoFoxington
 // 晚梦LateDream
 
-let fclDownWay1Laoded = false;
-let fclDownWay2Laoded = false;
-let fclDownWay3Laoded = false;
-let fclDownWay4Laoded = false;
-let fclDownWay5Laoded = false;
-let zlDownWay1Laoded = false;
-let zlDownWay2Laoded = false;
+let fclDownWay1Loaded = false;
+let fclDownWay2Loaded = false;
+let fclDownWay3Loaded = false;
+let fclDownWay4Loaded = false;
+let fclDownWay5Loaded = false;
+let fclDownWay6Loaded = false;
+let zlDownWay1Loaded = false;
+let zlDownWay2Loaded = false;
 let downLinksLoaded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
@@ -886,6 +887,7 @@ async function loadAllFclDownWays() {
     loadFclDownWay3(),
     loadFclDownWay4(),
     loadFclDownWay5(),
+    loadFclDownWay6(),
     loadZlDownWay1(),
     loadZlDownWay2()
   ]);
@@ -897,7 +899,7 @@ async function loadAllFclDownWays() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadFclDownWay1() {
-  if (fclDownWay1Laoded) {
+  if (fclDownWay1Loaded) {
     return;
   }
   await loadFclDownWay(
@@ -905,7 +907,7 @@ async function loadFclDownWay1() {
     'fclDownWay1',
     '加载FCL线1'
   );
-  fclDownWay1Laoded = true;
+  fclDownWay1Loaded = true;
 }
 
 /**
@@ -914,7 +916,7 @@ async function loadFclDownWay1() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadFclDownWay2() {
-  if (fclDownWay2Laoded) {
+  if (fclDownWay2Loaded) {
     return;
   }
   await loadFclDownWay(
@@ -922,7 +924,7 @@ async function loadFclDownWay2() {
     'fclDownWay2',
     '加载FCL线2'
   );
-  fclDownWay2Laoded = true;
+  fclDownWay2Loaded = true;
 }
 
 /**
@@ -931,7 +933,7 @@ async function loadFclDownWay2() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadFclDownWay3() {
-  if (fclDownWay3Laoded) {
+  if (fclDownWay3Loaded) {
     return;
   }
   await loadFclDownWay(
@@ -939,7 +941,7 @@ async function loadFclDownWay3() {
     'fclDownWay3',
     '加载FCL线3'
   );
-  fclDownWay3Laoded = true;
+  fclDownWay3Loaded = true;
 }
 
 /**
@@ -948,7 +950,7 @@ async function loadFclDownWay3() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadFclDownWay4() {
-  if (fclDownWay4Laoded) {
+  if (fclDownWay4Loaded) {
     return;
   }
   await loadFclDownWay(
@@ -956,7 +958,7 @@ async function loadFclDownWay4() {
     'fclDownWay4',
     '加载FCL线4'
   );
-  fclDownWay4Laoded = true;
+  fclDownWay4Loaded = true;
 }
 
 /**
@@ -965,7 +967,7 @@ async function loadFclDownWay4() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadFclDownWay5() {
-  if (fclDownWay5Laoded) {
+  if (fclDownWay5Loaded) {
     return;
   }
   await loadFclDownWay(
@@ -973,7 +975,24 @@ async function loadFclDownWay5() {
     'fclDownWay5',
     '加载FCL线5'
   );
-  fclDownWay5Laoded = true;
+  fclDownWay5Loaded = true;
+}
+
+/**
+ * 加载FCL下载线路6
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadFclDownWay6() {
+  if (fclDownWay6Loaded) {
+    return;
+  }
+  await loadFclDownWay(
+    'https://bbs.xn--rhqx00c95nv9a.club/mirror.json',
+    'fclDownWay6',
+    '加载FCL线6'
+  );
+  fclDownWay6Loaded = true;
 }
 
 /**
@@ -982,7 +1001,7 @@ async function loadFclDownWay5() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadZlDownWay1() {
-  if (zlDownWay1Laoded) {
+  if (zlDownWay1Loaded) {
     return;
   }
   await loadFclDownWay(
@@ -990,7 +1009,7 @@ async function loadZlDownWay1() {
     'zlDownWay1',
     '加载ZL线1'
   );
-  zlDownWay1Laoded = true;
+  zlDownWay1Loaded = true;
 }
 
 /**
@@ -999,7 +1018,7 @@ async function loadZlDownWay1() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadZlDownWay2() {
-  if (zlDownWay2Laoded) {
+  if (zlDownWay2Loaded) {
     return;
   }
   await loadFclDownWay(
@@ -1007,7 +1026,7 @@ async function loadZlDownWay2() {
     'zlDownWay2',
     '加载ZL线2'
   );
-  zlDownWay2Laoded = true;
+  zlDownWay2Loaded = true;
 }
 
 /**
@@ -1075,6 +1094,10 @@ const SOURCE_MAP = {
   F5: {
     path: "https://fcl.switch.api.072211.xyz/?from=foldcraftlauncher&isDev=1",
     markLatest: true
+  },
+  F6: {
+    path: "https://bbs.xn--rhqx00c95nv9a.club/mirror.json",
+    markLatest: false
   },
   Z1: {
     path: "/file/data/zlDownWay1.json",
