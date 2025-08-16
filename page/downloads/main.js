@@ -86,42 +86,26 @@ async function loadList(jsonLink, f2, name, sourceName) {
  * @param {string} url - 目标URL地址
  * @param {object} [options] - 可选配置项
  * @param {number} [options.timeout=10000] - 超时时间(毫秒)
- * @param {object} [options.headers] - 自定义请求头
  * @returns {Promise<object>} - 返回解析后的JSON数据
  */
 async function fetchJson(url, options = {}) {
-  const { timeout = 10000, headers = {} } = options;
-  
+  const { timeout = 10000 } = options;
+
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => {
-    controller.abort();
-    throw new Error(`请求超时 (${timeout}ms)`);
-  }, timeout);
-  
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
   try {
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers
-      },
-      signal: controller.signal
-    });
-    
+    const response = await fetch(url);
+
     clearTimeout(timeoutId);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP错误! 状态码: ${response.status}`);
-    }
-    
+
+    if (!response.ok) throw new Error(`HTTP错误! 状态码: ${response.status}`);
     return await response.json();
-    
+
   } catch (error) {
     clearTimeout(timeoutId);
-    
-    if (error.name === 'AbortError') {
-      throw new Error(`请求被中止: ${error.message}`);
-    }
-    
+
+    if (error.name === 'AbortError') throw new Error(`请求超时 (${timeout}ms)`);
     throw new Error(`获取数据失败: ${error.message}`);
   }
 }
