@@ -3,6 +3,8 @@ window.onload = async function() {
   await loadF2();
   await loadF3();
   await loadF4();
+  await loadF5();
+  await loadF6();
 }
 
 /**
@@ -32,6 +34,21 @@ async function loadF3() {
 async function loadF4() {
   loadList('/file/data/fclDownWay4.json', false, 'FCL', '线路4');
 }
+
+/**
+ * 加载F5
+ */
+async function loadF5() {
+  loadList('https://fcl.switch.api.072211.xyz/?from=foldcraftlauncher&isDev=1', false, 'FCL', '线路5');
+}
+
+/**
+ * 加载F6
+ */
+async function loadF6() {
+  loadList('https://bbs.xn--rhqx00c95nv9a.club/mirror.json', false, 'FCL', '线路6');
+}
+
 
 //
 
