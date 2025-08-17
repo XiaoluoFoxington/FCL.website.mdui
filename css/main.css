@@ -81,6 +81,11 @@ img {
   height: 48px;
 }
 
+.mdui-panel-item-arrow {
+  top: 12px;
+  right: 12px;
+}
+
 .mdui-panel-item-open>.mdui-panel-item-header .mdui-panel-item-arrow {
   top: 12px;
   right: 12px;
