@@ -14,58 +14,151 @@
 </head>
 
 <body class="mdui-appbar-with-toolbar mdui-theme-primary-teal mdui-theme-accent-green mdui-theme-layout-dark">
-  
+  <!-- 加载提示 -->
+  <div class="loadContainer" id="loading">
+    <div class="mdui-panel" style="width: auto;" mdui-panel>
+      <div class="mdui-panel-item mdui-panel-item-open">
+        <div class="mdui-panel-item-header mdui-ripple">
+          <div>等待 window.onload …</div>
+          <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+        <div class="mdui-panel-item-body">
+          <div class="mdui-typo">
+            <p id="status">加载基本框架…</p>
+            <div class="mdui-spinner"></div>
+            <p>网页正在加载，可能需要一段时间，请耐心等待。</p>
+            <p>如果你已经没有耐心继续等待了，请尝试：</p>
+            <ul>
+              <li>检查网络连接</li>
+              <li>绕过 GFW</li>
+              <li>启用 JavaScript</li>
+              <li>更换浏览器</li>
+              <li><a href="https://wj.qq.com/s2/22395480/df5b/" target="_blank">向站长反馈</a></li>
+              <li><a href="javascript: document.getElementById('loading').remove();">强制关闭此提示</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- 应用栏 -->
   <div class="mdui-appbar mdui-appbar-fixed">
     <!-- 工具栏 -->
     <div class="mdui-toolbar mdui-color-indigo mdui-color-theme">
       <a href="/" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '返回'}"><i class="mdui-icon material-icons">arrow_back</i></a>
+      <!--
       <div class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: 'FCL_icon'}"><img src="/file/picture/FCL_icon.webp"></div>
+      -->
       <a href="javascript:;" class="mdui-typo-title">所有下载列表</a>
       <div class="mdui-toolbar-spacer mdui-ripple"></div>
-      <a mdui-menu="{target: '#toolbar-more'}" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '更多'}"><i class="mdui-icon material-icons">more_vert</i></a>
-      <ul class="mdui-menu mdui-menu-cascade" id="toolbar-more">
-        <li class="mdui-menu-item">
-          <a href="https://foldcraftlauncher.cn" class="mdui-ripple">
-            <i class="mdui-menu-item-icon mdui-icon material-icons">links</i>
-            主域名
-          </a>
-        </li><!-- 主域名 -->
-        <li class="mdui-menu-item">
-          <a href="javascript: location.reload(true);" class="mdui-ripple">
-            <i class="mdui-menu-item-icon mdui-icon material-icons">refresh</i>
-            刷新
-          </a>
-        </li><!-- 刷新 -->
-      </ul>
+      <a href="javascript: window.scrollTo({top: 0, behavior: 'smooth'});" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '回到顶部'}"><i class="mdui-icon material-icons">arrow_upward</i></a>
+      <a mdui-menu="{target: '#toolbar-more' }" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '更多'}"><i class="mdui-icon material-icons">more_vert</i></a>
+        <ul class="mdui-menu mdui-menu-cascade" id="toolbar-more">
+          <li class="mdui-menu-item">
+            <a href="https://foldcraftlauncher.cn" class="mdui-ripple">
+              <i class="mdui-menu-item-icon mdui-icon material-icons">links</i>
+              主域名
+            </a>
+          </li><!-- 主域名 -->
+          <li class="mdui-menu-item">
+            <a href="javascript: location.reload(true);" class="mdui-ripple">
+              <i class="mdui-menu-item-icon mdui-icon material-icons">refresh</i>
+              刷新
+            </a>
+          </li><!-- 刷新 -->
+        </ul>
+      </div>
     </div>
   </div>
-  
+
   <!-- 主容器 -->
   <div class="mdui-container-fluid mdui-m-t-1">
     <div class="mdui-panel" mdui-panel>
       <!-- 过滤器 -->
       <div class="mdui-panel-item mdui-panel-item-open">
         <div class="mdui-panel-item-header mdui-ripple">
-          <div>警告</div>
-          <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-        </div>
-        <div class="mdui-panel-item-body mdui-typo">
-          <p>此页面目前特别简陋，许多功能还待开发。如果你只是想下载资源，请返回主页。</p>
-          <p>对此页面有建议？发现了BUG？请<a href="https://wj.qq.com/s2/22395480/df5b/" target="_blank">填写反馈问卷</a>。</p>
-        </div>
-      </div>
-      <!-- 过滤器 -->
-      <div class="mdui-panel-item mdui-panel-item-open">
-        <div class="mdui-panel-item-header mdui-ripple">
           <div>过滤器</div>
           <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
         </div>
-        <div class="mdui-panel-item-body mdui-typo">
-          <p>
-            <span>类型</span>
-            <select class="mdui-select"></select>
-          </p>
+        <div class="mdui-panel-item-body filter-container">
+          <div class="mdui-panel" mdui-panel>
+
+            <div class="mdui-panel-item mdui-panel-item-open">
+              <div class="mdui-panel-item-header mdui-ripple">
+                <div>可用过滤器</div>
+                <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+              </div>
+              <div class="mdui-panel-item-body mdui-typo" id="allList">
+                <p>
+                  <span>启动器</span>
+                <div class="mdui-chip filter-chip" data-value="Fold Craft Launcher">
+                  <span class="mdui-chip-title">Fold Craft Launcher</span>
+                </div>
+                <div class="mdui-chip filter-chip" data-value="Zalith Launcher">
+                  <span class="mdui-chip-title">Zalith Launcher</span>
+                </div>
+                </p>
+                <p>
+                  <span>下载源</span>
+                <div class="mdui-chip filter-chip" data-value="线路1">
+                  <span class="mdui-chip-title">线路1</span>
+                </div>
+                <div class="mdui-chip filter-chip" data-value="线路2">
+                  <span class="mdui-chip-title">线路2</span>
+                </div>
+                <div class="mdui-chip filter-chip" data-value="线路3">
+                  <span class="mdui-chip-title">线路3</span>
+                </div>
+                <div class="mdui-chip filter-chip" data-value="线路4">
+                  <span class="mdui-chip-title">线路4</span>
+                </div>
+                <div class="mdui-chip filter-chip" data-value="线路5">
+                  <span class="mdui-chip-title">线路5</span>
+                </div>
+                <div class="mdui-chip filter-chip" data-value="线路6">
+                  <span class="mdui-chip-title">线路6</span>
+                </div>
+                </p>
+                <p>
+                  <span>架构</span>
+                <div class="mdui-chip filter-chip" data-value="arm64-v8a">
+                  <span class="mdui-chip-title">arm64-v8a</span>
+                </div>
+                <div class="mdui-chip filter-chip" data-value="armeabi-v7a">
+                  <span class="mdui-chip-title">armeabi-v7a</span>
+                </div>
+                <div class="mdui-chip filter-chip" data-value="x86">
+                  <span class="mdui-chip-title">x86</span>
+                </div>
+                <div class="mdui-chip filter-chip" data-value="x86_64">
+                  <span class="mdui-chip-title">x86_64</span>
+                </div>
+                </p>
+              </div>
+            </div>
+
+            <div class="mdui-panel-item mdui-panel-item-open">
+              <div class="mdui-panel-item-header mdui-ripple">
+                <div>活动过滤器</div>
+                <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+              </div>
+              <div class="mdui-panel-item-body mdui-typo">
+                <p>
+                <div class="filter-controls">
+                  <a id="clearFilters" class="mdui-btn mdui-btn-raised mdui-ripple">
+                    <i class="mdui-icon material-icons">clear_all</i>
+                    清除所有过滤
+                  </a>
+                </div>
+                </p>
+                <p>
+                <div id="activeFilters"></div>
+                </p>
+                <p id="resultsCount">显示全部项目</p>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
       <!-- 主列表 -->
@@ -76,47 +169,15 @@
         </div>
         <div class="mdui-panel-item-body">
           <div class="mdui-panel" id="mainList" mdui-panel>
-            
-            <div class="mdui-panel-item mdui-panel-item-open">
-              <div class="mdui-panel-item-header">示例项1</div>
-              <div class="mdui-panel-item-body mdui-typo">
-                <p>
-                <div class="mdui-chip">
-                  <span class="mdui-chip-title">标签1</span>
-                </div>
-                <div class="mdui-chip">
-                  <span class="mdui-chip-title">标签2</span>
-                </div>
-                </p>
-                <p>
-                  <a class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple" href="#">下载</a>
-                </p>
-              </div>
-            </div>
-            
-            <div class="mdui-panel-item mdui-panel-item-open">
-              <div class="mdui-panel-item-header">示例项2</div>
-              <div class="mdui-panel-item-body mdui-typo">
-                <p>
-                <div class="mdui-chip">
-                  <span class="mdui-chip-title">标签1</span>
-                </div>
-                <div class="mdui-chip">
-                  <span class="mdui-chip-title">标签3</span>
-                </div>
-                </p>
-                <p>
-                  <a class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple" href="#">下载</a>
-                </p>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
     </div>
-    
-    <script src="/js/mdui.min.js"></script>
-    <script src="/page/downloads/main.js"></script>
+  </div>
+
+  <script src="/js/mdui.min.js"></script>
+  <script src="/page/downloads/main.js"></script>
 </body>
 
 </html>
