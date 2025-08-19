@@ -49,7 +49,6 @@ async function loadF6() {
   loadList('https://bbs.xn--rhqx00c95nv9a.club/mirror.json', false, 'FCL', '线路6');
 }
 
-
 //
 
 /**
@@ -65,7 +64,7 @@ async function loadList(jsonLink, f2, name, sourceName) {
     const mainList = document.getElementById('mainList');
     
     if (!data.children || data.children.length === 0) {
-      renderErrorState('mainList', '数据格式错误，未找到版本信息');
+      renderErrorState('数据格式错误，未找到版本信息');
       return;
     }
     
@@ -79,22 +78,9 @@ async function loadList(jsonLink, f2, name, sourceName) {
     
   } catch (e) {
     console.error('获取数据失败:', e);
-    renderErrorState('mainList', e);
+    renderErrorState(e);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //
 
@@ -189,10 +175,9 @@ function renderVersionData(versionData, name, sourceName) {
 
 /**
  * 渲染错误状态到DOM容器
- * @param {string} containerId - 容器元素ID
- * @param {string} errorMessage - 错误消息
+ * @param {string} e - 错误消息
  */
-function renderErrorState(containerId, errorMessage) {
+function renderErrorState(e) {
   console.error(e);
 }
 
