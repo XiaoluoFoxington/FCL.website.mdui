@@ -35,11 +35,11 @@ window.addEventListener('DOMContentLoaded', function() {
  */
 function initApp() {
   requestAnimationFrame(() => {
-    updateStatus('初始化Eruda…');
+    updateStatus('初始化Eruda…', 6);
     initEruda();
     
     requestAnimationFrame(() => {
-      updateStatus('获取系统主题色偏好...');
+      updateStatus('获取系统主题色偏好...', 12);
       if (!localStorage.getItem('theme')) {
         localStorage.setItem('theme', window.matchMedia(
           '(prefers-color-scheme: dark)'
@@ -47,58 +47,58 @@ function initApp() {
       }
       
       requestAnimationFrame(() => {
-        updateStatus('加载主题…');
+        updateStatus('加载主题…', 18);
         loadTheme();
         
         requestAnimationFrame(() => {
-          updateStatus('初始化地址栏参数解析…');
+          updateStatus('初始化地址栏参数解析…', 24);
           handleHashRouting();
           
           requestAnimationFrame(() => {
-            updateStatus('添加事件监听…');
+            updateStatus('添加事件监听…', 30);
             window.addEventListener('hashchange', handleHashRouting);
             document.getElementById('loadDownLinks').addEventListener('click', loadDownLinks);
             document.getElementById('loadChecksums').addEventListener('click', loadChecksums);
             document.getElementById('loadAbout').addEventListener('click', loadAbout);
             
             requestAnimationFrame(() => {
-              updateStatus('打开公告…');
+              updateStatus('打开公告…', 36);
               openNotice();
               
               requestAnimationFrame(async () => {
-                updateStatus('获取系统信息…');
+                updateStatus('获取系统信息…', 42);
                 await showDeviceInfo();
 
                 requestAnimationFrame(() => {
-                  updateStatus('获取下载TAB内容...');
+                  updateStatus('获取下载TAB内容...', 48);
                   loadDownLinks();
                   
                   requestAnimationFrame(() => {
-                    updateStatus('获取开门见山链接…');
+                    updateStatus('获取开门见山链接…', 54);
                     const odlm = document.getElementById('odlmSelect');
                     if (odlm) {
                       setupIndexDownLinks(odlm.value);
                     }
                     
                     requestAnimationFrame(() => {
-                      updateStatus('加载运作时间…');
+                      updateStatus('加载运作时间…', 60);
                       loadRunTime();
                       
                       requestAnimationFrame(() => {
-                        updateStatus('加载FCL线路2流量…');
+                        updateStatus('加载FCL线路2流量…', 66);
                         loadFclDownWay2Info();
                         
                         requestAnimationFrame(() => {
-                          updateStatus('添加定时器…');
+                          updateStatus('添加定时器…', 72);
                           setInterval(loadRunTime, 1000);
                           // setInterval(loadFclDownWay2Info, 60000);
                           
                           requestAnimationFrame(() => {
-                            updateStatus('添加按钮冷却...');
+                            updateStatus('添加按钮冷却...', 78);
                             setCoolDown();
                             
                             requestAnimationFrame(() => {
-                              updateStatus('等待其它乱七八糟的东西…')
+                              updateStatus('等待其它乱七八糟的东西…', 84);
                             });
                             
                           });
@@ -118,7 +118,7 @@ function initApp() {
 
 window.onload = function() {
   requestAnimationFrame(() => {
-    updateStatus('移除此提示…');
+    updateStatus('移除此提示…', 90);
     removeLoadTip();
     console.log('window.onload：完成');
   });
@@ -1569,17 +1569,23 @@ function setCoolDown() {
 
 /**
  * 更新状态文本
+ * @param {string} statusText 状态文本
+ * @param {number} progressNum 进度百分比
  */
-function updateStatus(statusText) {
-  console.log('状态：' + statusText);
+function updateStatus(statusText, progressNum) {
+  console.log('状态：' + statusText + '（' + progressNum + '）');
   const container = document.getElementById('status');
+  const porgress = document.getElementById('progress');
   const statusTextElement = document.getElementById('statusDebug');
   if (container) {
     container.innerHTML = statusText;
-  }
+  };
+  if (porgress) {
+    porgress.style.width = progressNum + '%';
+  };
   if (statusTextElement) {
     statusTextElement.innerHTML = statusTextElement.innerHTML + '<br>' + statusText;
-  }
+  };
 }
 
 // 那些盗用老子下载链接的人，我艹你们全家！老子拿自己的钱买的直链流量，以公益的性质搭建了这个下载站，就被你们这些缺德的没良心的傻逼给霍霍了！你们就不会考虑他人的感受吗？屎吃多了是吧？哈呀木！
