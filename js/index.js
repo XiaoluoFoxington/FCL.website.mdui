@@ -11,6 +11,8 @@ let fclDownWay5Loaded = false;
 let fclDownWay6Loaded = false;
 let zlDownWay1Loaded = false;
 let zlDownWay2Loaded = false;
+let zl2DownWay1Loaded = false;
+let zl2DownWay2Loaded = false;
 let downLinksLoaded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
@@ -754,8 +756,8 @@ async function loadFclDownWay(url, containerId, lineName) {
     
     let versionDirs = null;
     
-    if (url === 'https://frostlynx.work/external/fcl/file_tree.json') {
-      // FCL线2又在根children里包了一个“fcl”，需要再进入这个的children里寻找
+    if (url === 'https://frostlynx.work/external/fcl/file_tree.json' || url === 'https://frostlynx.work/external/zl2/file_tree.json') {
+      // FCL线2和zl2线2又在根children里包了一个“fcl”，需要再进入这个的children里寻找
       console.log('开门见山：FCL线2特殊处理');
       versionDirs = fileTree.children[0].children.filter(
         child => child.type === 'directory' && child.name !== 'root'
@@ -1030,6 +1032,41 @@ async function loadZlDownWay2() {
 }
 
 /**
+ * 加载ZL2下载线路1
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadZl2DownWay1() {
+  if (zl2DownWay1Loaded) {
+    return;
+  }
+  await loadFclDownWay(
+    '/file/data/zl2DownWay1.json',
+    'zl2DownWay1',
+    '加载ZL2线1'
+  );
+  zl2DownWay1Loaded = true;
+}
+
+/**
+ * 加载ZL2下载线路2
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadZl2DownWay2() {
+  if (zl2DownWay2Loaded) {
+    return;
+  }
+  await loadFclDownWay(
+    'https://frostlynx.work/external/zl2/file_tree.json',
+    'zl2DownWay2',
+    '加载ZL2线2'
+  );
+  zl2DownWay2Loaded = true;
+}
+
+
+/**
  * 获取当前时间与建站时间的时间差（精确到天）
  * @returns {string} 格式化后的时间差字符串（非零单位：天、小时、分钟、秒）
  */
@@ -1106,6 +1143,15 @@ const SOURCE_MAP = {
   Z2: {
     path: "/file/data/zlDownWay2.json",
     markLatest: false
+  },
+  Z21: {
+    path: "/file/data/zl2DownWay1.json",
+    markLatest: false
+  },
+  Z22: {
+    path: "https://frostlynx.work/external/zl2/file_tree.json",
+    markLatest: false,
+    nestedPath: ["zl2"] // 特殊嵌套路径
   }
 };
 

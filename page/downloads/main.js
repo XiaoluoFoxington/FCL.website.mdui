@@ -383,6 +383,10 @@ const Loads = {
     await this.z1();
     Functions.updateStatus('正在加载 ZL线2...');
     await this.z2();
+    Functions.updateStatus('正在加载 ZL2线1...');
+    await this.zl21();
+    Functions.updateStatus('正在加载 ZL2线2...');
+    await this.zl22();
   },
 
   /**
@@ -439,6 +443,20 @@ const Loads = {
    */
   async z2() {
     await Functions.loadList('/file/data/zlDownWay2.json', false, 'Zalith Launcher', '线路3');
+  },
+
+  /**
+   * 加载Z21
+   */
+  async zl21() {
+    await Functions.loadList('/file/data/zl2DownWay1.json', false, 'Zalith Launcher 2', '线路1');
+  },
+
+  /**
+   * 加载Z22
+   */
+  async zl22() {
+    await Functions.loadList('https://frostlynx.work/external/zl2/file_tree.json', true, 'Zalith Launcher 2', '线路2');
   }
 }
 

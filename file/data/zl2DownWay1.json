@@ -1,0 +1,36 @@
+{
+  "latest": "2.0.0_alpha-20250810a（此源最新）",
+  "children": [
+    {
+      "name": "2.0.0_alpha-20250810a（此源最新）",
+      "type": "directory",
+      "children": [
+        {
+          "type": "file",
+          "download_link": "https://pan.huang1111.cn/f/6VZF1/ZalithLauncher-2.0.0_alpha-20250810a.apk",
+          "arch": "all"
+        },
+        {
+          "type": "file",
+          "download_link": "https://pan.huang1111.cn/f/XVafw/ZalithLauncher-2.0.0_alpha-20250810a-arm64-v8a.apk",
+          "arch": "arm64-v8a"
+        },
+        {
+          "type": "file",
+          "download_link": "https://pan.huang1111.cn/f/amEH4/ZalithLauncher-2.0.0_alpha-20250810a-armeabi-v7a.apk",
+          "arch": "armeabi-v7a"
+        },
+        {
+          "type": "file",
+          "download_link": "https://pan.huang1111.cn/f/VXqux/ZalithLauncher-2.0.0_alpha-20250810a-x86.apk",
+          "arch": "x86"
+        },
+        {
+          "type": "file",
+          "download_link": "https://pan.huang1111.cn/f/YYofd/ZalithLauncher-2.0.0_alpha-20250810a-x86_64.apk",
+          "arch": "x86_64"
+        }
+      ]
+    }
+  ]
+}
