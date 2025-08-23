@@ -346,14 +346,21 @@ const Functions = {
   /**
    * 更新状态
    * @param {string} message - 状态消息
+   * @param {number} progress - 进度
    */
-  updateStatus(message) {
+  updateStatus(message, progressNum) {
+    const progress = document.getElementById('progress');
     const statusElement = document.getElementById('status');
 
     if (!statusElement) {
       return;
     }
 
+    if (!progress) {
+      return;
+    }
+
+    progress.style.width = progressNum + "%";
     statusElement.textContent = message;
   }
 
@@ -367,25 +374,25 @@ const Loads = {
    * 加载全部
    */
   async all() {
-    Functions.updateStatus('正在加载 FCL线1...');
+    Functions.updateStatus('正在加载 FCL线1...', 0);
     await this.f1();
-    Functions.updateStatus('正在加载 FCL线2...');
+    Functions.updateStatus('正在加载 FCL线2...', 10);
     await this.f2();
-    Functions.updateStatus('正在加载 FCL线3...');
+    Functions.updateStatus('正在加载 FCL线3...', 20);
     await this.f3();
-    Functions.updateStatus('正在加载 FCL线4...');
+    Functions.updateStatus('正在加载 FCL线4...', 30);
     await this.f4();
-    Functions.updateStatus('正在加载 FCL线5...');
+    Functions.updateStatus('正在加载 FCL线5...', 40);
     await this.f5();
-    Functions.updateStatus('正在加载 FCL线6...');
+    Functions.updateStatus('正在加载 FCL线6...', 50);
     await this.f6();
-    Functions.updateStatus('正在加载 ZL线1...');
+    Functions.updateStatus('正在加载 ZL线1...', 60);
     await this.z1();
-    Functions.updateStatus('正在加载 ZL线2...');
+    Functions.updateStatus('正在加载 ZL线2...', 70);
     await this.z2();
-    Functions.updateStatus('正在加载 ZL2线1...');
+    Functions.updateStatus('正在加载 ZL2线1...', 80);
     await this.zl21();
-    Functions.updateStatus('正在加载 ZL2线2...');
+    Functions.updateStatus('正在加载 ZL2线2...', 90);
     await this.zl22();
   },
 
