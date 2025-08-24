@@ -449,7 +449,7 @@ const Loads = {
    * 加载Z2
    */
   async z2() {
-    await Functions.loadList('/file/data/zlDownWay2.json', false, 'Zalith Launcher', '线路3');
+    await Functions.loadList('/file/data/ZlDownWay3.json', false, 'Zalith Launcher', '线路3');
   },
 
   /**

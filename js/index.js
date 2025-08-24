@@ -10,7 +10,7 @@ let fclDownWay4Loaded = false;
 let fclDownWay5Loaded = false;
 let fclDownWay6Loaded = false;
 let zlDownWay1Loaded = false;
-let zlDownWay2Loaded = false;
+let ZlDownWay3Loaded = false;
 let zl2DownWay1Loaded = false;
 let zl2DownWay2Loaded = false;
 let downLinksLoaded = false;
@@ -891,7 +891,7 @@ async function loadAllFclDownWays() {
     loadFclDownWay5(),
     loadFclDownWay6(),
     loadZlDownWay1(),
-    loadZlDownWay2()
+    loadZlDownWay3()
   ]);
 }
 
@@ -1019,16 +1019,16 @@ async function loadZlDownWay1() {
  * @async
  * @returns {Promise<void>} 无返回值
  */
-async function loadZlDownWay2() {
-  if (zlDownWay2Loaded) {
+async function loadZlDownWay3() {
+  if (ZlDownWay3Loaded) {
     return;
   }
   await loadFclDownWay(
-    '/file/data/zlDownWay2.json',
-    'zlDownWay2',
+    '/file/data/ZlDownWay3.json',
+    'ZlDownWay3',
     '加载ZL线2'
   );
-  zlDownWay2Loaded = true;
+  ZlDownWay3Loaded = true;
 }
 
 /**
@@ -1140,8 +1140,8 @@ const SOURCE_MAP = {
     path: "/file/data/zlDownWay1.json",
     markLatest: false
   },
-  Z2: {
-    path: "/file/data/zlDownWay2.json",
+  Z3: {
+    path: "/file/data/ZlDownWay3.json",
     markLatest: false
   },
   Z21: {
