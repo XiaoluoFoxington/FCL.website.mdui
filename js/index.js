@@ -9,10 +9,15 @@ let fclDownWay3Loaded = false;
 let fclDownWay4Loaded = false;
 let fclDownWay5Loaded = false;
 let fclDownWay6Loaded = false;
+let fclDownWay7Loaded = false;
 let zlDownWay1Loaded = false;
 let ZlDownWay3Loaded = false;
+let zlDownWay7Loaded = false;
 let zl2DownWay1Loaded = false;
 let zl2DownWay2Loaded = false;
+let zl2DownWay7Loaded = false;
+let plDownWay7Loaded = false;
+let pliosDownWay7Loaded = false;
 let downLinksLoaded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
@@ -998,6 +1003,15 @@ async function loadFclDownWay6() {
 }
 
 /**
+ * 加载FCL下载线路7
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadFclDownWay7() {
+  await loadDownWay7('FoldCraftLauncher', 'fclDownWay7', 'fclDownWay7Loaded');
+}
+
+/**
  * 加载ZL下载线路1
  * @async
  * @returns {Promise<void>} 无返回值
@@ -1015,7 +1029,7 @@ async function loadZlDownWay1() {
 }
 
 /**
- * 加载ZL下载线路2
+ * 加载ZL下载线路3
  * @async
  * @returns {Promise<void>} 无返回值
  */
@@ -1030,6 +1044,15 @@ async function loadZlDownWay3() {
   );
   ZlDownWay3Loaded = true;
 }
+
+/**
+ * 加载ZL下载线路7
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadZlDownWay7() {
+  await loadDownWay7('ZalithLauncher', 'zlDownWay7', 'zlDownWay7Loaded');}
+
 
 /**
  * 加载ZL2下载线路1
@@ -1065,6 +1088,117 @@ async function loadZl2DownWay2() {
   zl2DownWay2Loaded = true;
 }
 
+/**
+ * 加载ZL2下载线路7
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadZl2DownWay7() {
+  await loadDownWay7('ZalithLauncher2', 'zl2DownWay7', 'zl2DownWay7Loaded');
+}
+
+/**
+ * 加载PL下载线路7
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadPlDownWay7() {
+  await loadDownWay7('PojavLauncher', 'plDownWay7', 'plDownWay7Loaded');
+}
+
+/**
+ * 加载PL iOS下载线路7
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadPliosDownWay7() {
+  await loadDownWay7('PojavLauncher_iOS', 'pliosDownWay7', 'pliosDownWay7Loaded');
+}
+
+// AI太好用了你知道吗（（（
+/**
+ * 加载线路7
+ * @param {string} repoName - 仓库名称
+ * @param {string} prefix - DOM元素前缀
+ * @param {string} loadedFlag - 全局加载标记
+ */
+async function loadDownWay7(repoName, prefix, loadedFlag) {
+  // 获取DOM元素引用
+  const spinner = document.getElementById(`${prefix}Spinner`);
+  const versionEl = document.getElementById(`${prefix}Version`);
+  const archElements = {
+    all: document.getElementById(`${prefix}All`),
+    v8a: document.getElementById(`${prefix}V8a`),
+    v7a: document.getElementById(`${prefix}V7a`),
+    x86: document.getElementById(`${prefix}X86`),
+    x64: document.getElementById(`${prefix}X64`)
+  };
+
+  // 检查是否已加载
+  if (window[loadedFlag]) return;
+  console.log(`加载${repoName}线7：开始`);
+
+  try {
+    // 获取制品列表
+    const artifacts = await Launcher.getByRepo(repoName);
+    versionEl.textContent = artifacts[0]?.tag || '未知版本';
+
+    // 架构匹配模式（优先级从高到低）
+    const archPatterns = [
+      { key: 'v8a', pattern: 'arm64-v8a' },
+      { key: 'x64', pattern: 'x86_64' }, // 优先匹配x64
+      { key: 'v7a', pattern: 'armeabi-v7a' },
+      { key: 'x86', pattern: 'x86' }     // 最后匹配x86
+    ];
+
+    // 标记找到的架构
+    const foundArch = new Set();
+
+    // 处理每个制品
+    artifacts.forEach(item => {
+      let matched = false;
+
+      // 按优先级检查架构匹配
+      for (const { key, pattern } of archPatterns) {
+        if (item.name.includes(pattern)) {
+          archElements[key].href = item.url;
+          foundArch.add(key);
+          matched = true;
+          break; // 匹配成功即跳出
+        }
+      }
+
+      // 未匹配任何架构时使用all链接
+      if (!matched) {
+        archElements.all.href = item.url;
+        foundArch.add('all');
+      }
+    });
+
+    // 移除未找到的架构元素
+    Object.keys(archElements).forEach(arch => {
+      if (!foundArch.has(arch)) {
+        archElements[arch].remove();
+      }
+    });
+
+    // 清理并标记完成
+    spinner.remove();
+    window[loadedFlag] = true;
+    console.log(`加载${repoName}线7：完成`);
+  } catch (error) {
+    console.error(`加载${repoName}线7：出错`, error);
+    versionEl.textContent = '加载失败';
+
+    // 显示错误对话框
+    mdui.dialog({
+      title: `加载${repoName}线7：出错`,
+      content: error.message,
+      buttons: [{ text: '关闭' }],
+      history: false
+    });
+  }
+}
 
 /**
  * 获取当前时间与建站时间的时间差（精确到天）
