@@ -1038,9 +1038,9 @@ async function loadZlDownWay3() {
     return;
   }
   await loadFclDownWay(
-    '/file/data/ZlDownWay3.json',
-    'ZlDownWay3',
-    '加载ZL线2'
+    '/file/data/zlDownWay3.json',
+    'zlDownWay3',
+    '加载ZL线3'
   );
   ZlDownWay3Loaded = true;
 }
