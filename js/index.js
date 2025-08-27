@@ -18,6 +18,7 @@ let zl2DownWay2Loaded = false;
 let zl2DownWay7Loaded = false;
 let plDownWay7Loaded = false;
 let pliosDownWay7Loaded = false;
+let driverDownWay1Loaded = false;
 let downLinksLoaded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
@@ -1198,6 +1199,77 @@ async function loadDownWay7(repoName, prefix, loadedFlag) {
       history: false
     });
   }
+}
+
+/**
+ * 加载一般列表。这种列表不像上面的需要按架构进行各种杂七杂八的东西，就是一个简单的按钮列表。
+ * @async
+ * @param {string} fileUrl - 数据JSON文件路径
+ * @param {string} targetId - 目标DOM元素ID
+ * @param {string} operationName - 操作名称（用于错误信息）
+ * @param {string} loadedFlag - 全局加载标记
+
+*/
+async function loadList(fileUrl, targetId, operationName, loadedFlag) {
+  // 检查是否已加载
+  if (window[loadedFlag]) {
+    return;
+  }
+
+  //调试
+  console.log(`加载${operationName}：${fileUrl}`);
+
+  try {
+    // 发起请求获取JSON数据
+    const response = await fetch(fileUrl);
+
+    // 检查请求是否成功
+    if (!response.ok) {
+      throw new Error(`状态码：${response.status}`);
+    }
+
+    // 解析JSON数据
+    const data = await response.json();
+
+    // 获取目标DOM元素
+    const targetElement = document.getElementById(targetId);
+    if (!targetElement) {
+      throw new Error(`元素不存在：${targetId}`);
+    }
+
+    // 生成HTML链接字符串
+    const linksHtml = data.map(item =>
+      `<a href="${item.url}" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">${item.name}</a>`
+    ).join('\n');
+
+    // 将生成的HTML填充到目标元素
+    targetElement.innerHTML = linksHtml;
+
+    // 输出加载完成
+    console.log(`加载${operationName}：完成`);
+
+    // 标记为已加载
+    window[loadedFlag] = true;
+
+  } catch (error) {
+    // 打印错误
+    console.error(`加载${operationName}：`, error);
+    
+    // 显示错误对话框
+    mdui.dialog({
+      title: `加载${operationName}：出错：`,
+      content: error.message,
+      buttons: [{ text: '关闭' }],
+      history: false
+    });
+  }
+}
+
+/**
+ * 加载驱动线1
+ */
+async function loadDriverDownWay1() {
+  await loadList('/file/data/驱动线1.json', 'driverDownWay1', '驱动线1', 'driverDownWay1Loaded');
 }
 
 /**
