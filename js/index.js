@@ -31,7 +31,7 @@ let sysArch = undefined;
 let androidVer = 0;
 
 
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', function () {
   'use strict';
   requestAnimationFrame(() => {
     initApp();
@@ -46,7 +46,7 @@ function initApp() {
   requestAnimationFrame(() => {
     updateStatus('初始化Eruda…', 6);
     initEruda();
-    
+
     requestAnimationFrame(() => {
       updateStatus('获取系统主题色偏好...', 12);
       if (!localStorage.getItem('theme')) {
@@ -54,26 +54,26 @@ function initApp() {
           '(prefers-color-scheme: dark)'
         ).matches ? 'dark' : 'light');
       }
-      
+
       requestAnimationFrame(() => {
         updateStatus('加载主题…', 18);
         loadTheme();
-        
+
         requestAnimationFrame(() => {
           updateStatus('初始化地址栏参数解析…', 24);
           handleHashRouting();
-          
+
           requestAnimationFrame(() => {
             updateStatus('添加事件监听…', 30);
             window.addEventListener('hashchange', handleHashRouting);
             document.getElementById('loadDownLinks').addEventListener('click', loadDownLinks);
             document.getElementById('loadChecksums').addEventListener('click', loadChecksums);
             document.getElementById('loadAbout').addEventListener('click', loadAbout);
-            
+
             requestAnimationFrame(() => {
               updateStatus('打开公告…', 36);
               openNotice();
-              
+
               requestAnimationFrame(async () => {
                 updateStatus('获取系统信息…', 42);
                 await showDeviceInfo();
@@ -81,35 +81,35 @@ function initApp() {
                 requestAnimationFrame(() => {
                   updateStatus('获取下载TAB内容...', 48);
                   loadDownLinks();
-                  
+
                   requestAnimationFrame(() => {
                     updateStatus('获取开门见山链接…', 54);
                     const odlm = document.getElementById('odlmSelect');
                     if (odlm) {
                       setupIndexDownLinks(odlm.value);
                     }
-                    
+
                     requestAnimationFrame(() => {
                       updateStatus('加载运作时间…', 60);
                       loadRunTime();
-                      
+
                       requestAnimationFrame(() => {
                         updateStatus('加载FCL线路2流量…', 66);
                         loadFclDownWay2Info();
-                        
+
                         requestAnimationFrame(() => {
                           updateStatus('添加定时器…', 72);
                           setInterval(loadRunTime, 1000);
                           // setInterval(loadFclDownWay2Info, 60000);
-                          
+
                           requestAnimationFrame(() => {
                             updateStatus('添加按钮冷却...', 78);
                             setCoolDown();
-                            
+
                             requestAnimationFrame(() => {
                               updateStatus('等待其它乱七八糟的东西…', 84);
                             });
-                            
+
                           });
                         });
                       });
@@ -125,7 +125,7 @@ function initApp() {
   });
 }
 
-window.onload = function() {
+window.onload = function () {
   requestAnimationFrame(() => {
     updateStatus('移除此提示…', 90);
     removeLoadTip();
@@ -133,7 +133,7 @@ window.onload = function() {
   });
 }
 
-document.getElementById('odlmSelect').addEventListener('change', function() {
+document.getElementById('odlmSelect').addEventListener('change', function () {
   console.log('开门见山：选择器：' + this.value);
   setupIndexDownLinks(this.value);
 });
@@ -144,7 +144,7 @@ document.getElementById('odlmSelect').addEventListener('change', function() {
 function removeLoadTip() {
   const container = document.getElementById('loading');
   container.classList.add('scale-out');
-  
+
   container.addEventListener('transitionend', () => {
     container.remove();
   });
@@ -176,7 +176,7 @@ function showLoading() {
 async function runDoNotClickEvent(eventId) {
   const events = (await import('./DoNotClick.js')).default;
   console.log("千万别点：事件数量：", events.length);
-  
+
   const runEvent = (event) => {
     event.run();
     console.log(`千万别点：执行：${event.name}`);
@@ -185,34 +185,34 @@ async function runDoNotClickEvent(eventId) {
       position: 'right-bottom',
     });
   };
-  
+
   const shouldShowWarning = (event) => {
     const needWarning = event.warning && showEpilepsyWarning;
     console.log(`千万别点：${event.name}：显示警告：${needWarning}`);
     return needWarning;
   };
-  
+
   const handleWarningDialog = (event, runCallback) => {
     mdui.dialog({
       title: '光敏性癫痫警告',
       content: '此功能包含闪烁、闪光或动态视觉效果，可能对光敏性癫痫患者或光敏症患者造成不适。如果您有相关病史，请勿继续操作。',
       buttons: [
-      {
-        text: '取消',
-        onClick: () => {
-          return true;
-        }
-      },
-      {
-        text: '继续',
-        onClick: () => {
-          showEpilepsyWarning = false;
-          // 只显示一次警告
-          runCallback();
-          return true;
-        }
-      }],
-      onOpen: function() {
+        {
+          text: '取消',
+          onClick: () => {
+            return true;
+          }
+        },
+        {
+          text: '继续',
+          onClick: () => {
+            showEpilepsyWarning = false;
+            // 只显示一次警告
+            runCallback();
+            return true;
+          }
+        }],
+      onOpen: function () {
         mdui.mutation();
       },
       history: false,
@@ -220,14 +220,14 @@ async function runDoNotClickEvent(eventId) {
       modal: true
     });
   };
-  
+
   if (typeof eventId === 'number') {
     console.log(`千万别点：指定：${eventId}`);
-    
+
     if (eventId >= 0 && eventId < events.length) {
       const selectedEvent = events[eventId];
       console.log(`千万别点：${selectedEvent.name}：找到`);
-      
+
       if (shouldShowWarning(selectedEvent)) {
         handleWarningDialog(selectedEvent, () => runEvent(selectedEvent));
       } else {
@@ -247,19 +247,19 @@ async function runDoNotClickEvent(eventId) {
     }
     return;
   }
-  
+
   const runRandom = () => {
     const randomIndex = Math.floor(Math.random() * events.length);
     const randomEvent = events[randomIndex];
     console.log(`千万别点：随机选中${randomEvent.name}[${randomIndex}]`);
-    
+
     if (shouldShowWarning(randomEvent)) {
       handleWarningDialog(randomEvent, () => runEvent(randomEvent));
     } else {
       runEvent(randomEvent);
     }
   };
-  
+
   runRandom();
 }
 
@@ -268,7 +268,7 @@ async function runDoNotClickEvent(eventId) {
  */
 function runSelectDNCEvent() {
   mdui.prompt('eventId', '请输入事件ID，空为随机',
-    function(value) {
+    function (value) {
       runDoNotClickEvent(Number(value));
     },
   );
@@ -282,13 +282,13 @@ function handleHashRouting() {
     window.mduiTabInstance = new mdui.Tab('.mdui-tab');
   }
   const Tab = window.mduiTabInstance;
-  
+
   const hash = window.location.hash.slice(1);
   if (!hash) return;
-  
+
   const query = new URLSearchParams(hash);
   let shouldUpdateUrl = false;
-  
+
   if (query.has('tab')) {
     const tabIndex = Math.floor(Number(query.get('tab')));
     if (!isNaN(tabIndex)) {
@@ -297,24 +297,24 @@ function handleHashRouting() {
       shouldUpdateUrl = true;
     }
   }
-  
+
   if (query.has('target')) {
     const targetId = query.get('target');
     const target = document.getElementById(targetId);
-    
+
     if (target) {
       target.scrollIntoView({ behavior: 'instant' });
-      
+
       if (target.classList.contains('mdui-panel-item') &&
         !target.classList.contains('mdui-panel-item-open')) {
         target.click();
       }
-      
+
       query.delete('target');
       shouldUpdateUrl = true;
     }
   }
-  
+
   if (shouldUpdateUrl) {
     const newHash = query.toString() ? `#${query.toString()}` : '';
     history.replaceState(null, null, location.pathname + location.search + newHash);
@@ -329,11 +329,11 @@ function initEruda() {
   const debugMode = new URLSearchParams(location.search).has('debug');
   const debugTip = document.getElementById('debugTip');
   const statusTip = document.getElementById('statusTip');
-  
+
   if (window.eruda && debugMode) {
     eruda.init();
     console.info('Eruda：启用');
-    
+
     if (!isLocal && debugTip) {
       console.log('调试：非localhost');
       debugTip.classList.remove('hide');
@@ -353,17 +353,17 @@ function initEruda() {
  */
 async function openNotice(forceShow = false) {
   const loadingDialog = showLoading();
-  
+
   try {
     const noticeDoc = await fetchContent('/file/data/notice.html');
     loadingDialog.close();
-    
+
     const noticeContent = noticeDoc.body.innerHTML;
     const hashCurrent = hashCode(noticeContent);
     const hashStored = localStorage.getItem('notice_hash');
-    
+
     const shouldSkipDisplay = !forceShow && (hashStored === hashCurrent);
-    
+
     if (shouldSkipDisplay) {
       console.log('公告：内容未变，不会显示');
       mdui.snackbar({
@@ -372,34 +372,34 @@ async function openNotice(forceShow = false) {
       });
       return;
     }
-    
+
     const closeHandler = () => console.log('公告：已关闭');
-    
+
     const dialog = mdui.dialog({
       title: '公告',
       content: noticeContent,
       buttons: [
-      {
-        text: '不再显示当前公告',
-        onClick: () => {
-          localStorage.setItem('notice_hash', hashCurrent);
-          console.log('公告：不再显示，已存储内容标识');
-          return true;
-        }
-      },
-      {
-        text: '确认'
-      }],
+        {
+          text: '不再显示当前公告',
+          onClick: () => {
+            localStorage.setItem('notice_hash', hashCurrent);
+            console.log('公告：不再显示，已存储内容标识');
+            return true;
+          }
+        },
+        {
+          text: '确认'
+        }],
       onOpen: () => mdui.mutation(),
       onClose: closeHandler,
       history: false
     });
-    
+
     console.log(`公告：${forceShow ? '强制显示' : '显示新内容'}`);
-    
+
   } catch (error) {
     loadingDialog.close();
-    
+
     console.error('公告：加载出错：', error);
     mdui.dialog({
       title: '公告：加载出错：',
@@ -428,17 +428,17 @@ function hashCode(str) {
  * 彩蛋
  */
 function openEgg() {
-  
+
   mdui.dialog({
     title: '',
     content: '<img src="/file/picture/得意.webp">',
     buttons: [
-    {
-      text: '关闭'
-    }],
+      {
+        text: '关闭'
+      }],
     history: false
   });
-  
+
 }
 
 /**
@@ -453,9 +453,9 @@ async function openBlockedIps() {
         title: '封神榜：加载：HTTP出错：',
         content: blockedIps.status + " " + blockedIps.statusText,
         buttons: [
-        {
-          text: '关闭'
-        }],
+          {
+            text: '关闭'
+          }],
         history: false
       });
       return;
@@ -465,9 +465,9 @@ async function openBlockedIps() {
       title: '封神榜',
       content: blockedIpsText,
       buttons: [
-      {
-        text: '关闭'
-      }],
+        {
+          text: '关闭'
+        }],
       history: false
     });
   } catch (e) {
@@ -476,9 +476,9 @@ async function openBlockedIps() {
       title: '封神榜：加载：出错：',
       content: e,
       buttons: [
-      {
-        text: '关闭'
-      }],
+        {
+          text: '关闭'
+        }],
       history: false
     });
   }
@@ -490,11 +490,11 @@ async function openBlockedIps() {
 function toggleTheme() {
   const body = document.body;
   const isDark = body.classList.contains('mdui-theme-layout-dark');
-  
+
   body.classList.toggle('mdui-theme-layout-dark', !isDark);
-  
+
   localStorage.setItem('theme', isDark ? 'light' : 'dark');
-  
+
   console.log('主题切换：浅色：' + isDark);
 }
 
@@ -504,7 +504,7 @@ function toggleTheme() {
 function loadTheme() {
   const savedTheme = localStorage.getItem('theme');
   const body = document.body;
-  
+
   if (savedTheme) {
     body.classList.toggle('mdui-theme-layout-dark', savedTheme === 'dark');
     console.log('加载主题：' + savedTheme);
@@ -520,12 +520,12 @@ function loadTheme() {
  */
 async function fetchContent(url) {
   console.log(`获取页面：${url}`);
-  
+
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`获取页面：HTTP出错：${response.status} ${response.statusText}`);
   }
-  
+
   try {
     const html = await response.text();
     const domParser = new DOMParser();
@@ -568,15 +568,15 @@ async function loadContent({
       throw new Error(`${context}：加载：目标容器不存在：${targetId}`);
     }
     targetContainer.innerHTML = '<div class="mdui-spinner"></div>正在加载';
-    
+
     const htmlDoc = await fetchContent(url);
-    
+
     // 插入内容
     const contentElement = htmlDoc.querySelector('[content]');
     if (contentElement) {
       targetContainer.innerHTML = contentElement.innerHTML;
     }
-    
+
     // 执行setup脚本
     const setupScript = htmlDoc.querySelector('[setup]');
     if (setupScript?.textContent.trim()) {
@@ -584,7 +584,7 @@ async function loadContent({
       script.text = setupScript.textContent;
       targetContainer.appendChild(script);
     }
-    
+
     console.log(`${context}：加载：完成`);
     mdui.mutation?.();
   } catch (error) {
@@ -631,7 +631,7 @@ async function loadDownLinks() {
     return;
   } else {
     await loadContent({
-     url: '/file/data/downLinks.html',
+      url: '/file/data/downLinks.html',
       targetId: 'tab2',
       context: '直链'
     });
@@ -686,9 +686,9 @@ async function loadSponsorList() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    
+
     const tableHeaders = ['昵称', '¥', '留言', '邮箱', 'GH', '备注'];
-    
+
     let html = `
 <div class="mdui-table-fluid">
   <table class="mdui-table">
@@ -698,12 +698,12 @@ async function loadSponsorList() {
       </tr>
     </thead>
     <tbody>`;
-    
+
     for (const [nickname, info] of Object.entries(data)) {
       const ghCell = info.GH ?
         `<td class="mdui-typo"><a href="${info.GH}" target="_blank">${info.GH.split('/').pop() || '链接'}</a></td>` :
         '<td></td>';
-      
+
       html += `
       <tr>
         <td>${nickname}</td>
@@ -714,12 +714,12 @@ async function loadSponsorList() {
         <td>${info.备注 ?? ''}</td>
       </tr>`;
     }
-    
+
     html += `
     </tbody>
   </table>
 </div>`;
-    
+
     const container = document.getElementById('sponsorList');
     if (container) {
       container.innerHTML = html;
@@ -748,23 +748,23 @@ async function loadFclDownWay(url, containerId, lineName) {
     console.error(`${lineName}：找不到容器：${containerId}`);
     return;
   }
-  
+
   try {
     console.log(`${lineName}：${url}`);
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`HTTP ${response.status} ${response.statusText}`);
     }
-    
+
     const fileTree = await response.json();
     container.innerHTML = '';
-    
+
     const panel = document.createElement('div');
     panel.className = 'mdui-panel';
     panel.setAttribute('mdui-panel', '');
-    
+
     let versionDirs = null;
-    
+
     if (url === 'https://frostlynx.work/external/fcl/file_tree.json' || url === 'https://frostlynx.work/external/zl2/file_tree.json') {
       // FCL线2和zl2线2又在根children里包了一个“fcl”，需要再进入这个的children里寻找
       console.log('开门见山：FCL线2特殊处理');
@@ -776,19 +776,19 @@ async function loadFclDownWay(url, containerId, lineName) {
         child => child.type === 'directory' && child.name !== 'root'
       );
     }
-    
+
     if (versionDirs.length === 0) {
       console.warn(`${lineName}：找到版本数：${versionDirs.length}`);
       container.innerHTML = `<div class="mdui-typo">${lineName}：警告：没有找到版本数据</div>`;
     } else {
       console.log(`${lineName}：找到版本数：${versionDirs.length}`);
-      
+
     }
-    
+
     versionDirs.forEach(versionDir => {
       panel.appendChild(createPanelItem(versionDir));
     });
-    
+
     container.appendChild(panel);
     new mdui.Panel(panel);
     console.log(`${lineName}：完成`);
@@ -807,20 +807,20 @@ function createPanelItem(versionDir) {
   const version = versionDir.name;
   const archMap = createArchLinkMap(versionDir);
   const allArchs = Object.keys(archMap);
-  
+
   const panelItem = document.createElement('div');
   panelItem.className = 'mdui-panel-item';
-  
+
   const header = document.createElement('div');
   header.className = 'mdui-panel-item-header mdui-ripple';
   header.innerHTML = `
         <div>${version}</div>
         <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
     `;
-  
+
   const body = document.createElement('div');
   body.className = 'mdui-panel-item-body';
-  
+
   // 单架构不显示提示语
   if (allArchs.length === 1) {
     const arch = allArchs[0];
@@ -829,13 +829,13 @@ function createPanelItem(versionDir) {
   }
   else if (allArchs.length > 1) {
     body.innerHTML = `<p class="mdui-typo">您的系统架构是？</p>`;
-    
+
     // 优先创建"我不知道"按钮（后续将"all"显示为"我不知道"）
     if (allArchs.includes('all')) {
       const btn = createArchButton('all', archMap.all);
       body.appendChild(btn);
     }
-    
+
     // 创建其他架构按钮（排除all）
     allArchs
       .filter(arch => arch !== 'all')
@@ -847,7 +847,7 @@ function createPanelItem(versionDir) {
   else {
     body.innerHTML = `<p class="mdui-typo">此版本无可用下载文件</p>`;
   }
-  
+
   panelItem.appendChild(header);
   panelItem.appendChild(body);
   return panelItem;
@@ -877,10 +877,10 @@ function createArchLinkMap(versionDir) {
 function createArchButton(arch, link) {
   const btn = document.createElement('a');
   btn.className = 'mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple';
-  
+
   btn.textContent = arch === 'all' ? '我不知道' : arch;
   btn.href = link || 'javascript:void(0);';
-  
+
   if (!link) {
     btn.classList.add('mdui-btn-disabled');
     btn.title = '未提供此架构版本';
@@ -1055,7 +1055,8 @@ async function loadZlDownWay3() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadZlDownWay7() {
-  await loadDownWay7('ZalithLauncher', 'zlDownWay7', 'zlDownWay7Loaded');}
+  await loadDownWay7('ZalithLauncher', 'zlDownWay7', 'zlDownWay7Loaded');
+}
 
 
 /**
@@ -1303,19 +1304,19 @@ async function loadDriverDownWay8() {
 function getRunTime() {
   const startDate = new Date(2025, 2, 19, 2, 19, 45); // 建站时间（月份0-based）
   const now = Date.now();
-  
+
   if (now < startDate) return "0秒";
-  
+
   const UNITS = [
     { value: 24 * 60 * 60 * 1000, label: "天" },
     { value: 60 * 60 * 1000, label: "时" },
     { value: 60 * 1000, label: "分" },
     { value: 1000, label: "秒" }
   ];
-  
+
   let diff = now - startDate;
   const parts = [];
-  
+
   for (const unit of UNITS) {
     const count = Math.floor(diff / unit.value);
     if (count > 0) {
@@ -1323,7 +1324,7 @@ function getRunTime() {
       diff %= unit.value;
     }
   }
-  
+
   return parts.length > 0 ? parts.join('') : "0秒";
 }
 
@@ -1333,7 +1334,7 @@ function getRunTime() {
 function loadRunTime() {
   const timeString = getRunTime();
   const displayElement = document.getElementById('runTime');
-  
+
   if (displayElement) {
     displayElement.textContent = timeString;
   }
@@ -1391,51 +1392,51 @@ const SOURCE_MAP = {
  */
 async function setupIndexDownLinks(sourceKey) {
   console.log(`开门见山：加载：${sourceKey}`);
-  
+
   try {
     await loadOdlm();
-    
+
     const antiSpamEl = document.getElementById('fu');
     if (sourceKey !== "F2" && antiSpamEl) {
       console.log('开门见山：隐藏防刷提示');
       antiSpamEl.remove();
     }
-    
+
     const sourceConfig = SOURCE_MAP[sourceKey];
     if (!sourceConfig) throw new Error(`无效数据源标识："${sourceKey}"`);
-    
+
     const jsonUrl = sourceConfig.path;
     console.log(`开门见山：JSON：${jsonUrl}`);
-    
+
     const response = await fetch(jsonUrl);
     if (!response.ok) throw new Error(`HTTP出错：${response.status}`);
-    
+
     const fileTree = await response.json();
     const { latest, children } = fileTree;
-    
+
     if (!latest || !Array.isArray(children)) {
       throw new Error('无效的文件树结构');
     }
-    
+
     let latestVersionDir = findNestedDirectory(children, latest, sourceConfig.nestedPath);
     if (!latestVersionDir) throw new Error(`未找到最新版本目录: ${latest}`);
-    
+
     console.log(`开门见山：最新版本：${latestVersionDir.name}`);
-    
+
     const archLinks = latestVersionDir.children?.reduce((map, child) => {
       if (child.type === 'file' && child.arch) {
         map[child.arch] = child.download_link;
       }
       return map;
     }, {}) || {};
-    
+
     const setLink = (id, arch) => {
       const element = document.getElementById(id);
       if (!element) {
         console.warn(`找不到元素: ${id}`);
         return;
       }
-      
+
       const link = archLinks[arch];
       if (link) {
         element.textContent = arch;
@@ -1456,28 +1457,28 @@ async function setupIndexDownLinks(sourceKey) {
         element.href = 'javascript:void(0)';
       }
     };
-    
+
     setLink('odlmAllLink', 'all');
     console.log(`开门见山：系统架构：${sysArch}`);
     setLink('odlmv8aLink', sysArch);
-    
+
     const latestInfoEl = document.getElementById('latestInfo');
     if (latestInfoEl) {
       latestInfoEl.textContent = sourceConfig.markLatest ?
         `${latest}（此源最新）` :
         latest;
     }
-    
+
     const diEl = document.getElementById('deviceInfo');
     if (diEl) diEl.innerHTML = sysInfo;
-    
+
     testAndroidVersion(8, 'FCL');
-    
+
     console.log('开门见山：setCoolDown()!!!');
     setCoolDown();
   } catch (error) {
     console.error(`开门见山：出错：${error.message}`, error);
-    
+
     const errorHtml = `
     <div class="mdui-typo">
       <p>抱歉，我们遇到了一个无法解决的问题。</p>
@@ -1500,13 +1501,13 @@ async function setupIndexDownLinks(sourceKey) {
       <p>注意：<mark>赞助是纯自愿的，请结合您的经济状况实力再考虑是否要赞助！赞助后无法退款！</mark></p>
     </div>
     `;
-    
+
     const odlm = document.getElementById('odlm');
     if (odlm) {
       odlm.innerHTML = errorHtml;
       mdui.mutation();
     }
-    
+
     mdui.dialog({
       title: '开门见山：出错',
       content: error.message,
@@ -1533,7 +1534,7 @@ function findNestedDirectory(children, targetName, nestedPath = []) {
       currentChildren = dir.children;
     }
   }
-  
+
   return currentChildren.find(
     dir => dir.type === 'directory' && dir.name === targetName
   );
@@ -1545,15 +1546,15 @@ function findNestedDirectory(children, targetName, nestedPath = []) {
 async function loadFclDownWay2Info() {
   try {
     const response = await fetch('https://frostlynx.work/external/fcl/file_tree.json');
-    
+
     if (!response.ok) {
       throw new Error(`HTTP出错：${response.status}`);
     }
-    
+
     const data = await response.json();
-    
+
     const targetElement = document.getElementById('fclDownWay2Info');
-    
+
     if (targetElement) {
       targetElement.textContent = data.traffic + 'GiB';
     } else {
@@ -1575,11 +1576,11 @@ const ARCH_RULES = [
   { regex: /armeabi$/i, name: 'armeabi' },
   { regex: /x86_64|x64|amd64/i, name: 'x86_64' },
   { regex: /x86|i[36]86/i, name: 'x86' }
-  ];
-  // windows 系统不要根据平台来判断架构!!!
-  // windows 系统不管是 64 位还是 32 位始终为 win32 平台
-  // 再乱改我就炸了!!!
-  //                                            晚梦
+];
+// windows 系统不要根据平台来判断架构!!!
+// windows 系统不管是 64 位还是 32 位始终为 win32 平台
+// 再乱改我就炸了!!!
+//                                            晚梦
 
 /**
  * 架构检测：设备信息检测工具函数
@@ -1594,47 +1595,47 @@ async function showDeviceInfo(containerId) {
       return;
     }
   }
-  
+
   const updateContainer = content => {
     if (container) container.innerHTML = content;
   };
-  
+
   if (!navigator.userAgent) {
     const msg = "架构检测：无法检测到您的设备信息";
     updateContainer(msg);
     console.warn(msg);
     return;
   }
-  
+
   try {
     const { default: browserHelper } = await import('/js/lib/browser-helper.min.js');
     /** @type {BrowserInfo} */
     const info = await browserHelper.getInfo();
-    
+
     const matchedRule = ARCH_RULES.find(r => r.regex.test(info.platform));
     const archName = matchedRule ? matchedRule.name : `${info.architecture}${info?.bitness >> 6 && '_64' || ''}`;
     // 64 >> 6 === 1
     const archDisplay = matchedRule ?
       `${matchedRule.name}(${info.platform})` :
       `${archName}(${info.platform})`;
-    
+
     if (info.system && /android/i.test(info.system)) {
       androidVer = info.systemVersion || '';
     } else {
       androidVer = 0;
     }
-    
+
     console.log(`架构检测：androidVer：${androidVer}`);
-    
+
     sysArch = archName;
-    
+
     console.log(`架构检测：sysArch：${sysArch}`);
-    
+
     const output = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
     sysInfo = output;
-    
+
     updateContainer(output);
-    
+
   } catch (error) {
     const errorMsg = `架构检测：出错：${error.message || error}`;
     console.error(errorMsg);
@@ -1653,10 +1654,10 @@ function testAndroidVersion(version, lineName) {
     console.error('安卓版本检测：无效版本参数', version);
     return false;
   }
-  
+
   const reqVersion = parseFloat(version);
   const currentVersion = parseFloat(androidVer);
-  
+
   if (currentVersion === 0) {
     console.log('安卓版本检测：非安卓');
     mdui.dialog({
@@ -1667,7 +1668,7 @@ function testAndroidVersion(version, lineName) {
     });
     return false;
   }
-  
+
   if (currentVersion < reqVersion) {
     console.log(`安卓版本检测：版本过低`);
     mdui.dialog({
@@ -1678,7 +1679,7 @@ function testAndroidVersion(version, lineName) {
     });
     return false;
   }
-  
+
   console.log(`安卓版本检测：通过`);
   return true;
 }
@@ -1690,14 +1691,14 @@ function testAndroidVersion(version, lineName) {
 async function authAndDown(originalUrl) {
   try {
     const authUrl = await generateAuthUrl(originalUrl);
-    
+
     console.log('鉴权下载：成功');
     mdui.snackbar({ message: '鉴权下载：成功', position: 'right-bottom' });
-    
+
     const downloadLink = document.createElement('a');
     downloadLink.href = authUrl;
     downloadLink.style.display = 'none';
-    
+
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
@@ -1718,52 +1719,52 @@ async function authAndDown(originalUrl) {
 function setCoolDown() {
   const buttons = document.querySelectorAll('button[class*="-cd"], a[class*="-cd"]');
   console.log(`CD：找到按钮数：${buttons.length}`);
-  
+
   buttons.forEach(button => {
     if (button._cdBound) {
       console.log('CD：跳过已处理的按钮', button);
       return;
     }
     button._cdBound = true;
-    
+
     const cdClass = Array.from(button.classList).find(cls => cls.endsWith('-cd'));
     if (!cdClass) {
       console.warn(`CD：可恶，是障眼法：`, button);
       return;
     }
-    
+
     const timeStr = cdClass.split('-')[0];
     const cdTime = parseFloat(timeStr) * 1000;
-    
+
     if (isNaN(cdTime) || cdTime <= 0) {
       console.error(`CD：无效的时间：${timeStr}`, button);
       return;
     }
-    
+
     button.addEventListener('click', function handleClick(event) {
       console.log(`CD：按钮被点击：`, button);
-      
+
       if (button.hasAttribute('data-cd-active')) {
         console.warn(`CD：冷却中按钮被点击：`, button);
         event.preventDefault();
         event.stopPropagation();
         return;
       }
-      
+
       const originalHTML = button.innerHTML;
       const originalDisabled = button.disabled;
       const originalWidth = button.offsetWidth;
-      
+
       button.setAttribute('data-cd-active', 'true');
       button.disabled = true;
       button.style.minWidth = `${originalWidth}px`;
       mdui.mutation();
-      
+
       const startTime = Date.now();
       const endTime = startTime + cdTime;
-      
+
       if (button._cdTimer) clearInterval(button._cdTimer);
-      
+
       button._cdTimer = setInterval(() => {
         if (!document.body.contains(button)) {
           console.warn('CD：按钮已消失，停止冷却');
@@ -1771,19 +1772,19 @@ function setCoolDown() {
           button._cdTimer = null;
           return;
         }
-        
+
         const now = Date.now();
         const remaining = Math.max(0, endTime - now);
-        
+
         if (remaining <= 0) {
           clearInterval(button._cdTimer);
           button._cdTimer = null;
-          
+
           button.innerHTML = originalHTML;
           button.disabled = originalDisabled;
           button.removeAttribute('data-cd-active');
           button.style.minWidth = '';
-          
+
           console.log(`CD：冷却结束：`, button);
           mdui.mutation();
         }
@@ -1793,7 +1794,7 @@ function setCoolDown() {
       }, 100);
     });
   });
-  
+
   console.log('CD：所有按钮处理完成');
 }
 
@@ -1820,7 +1821,7 @@ function updateStatus(statusText, progressNum) {
 
 // 那些盗用老子下载链接的人，我艹你们全家！老子拿自己的钱买的直链流量，以公益的性质搭建了这个下载站，就被你们这些缺德的没良心的傻逼给霍霍了！你们就不会考虑他人的感受吗？屎吃多了是吧？哈呀木！
 
-(function(_0x50d9a8, _0x5ed954) {
+(function (_0x50d9a8, _0x5ed954) {
   const _0x4fd53d = _0x17b3,
     _0x4bf918 = _0x50d9a8();
   while (!![]) {
@@ -1879,7 +1880,7 @@ function generateAuthUrl(_0x4690ba) {
 
 function _0x17b3(_0x314702, _0x26c0c1) {
   const _0x525f16 = _0x4eb7();
-  return _0x17b3 = function(_0x68519b, _0x5100be) {
+  return _0x17b3 = function (_0x68519b, _0x5100be) {
     _0x68519b = _0x68519b - (-0x25 * -0x9 + -0x3 * -0xcc + 0x7c * -0x5);
     let _0x41452e = _0x525f16[_0x68519b];
     return _0x41452e;
