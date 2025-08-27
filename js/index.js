@@ -18,6 +18,7 @@ let zl2DownWay2Loaded = false;
 let zl2DownWay7Loaded = false;
 let plDownWay7Loaded = false;
 let pliosDownWay7Loaded = false;
+let renderDownWay1Loaded = false;
 let driverDownWay1Loaded = false;
 let driverDownWay2Loaded = false;
 let downLinksLoaded = false;
@@ -1264,6 +1265,13 @@ async function loadList(fileUrl, targetId, operationName, loadedFlag) {
       history: false
     });
   }
+}
+
+/**
+ * 加载渲染器线1
+ */
+async function loadRenderDownWay1() {
+  await loadList('/file/data/渲染器线1.json', 'renderDownWay1', '渲染器线1', 'renderDownWay1Loaded');
 }
 
 /**
