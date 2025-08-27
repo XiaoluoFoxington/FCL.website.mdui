@@ -21,6 +21,7 @@ let pliosDownWay7Loaded = false;
 let renderDownWay1Loaded = false;
 let renderDownWay3Loeded = false;
 let driverDownWay1Loaded = false;
+let driverDownWay7Loaded = false;
 let driverDownWay8Loaded = false;
 let downLinksLoaded = false;
 let checksumsLoaded = false;
@@ -1270,6 +1271,60 @@ async function loadList(fileUrl, targetId, operationName, loadedFlag) {
 }
 
 /**
+ * 加载一般列表（线路7）
+ * @param {string} repoName - 仓库名称
+ * @param {string} logPrefix - 日志和提示信息前缀
+ * @param {string} loadedFlag - 全局加载标记
+ * @param {string} containerId - 容器元素ID
+ */
+async function loadListDownWay7(repoName, logPrefix, loadedFlag, containerId) {
+  // 获取DOM元素引用
+  const container = document.getElementById(containerId);
+
+  // 检查是否已加载
+  if (window[loadedFlag]) return;
+  console.log(`${logPrefix}：开始`);
+
+  try {
+    // 获取制品列表
+    const drivers = await Launcher.getByRepo(repoName);
+
+    // 清空容器
+    container.innerHTML = '';
+
+    // 处理每个驱动程序
+    drivers.forEach(driver => {
+      // 创建链接元素
+      const link = document.createElement('a');
+      link.href = driver.url;
+      link.className = 'mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple';
+      link.textContent = driver.name;
+
+      // 添加到容器
+      container.appendChild(link);
+    });
+
+    // 清理并标记完成
+    window[loadedFlag] = true;
+    console.log(`${logPrefix}：完成`);
+  } catch (error) {
+    console.error(`${logPrefix}：出错`, error);
+
+    // 显示错误信息
+    container.textContent = '出错：' + error.message;
+
+    // 显示错误对话框
+    mdui.dialog({
+      title: `${logPrefix}：出错`,
+      content: error.message,
+      buttons: [{ text: '关闭' }],
+      history: false
+    });
+  }
+}
+
+
+/**
  * 加载渲染器线1
  */
 async function loadRenderDownWay1() {
@@ -1288,6 +1343,13 @@ async function loadRenderDownWay3() {
  */
 async function loadDriverDownWay1() {
   await loadList('/file/data/驱动线1.json', 'driverDownWay1', '驱动线1', 'driverDownWay1Loaded');
+}
+
+/**
+ * 加载驱动线7
+ */
+async function loadDriverDownWay7() {
+  await loadListDownWay7('FCLDriverPlugin', '驱动线7', 'driverDownWay7Loaded', 'driverDownWay7');
 }
 
 /**
