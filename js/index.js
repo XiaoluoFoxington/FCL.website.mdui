@@ -21,7 +21,7 @@ let pliosDownWay7Loaded = false;
 let renderDownWay1Loaded = false;
 let renderDownWay3Loeded = false;
 let driverDownWay1Loaded = false;
-let driverDownWay2Loaded = false;
+let driverDownWay8Loaded = false;
 let downLinksLoaded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
@@ -1290,10 +1290,10 @@ async function loadDriverDownWay1() {
 }
 
 /**
- * 加载驱动线2
+ * 加载驱动线8
  */
-async function loadDriverDownWay2() {
-  await loadList('/file/data/驱动线2.json', 'driverDownWay2', '驱动线2', 'driverDownWay2Loaded');
+async function loadDriverDownWay8() {
+  await loadList('/file/data/驱动线8.json', 'driverDownWay8', '驱动线8', 'driverDownWay8Loaded');
 }
 
 /**
