@@ -19,6 +19,7 @@ let zl2DownWay7Loaded = false;
 let plDownWay7Loaded = false;
 let pliosDownWay7Loaded = false;
 let driverDownWay1Loaded = false;
+let driverDownWay2Loaded = false;
 let downLinksLoaded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
@@ -1254,7 +1255,7 @@ async function loadList(fileUrl, targetId, operationName, loadedFlag) {
   } catch (error) {
     // 打印错误
     console.error(`加载${operationName}：`, error);
-    
+
     // 显示错误对话框
     mdui.dialog({
       title: `加载${operationName}：出错：`,
@@ -1270,6 +1271,13 @@ async function loadList(fileUrl, targetId, operationName, loadedFlag) {
  */
 async function loadDriverDownWay1() {
   await loadList('/file/data/驱动线1.json', 'driverDownWay1', '驱动线1', 'driverDownWay1Loaded');
+}
+
+/**
+ * 加载驱动线2
+ */
+async function loadDriverDownWay2() {
+  await loadList('/file/data/驱动线2.json', 'driverDownWay2', '驱动线2', 'driverDownWay2Loaded');
 }
 
 /**
