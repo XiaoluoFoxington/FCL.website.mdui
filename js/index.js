@@ -20,6 +20,7 @@ let plDownWay7Loaded = false;
 let pliosDownWay7Loaded = false;
 let renderDownWay1Loaded = false;
 let renderDownWay3Loeded = false;
+let renderDownWay7Loaded = false;
 let driverDownWay1Loaded = false;
 let driverDownWay7Loaded = false;
 let driverDownWay8Loaded = false;
@@ -1305,7 +1306,10 @@ async function loadListDownWay7(repoName, logPrefix, loadedFlag, containerId) {
       link.href = driver.url;
       link.className = 'mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple';
       link.textContent = driver.name;
-
+      // 如果名称不合理则改为仓库名称
+      if (driver.name === 'app-release.apk') {
+        link.textContent = repoName;
+      }
       // 添加到容器
       container.appendChild(link);
     });
@@ -1342,6 +1346,13 @@ async function loadRenderDownWay1() {
  */
 async function loadRenderDownWay3() {
   await loadList('/file/data/渲染器线3.json', 'renderDownWay3', '渲染器线3', 'renderDownWay3Loaded');
+}
+
+/**
+ * 加载渲染器线7
+ */
+async function loadRenderDownWay7() {
+  await loadListDownWay7('MobileGlues', '渲染器线7', 'renderDownWay7Loaded', 'renderDownWay7'); // 这里填MobileGlues的原因是这个线只提供了这一个渲染器。。。
 }
 
 /**
