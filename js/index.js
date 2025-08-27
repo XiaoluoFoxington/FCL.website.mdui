@@ -1194,7 +1194,7 @@ async function loadDownWay7(repoName, prefix, loadedFlag) {
     console.log(`加载${repoName}线7：完成`);
   } catch (error) {
     console.error(`加载${repoName}线7：出错`, error);
-    versionEl.textContent = '加载失败';
+    versionEl.textContent = '出错：' + error.message;
 
     // 显示错误对话框
     mdui.dialog({
@@ -1221,6 +1221,8 @@ async function loadList(fileUrl, targetId, operationName, loadedFlag) {
     return;
   }
 
+  const targetElement = document.getElementById(targetId);
+
   //调试
   console.log(`加载${operationName}：${fileUrl}`);
 
@@ -1237,7 +1239,6 @@ async function loadList(fileUrl, targetId, operationName, loadedFlag) {
     const data = await response.json();
 
     // 获取目标DOM元素
-    const targetElement = document.getElementById(targetId);
     if (!targetElement) {
       throw new Error(`元素不存在：${targetId}`);
     }
@@ -1257,6 +1258,11 @@ async function loadList(fileUrl, targetId, operationName, loadedFlag) {
     window[loadedFlag] = true;
 
   } catch (error) {
+    // 显示错误
+    if (targetElement) {
+      targetElement.textContent = `出错：${error.message}`;
+    }
+
     // 打印错误
     console.error(`加载${operationName}：`, error);
 
