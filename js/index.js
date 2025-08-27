@@ -19,6 +19,7 @@ let zl2DownWay7Loaded = false;
 let plDownWay7Loaded = false;
 let pliosDownWay7Loaded = false;
 let renderDownWay1Loaded = false;
+let renderDownWay3Loeded = false;
 let driverDownWay1Loaded = false;
 let driverDownWay2Loaded = false;
 let downLinksLoaded = false;
@@ -1272,6 +1273,13 @@ async function loadList(fileUrl, targetId, operationName, loadedFlag) {
  */
 async function loadRenderDownWay1() {
   await loadList('/file/data/渲染器线1.json', 'renderDownWay1', '渲染器线1', 'renderDownWay1Loaded');
+}
+
+/**
+ * 加载渲染器线3
+ */
+async function loadRenderDownWay3() {
+  await loadList('/file/data/渲染器线3.json', 'renderDownWay3', '渲染器线3', 'renderDownWay3Loaded');
 }
 
 /**
