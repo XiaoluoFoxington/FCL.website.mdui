@@ -19,6 +19,7 @@ let zl2DownWay7Loaded = false;
 let plDownWay7Loaded = false;
 let pliosDownWay7Loaded = false;
 let hmclpeDownWay7Loaded = false;
+let mcinaboxDownWay7Loaded = false;
 let renderDownWay1Loaded = false;
 let renderDownWay3Loeded = false;
 let renderDownWay7Loaded = false;
@@ -1131,6 +1132,15 @@ async function loadPliosDownWay7() {
  */
 async function loadHmclpeDownWay7() {
   await loadDownWay7('HMCL-PE(Outdated)', 'hmclpeDownWay7', 'hmclpeDownWay7Loaded');
+}
+
+/**
+ * 加载MCinaBOX下载线路7
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadMcinaboxDownWay7() {
+  await loadDownWay7('MCinaBOX(Outdated)', 'mcinaboxDownWay7', 'mcinaboxDownWay7Loaded');
 }
 
 // AI太好用了你知道吗（（（
