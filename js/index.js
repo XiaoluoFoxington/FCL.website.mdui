@@ -39,104 +39,111 @@ let androidVer = 0;
 
 window.addEventListener('DOMContentLoaded', function () {
   'use strict';
-  requestAnimationFrame(() => {
-    initApp();
-    console.log('DOMContentLoaded：完成');
-  });
+  console.log('DOMContentLoaded：完成');
 });
 
 /**
  * 初始化各种玩意
  */
 function initApp() {
-  requestAnimationFrame(() => {
-    updateStatus('初始化Eruda…', 6);
-    initEruda();
+  // 使用IIFE和async/await重构回调地狱
+  (async function initSequence() {
+    try {
+      // 初始化Eruda
+      await nextFrame('初始化Eruda…', 6);
+      initEruda();
 
-    requestAnimationFrame(() => {
-      updateStatus('获取系统主题色偏好...', 12);
+      // 获取系统主题色偏好
+      await nextFrame('获取系统主题色偏好...', 12);
       if (!localStorage.getItem('theme')) {
         localStorage.setItem('theme', window.matchMedia(
           '(prefers-color-scheme: dark)'
         ).matches ? 'dark' : 'light');
       }
 
-      requestAnimationFrame(() => {
-        updateStatus('加载主题…', 18);
-        loadTheme();
+      // 加载主题
+      await nextFrame('加载主题…', 18);
+      loadTheme();
 
-        requestAnimationFrame(() => {
-          updateStatus('初始化地址栏参数解析…', 24);
-          handleHashRouting();
+      // 初始化地址栏参数解析
+      await nextFrame('初始化地址栏参数解析…', 24);
+      handleHashRouting();
 
-          requestAnimationFrame(() => {
-            updateStatus('添加事件监听…', 30);
-            window.addEventListener('hashchange', handleHashRouting);
-            document.getElementById('loadDownLinks').addEventListener('click', loadDownLinks);
-            document.getElementById('loadChecksums').addEventListener('click', loadChecksums);
-            document.getElementById('loadAbout').addEventListener('click', loadAbout);
+      // 添加事件监听
+      await nextFrame('添加事件监听…', 30);
+      window.addEventListener('hashchange', handleHashRouting);
+      document.getElementById('loadDownLinks').addEventListener('click', loadDownLinks);
+      document.getElementById('loadChecksums').addEventListener('click', loadChecksums);
+      document.getElementById('loadAbout').addEventListener('click', loadAbout);
 
-            requestAnimationFrame(() => {
-              updateStatus('打开公告…', 36);
-              openNotice();
+      // 打开公告
+      await nextFrame('打开公告…', 36);
+      await openNotice();
 
-              requestAnimationFrame(async () => {
-                updateStatus('获取系统信息…', 42);
-                await showDeviceInfo();
+      // 获取系统信息
+      await nextFrame('获取系统信息…', 42);
+      await showDeviceInfo();
 
-                requestAnimationFrame(() => {
-                  updateStatus('获取下载TAB内容...', 48);
-                  loadDownLinks();
+      // 获取下载TAB内容
+      await nextFrame('获取下载TAB内容...', 48);
+      await loadDownLinks();
 
-                  requestAnimationFrame(() => {
-                    updateStatus('获取开门见山链接…', 54);
-                    const odlm = document.getElementById('odlmSelect');
-                    if (odlm) {
-                      setupIndexDownLinks(odlm.value);
-                    }
+      // 获取开门见山链接
+      await nextFrame('获取开门见山链接…', 54);
+      const odlm = document.getElementById('odlmSelect');
+      if (odlm) {
+        await setupIndexDownLinks(odlm.value);
+      }
 
-                    requestAnimationFrame(() => {
-                      updateStatus('加载运作时间…', 60);
-                      loadRunTime();
+      // 加载运作时间
+      await nextFrame('加载运作时间…', 60);
+      await loadRunTime();
 
-                      requestAnimationFrame(() => {
-                        updateStatus('加载FCL线路2流量…', 66);
-                        loadFclDownWay2Info();
+      // 加载FCL线路2流量
+      await nextFrame('加载FCL线路2流量…', 66);
+      await loadFclDownWay2Info();
 
-                        requestAnimationFrame(() => {
-                          updateStatus('添加定时器…', 72);
-                          setInterval(loadRunTime, 1000);
-                          // setInterval(loadFclDownWay2Info, 60000);
+      // 添加定时器
+      await nextFrame('添加定时器…', 72);
+      setInterval(loadRunTime, 1000);
+      // setInterval(loadFclDownWay2Info, 60000);
 
-                          requestAnimationFrame(() => {
-                            updateStatus('添加按钮冷却...', 78);
-                            setCoolDown();
+      // 添加按钮冷却
+      await nextFrame('添加按钮冷却...', 78);
+      setCoolDown();
 
-                            requestAnimationFrame(() => {
-                              updateStatus('等待其它乱七八糟的东西…', 84);
-                            });
+      // 等待其它乱七八糟的东西
+      await nextFrame('等待其它乱七八糟的东西…', 84);
 
-                          });
-                        });
-                      });
-                    });
-                  });
-                })
-              });
-            });
-          });
-        });
-      });
+      // 移除此提示
+      await nextFrame('移除此提示…', 90);
+      removeLoadTip();
+
+    } catch (error) {
+      console.error('初始化应用：出错：', error);
+      updateStatus('初始化过程中出错', 100);
+    }
+  })();
+}
+
+/**
+ * 封装requestAnimationFrame，返回Promise并更新状态
+ * @param {string} statusText - 状态文本
+ * @param {number} progressNum - 进度百分比
+ * @returns {Promise<void>}
+ */
+function nextFrame(statusText, progressNum) {
+  return new Promise(resolve => {
+    requestAnimationFrame(() => {
+      updateStatus(statusText, progressNum);
+      resolve();
     });
   });
 }
 
-window.onload = function () {
-  requestAnimationFrame(() => {
-    updateStatus('移除此提示…', 90);
-    removeLoadTip();
-    console.log('window.onload：完成');
-  });
+window.onload = async function () {
+  await initApp();
+  console.log('window.onload：完成');
 }
 
 document.getElementById('odlmSelect').addEventListener('change', function () {
