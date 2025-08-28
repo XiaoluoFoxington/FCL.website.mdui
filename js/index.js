@@ -21,6 +21,7 @@ let pliosDownWay7Loaded = false;
 let renderDownWay1Loaded = false;
 let renderDownWay3Loeded = false;
 let renderDownWay7Loaded = false;
+let mgRenderDownWay7Loaded = false;
 let driverDownWay1Loaded = false;
 let driverDownWay7Loaded = false;
 let driverDownWay8Loaded = false;
@@ -1352,7 +1353,8 @@ async function loadRenderDownWay3() {
  * 加载渲染器线7
  */
 async function loadRenderDownWay7() {
-  await loadListDownWay7('MobileGlues', '渲染器线7', 'renderDownWay7Loaded', 'renderDownWay7'); // 这里填MobileGlues的原因是这个线只提供了这一个渲染器。。。
+  await loadListDownWay7('MobileGlues', '渲染器线7：MG', 'mgRenderDownWay7Loaded', 'mgRenderDownWay7');
+  await loadListDownWay7('FCL渲染器插件备份源', '渲染器线7：全部', 'renderDownWay7Loaded', 'renderDownWay7');
 }
 
 /**
