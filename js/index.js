@@ -27,6 +27,7 @@ let mgRenderDownWay7Loaded = false;
 let driverDownWay1Loaded = false;
 let driverDownWay7Loaded = false;
 let driverDownWay8Loaded = false;
+let jreDownWay7Loaded = false;
 let downLinksLoaded = false;
 let checksumsLoaded = false;
 let aboutLoaded = false;
@@ -1458,6 +1459,13 @@ async function loadDriverDownWay7() {
  */
 async function loadDriverDownWay8() {
   await loadList('/file/data/驱动线8.json', 'driverDownWay8', '驱动线8', 'driverDownWay8Loaded');
+}
+
+/**
+ * 加载JRE线7
+ */
+async function loadJreDownWay7() {
+  await loadListDownWay7('其他资源文件', 'JRE线7', 'jreDownWay7Loaded', 'jreDownWay7');
 }
 
 /**
