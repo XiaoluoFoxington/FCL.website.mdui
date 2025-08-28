@@ -1142,24 +1142,36 @@ async function loadHmclpeDownWay7() {
  * @param {string} loadedFlag - 全局加载标记
  */
 async function loadDownWay7(repoName, prefix, loadedFlag) {
-  // 获取DOM元素引用
-  const spinner = document.getElementById(`${prefix}Spinner`);
-  const versionEl = document.getElementById(`${prefix}Version`);
-  const archElements = {
-    all: document.getElementById(`${prefix}All`),
-    v8a: document.getElementById(`${prefix}V8a`),
-    v7a: document.getElementById(`${prefix}V7a`),
-    x86: document.getElementById(`${prefix}X86`),
-    x64: document.getElementById(`${prefix}X64`)
-  };
-
   // 检查是否已加载
   if (window[loadedFlag]) return;
-  console.log(`加载${repoName}线7：开始`);
+  console.log(`loadDownWay7：加载${repoName}线7：开始`);
 
   try {
+    // 获取DOM元素引用并检查是否存在
+    const spinner = document.getElementById(`${prefix}Spinner`);
+    const versionEl = document.getElementById(`${prefix}Version`);
+    
+    // 检查关键DOM元素是否存在
+    if (!spinner || !versionEl) {
+      throw new Error(`必要的DOM元素不存在：${prefix}Spinner 或 ${prefix}Version`);
+    }
+
+    const archElements = {
+      all: document.getElementById(`${prefix}All`),
+      v8a: document.getElementById(`${prefix}V8a`),
+      v7a: document.getElementById(`${prefix}V7a`),
+      x86: document.getElementById(`${prefix}X86`),
+      x64: document.getElementById(`${prefix}X64`)
+    };
+
     // 获取制品列表
     const artifacts = await Launcher.getByRepo(repoName);
+    
+    // 检查制品列表是否为空
+    if (!artifacts || artifacts.length === 0) {
+      throw new Error(`未找到任何制品`);
+    }
+    
     versionEl.textContent = artifacts[0]?.tag || '未知版本';
 
     // 架构匹配模式（优先级从高到低）
@@ -1178,67 +1190,35 @@ async function loadDownWay7(repoName, prefix, loadedFlag) {
 
     // 处理每个制品
     artifacts.forEach(item => {
-      let matched = false;
-
-      // 按优先级检查架构匹配
-      for (const { key, pattern } of archPatterns) {
-        if (item.name.includes(pattern)) {
-          archElements[key].href = item.url;
-          foundArch.add(key);
-          matched = true;
-          break; // 匹配成功即跳出
-        }
-      }
-
-      // 未匹配任何架构时加入未匹配列表
-      if (!matched) {
+      // 使用find代替for循环，提高代码可读性
+      const matchedArch = archPatterns.find(({ pattern }) => item.name.includes(pattern));
+      
+      if (matchedArch && archElements[matchedArch.key]) {
+        archElements[matchedArch.key].href = item.url;
+        foundArch.add(matchedArch.key);
+      } else {
         unmatchedItems.push(item);
       }
     });
 
     // 处理未匹配的项
-    if (unmatchedItems.length > 0) {
-      // 如果只有一个未匹配项，使用现有的all按钮
-      if (unmatchedItems.length === 1) {
-        archElements.all.href = unmatchedItems[0].url;
-        foundArch.add('all');
-      } else {
-        // 多个未匹配项时，创建新按钮
-        // 先移除原始的all按钮
-        if (archElements.all) {
-          archElements.all.remove();
-        }
-        
-        // 获取父容器
-        const parentContainer = versionEl.parentElement.nextElementSibling;
-        
-        // 为每个未匹配项创建新按钮
-        unmatchedItems.forEach((item, index) => {
-          const newButton = document.createElement('a');
-          newButton.href = item.url;
-          newButton.className = 'mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple';
-          newButton.textContent = item.name;
-          
-          // 添加到父容器
-          parentContainer.appendChild(newButton);
-        });
-      }
-    }
+    handleUnmatchedItems(unmatchedItems, archElements, versionEl);
 
     // 移除未找到的架构元素
-    Object.keys(archElements).forEach(arch => {
-      if (arch !== 'all' && !foundArch.has(arch) && archElements[arch]) {
-        archElements[arch].remove();
-      }
-    });
+    removeUnsupportedArchElements(archElements, foundArch);
 
     // 清理并标记完成
     spinner.remove();
     window[loadedFlag] = true;
-    console.log(`加载${repoName}线7：完成`);
+    console.log(`loadDownWay7：加载${repoName}线7：完成：版本${artifacts[0]?.tag || '未知'}`);
   } catch (error) {
-    console.error(`加载${repoName}线7：出错`, error);
-    versionEl.textContent = '出错：' + error.message;
+    console.error(`loadDownWay7：加载${repoName}线7：出错：${error.message}`);
+    
+    // 确保versionEl存在再更新内容
+    const versionEl = document.getElementById(`${prefix}Version`);
+    if (versionEl) {
+      versionEl.textContent = '出错：' + error.message;
+    }
 
     // 显示错误对话框
     mdui.dialog({
@@ -1248,6 +1228,56 @@ async function loadDownWay7(repoName, prefix, loadedFlag) {
       history: false
     });
   }
+}
+
+/**
+ * 处理未匹配架构的下载项
+ * @param {Array} unmatchedItems - 未匹配架构的下载项数组
+ * @param {Object} archElements - 架构元素对象
+ * @param {HTMLElement} versionEl - 版本元素
+ */
+function handleUnmatchedItems(unmatchedItems, archElements, versionEl) {
+  if (unmatchedItems.length === 0) return;
+  
+  // 如果只有一个未匹配项，使用现有的all按钮
+  if (unmatchedItems.length === 1 && archElements.all) {
+    archElements.all.href = unmatchedItems[0].url;
+    return;
+  }
+  
+  // 多个未匹配项时，创建新按钮
+  // 先移除原始的all按钮
+  if (archElements.all) {
+    archElements.all.remove();
+  }
+  
+  // 获取父容器
+  const parentContainer = versionEl.parentElement?.nextElementSibling;
+  if (!parentContainer) return;
+  
+  // 为每个未匹配项创建新按钮
+  unmatchedItems.forEach((item) => {
+    const newButton = document.createElement('a');
+    newButton.href = item.url;
+    newButton.className = 'mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple';
+    newButton.textContent = item.name;
+    
+    // 添加到父容器
+    parentContainer.appendChild(newButton);
+  });
+}
+
+/**
+ * 移除不支持的架构元素
+ * @param {Object} archElements - 架构元素对象
+ * @param {Set} foundArch - 找到的架构集合
+ */
+function removeUnsupportedArchElements(archElements, foundArch) {
+  Object.keys(archElements).forEach(arch => {
+    if (arch !== 'all' && !foundArch.has(arch) && archElements[arch]) {
+      archElements[arch].remove();
+    }
+  });
 }
 
 /**
