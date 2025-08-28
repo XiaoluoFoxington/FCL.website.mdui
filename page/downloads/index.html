@@ -55,27 +55,37 @@
       <div class="mdui-toolbar-spacer mdui-ripple"></div>
       <a href="javascript: window.scrollTo({top: 0, behavior: 'smooth'});" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '回到顶部'}"><i class="mdui-icon material-icons">arrow_upward</i></a>
       <a mdui-menu="{target: '#toolbar-more' }" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '更多'}"><i class="mdui-icon material-icons">more_vert</i></a>
-        <ul class="mdui-menu mdui-menu-cascade" id="toolbar-more">
-          <li class="mdui-menu-item">
-            <a href="https://foldcraftlauncher.cn" class="mdui-ripple">
-              <i class="mdui-menu-item-icon mdui-icon material-icons">links</i>
-              主域名
-            </a>
-          </li><!-- 主域名 -->
-          <li class="mdui-menu-item">
-            <a href="javascript: location.reload(true);" class="mdui-ripple">
-              <i class="mdui-menu-item-icon mdui-icon material-icons">refresh</i>
-              刷新
-            </a>
-          </li><!-- 刷新 -->
-        </ul>
-      </div>
+      <ul class="mdui-menu mdui-menu-cascade" id="toolbar-more">
+        <li class="mdui-menu-item">
+          <a href="https://foldcraftlauncher.cn" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">links</i>
+            主域名
+          </a>
+        </li><!-- 主域名 -->
+        <li class="mdui-menu-item">
+          <a href="javascript: location.reload(true);" class="mdui-ripple">
+            <i class="mdui-menu-item-icon mdui-icon material-icons">refresh</i>
+            刷新
+          </a>
+        </li><!-- 刷新 -->
+      </ul>
     </div>
   </div>
-
+  </div>
+  
   <!-- 主容器 -->
   <div class="mdui-container-fluid mdui-m-t-1">
     <div class="mdui-panel" mdui-panel>
+      <div class="mdui-panel-item mdui-panel-item-open" style="background-color: #ff0; color: #000;">
+        <div class="mdui-panel-item-header mdui-ripple">
+          <div>警告</div>
+          <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+        <div class="mdui-panel-item-body mdui-typo">
+          <p>此页面已弃用！</p>
+        </div>
+      </div>
+      
       <!-- 过滤器 -->
       <div class="mdui-panel-item mdui-panel-item-open">
         <div class="mdui-panel-item-header mdui-ripple">
@@ -84,7 +94,7 @@
         </div>
         <div class="mdui-panel-item-body filter-container">
           <div class="mdui-panel" mdui-panel>
-
+            
             <div class="mdui-panel-item mdui-panel-item-open">
               <div class="mdui-panel-item-header mdui-ripple">
                 <div>可用过滤器</div>
@@ -141,7 +151,7 @@
                 </p>
               </div>
             </div>
-
+            
             <div class="mdui-panel-item mdui-panel-item-open">
               <div class="mdui-panel-item-header mdui-ripple">
                 <div>活动过滤器</div>
@@ -162,7 +172,7 @@
                 <p id="resultsCount">显示全部项目</p>
               </div>
             </div>
-
+            
           </div>
         </div>
       </div>
@@ -174,13 +184,13 @@
         </div>
         <div class="mdui-panel-item-body">
           <div class="mdui-panel" id="mainList" mdui-panel>
-
+            
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  
   <script src="/js/mdui.min.js"></script>
   <script src="/page/downloads/main.js"></script>
 </body>
