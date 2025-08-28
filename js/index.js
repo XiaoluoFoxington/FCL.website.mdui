@@ -18,6 +18,7 @@ let zl2DownWay2Loaded = false;
 let zl2DownWay7Loaded = false;
 let plDownWay7Loaded = false;
 let pliosDownWay7Loaded = false;
+let hmclpeDownWay7Loaded = false;
 let renderDownWay1Loaded = false;
 let renderDownWay3Loeded = false;
 let renderDownWay7Loaded = false;
@@ -1121,6 +1122,15 @@ async function loadPlDownWay7() {
  */
 async function loadPliosDownWay7() {
   await loadDownWay7('PojavLauncher_iOS', 'pliosDownWay7', 'pliosDownWay7Loaded');
+}
+
+/**
+ * 加载HMCL-PE下载线路7
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadHmclpeDownWay7() {
+  await loadDownWay7('HMCL-PE(Outdated)', 'hmclpeDownWay7', 'hmclpeDownWay7Loaded');
 }
 
 // AI太好用了你知道吗（（（
