@@ -1134,6 +1134,7 @@ async function loadHmclpeDownWay7() {
 }
 
 // AI太好用了你知道吗（（（
+
 /**
  * 加载线路7
  * @param {string} repoName - 仓库名称
@@ -1172,6 +1173,9 @@ async function loadDownWay7(repoName, prefix, loadedFlag) {
     // 标记找到的架构
     const foundArch = new Set();
 
+    // 收集未匹配到架构的项
+    const unmatchedItems = [];
+
     // 处理每个制品
     artifacts.forEach(item => {
       let matched = false;
@@ -1186,16 +1190,44 @@ async function loadDownWay7(repoName, prefix, loadedFlag) {
         }
       }
 
-      // 未匹配任何架构时使用all链接
+      // 未匹配任何架构时加入未匹配列表
       if (!matched) {
-        archElements.all.href = item.url;
-        foundArch.add('all');
+        unmatchedItems.push(item);
       }
     });
 
+    // 处理未匹配的项
+    if (unmatchedItems.length > 0) {
+      // 如果只有一个未匹配项，使用现有的all按钮
+      if (unmatchedItems.length === 1) {
+        archElements.all.href = unmatchedItems[0].url;
+        foundArch.add('all');
+      } else {
+        // 多个未匹配项时，创建新按钮
+        // 先移除原始的all按钮
+        if (archElements.all) {
+          archElements.all.remove();
+        }
+        
+        // 获取父容器
+        const parentContainer = versionEl.parentElement.nextElementSibling;
+        
+        // 为每个未匹配项创建新按钮
+        unmatchedItems.forEach((item, index) => {
+          const newButton = document.createElement('a');
+          newButton.href = item.url;
+          newButton.className = 'mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple';
+          newButton.textContent = item.name;
+          
+          // 添加到父容器
+          parentContainer.appendChild(newButton);
+        });
+      }
+    }
+
     // 移除未找到的架构元素
     Object.keys(archElements).forEach(arch => {
-      if (!foundArch.has(arch)) {
+      if (arch !== 'all' && !foundArch.has(arch) && archElements[arch]) {
         archElements[arch].remove();
       }
     });
