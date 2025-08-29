@@ -15,6 +15,7 @@ let ZlDownWay3Loaded = false;
 let zlDownWay7Loaded = false;
 let zl2DownWay1Loaded = false;
 let zl2DownWay2Loaded = false;
+let zl2DownWay3Loaded = false;
 let zl2DownWay7Loaded = false;
 let plDownWay7Loaded = false;
 let pliosDownWay7Loaded = false;
@@ -1104,6 +1105,23 @@ async function loadZl2DownWay2() {
     '加载ZL2线2'
   );
   zl2DownWay2Loaded = true;
+}
+
+/**
+ * 加载ZL2下载线路3
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadZl2DownWay3() {
+  if (zl2DownWay3Loaded) {
+    return;
+  }
+  await loadFclDownWay(
+    '/file/data/zl2DownWay3.json',
+    'zl2DownWay3',
+    '加载ZL2线3'
+  );
+  zl2DownWay3Loaded = true;
 }
 
 /**
