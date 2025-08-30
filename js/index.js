@@ -10,6 +10,7 @@ let fclDownWay4Loaded = false;
 let fclDownWay5Loaded = false;
 let fclDownWay6Loaded = false;
 let fclDownWay7Loaded = false;
+let fclDownWay8Loaded = false;
 let zlDownWay1Loaded = false;
 let ZlDownWay3Loaded = false;
 let zlDownWay7Loaded = false;
@@ -913,6 +914,7 @@ async function loadAllFclDownWays() {
     loadFclDownWay4(),
     loadFclDownWay5(),
     loadFclDownWay6(),
+    loadFclDownWay8(),
     loadZlDownWay1(),
     loadZlDownWay3()
   ]);
@@ -1027,6 +1029,24 @@ async function loadFclDownWay6() {
  */
 async function loadFclDownWay7() {
   await loadDownWay7('FoldCraftLauncher', 'fclDownWay7', 'fclDownWay7Loaded');
+}
+
+/**
+ * 加载FCL下载线路8
+ * @async
+ * @returns {Promise<void>} 无返回值
+ */
+async function loadFclDownWay8() {
+  if (fclDownWay8Loaded) {
+    return;
+  }
+  await loadFclDownWay(
+    // 'http://103.217.184.153/api/FCL/filelist.json',
+    'https://fcl.cxsjmc.cn/api/FCL/filelist.json',
+    'fclDownWay8',
+    '加载FCL线8'
+  );
+  fclDownWay8Loaded = true;
 }
 
 /**
