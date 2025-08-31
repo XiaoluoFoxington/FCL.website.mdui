@@ -1042,7 +1042,7 @@ async function loadFclDownWay8() {
   }
   await loadFclDownWay(
     // 'http://103.217.184.153/api/FCL/filelist.json',
-    'https://fcl.cxsjmc.cn/api/FCL/filelist.json',
+    'https://api.cxsjmc.cn/api/FCL/filelist.json',
     'fclDownWay8',
     '加载FCL线8'
   );
