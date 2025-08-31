@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>模块测试</title>
+</head>
+<body>
+    <h1>模块化结构测试</h1>
+    <p>如果看到此页面，说明模块化结构已正确设置。</p>
+    <script type="module">
+        import { initApp } from './js/modules/core/app.js';
+        import { showDeviceInfo } from './js/modules/utils/device.js';
+        import { loadContent } from './js/modules/downloads/downloads.js';
+        
+        console.log('模块导入测试成功');
+        console.log('initApp:', typeof initApp);
+        console.log('showDeviceInfo:', typeof showDeviceInfo);
+        console.log('loadContent:', typeof loadContent);
+    </script>
+</body>
+</html>
