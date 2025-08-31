@@ -100,3 +100,25 @@ img {
   font-size: unset;
   font-family: unset;
 }
+
+/* 内容占位符样式 */
+.content-placeholder {
+  padding: 20px;
+  text-align: center;
+  color: #9e9e9e;
+}
+
+.content-placeholder-container {
+  min-height: 100px;
+}
+
+.content-placeholder .mdui-spinner {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.content-placeholder span {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+}

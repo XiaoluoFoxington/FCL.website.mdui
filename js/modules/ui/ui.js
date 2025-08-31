@@ -230,22 +230,32 @@ function initEruda() {
  * @param {boolean} [forceShow=false] 强制显示公告，忽略哈希检查
  */
 async function openNotice(forceShow = false) {
-  // 预加载公告内容以提高性能
-  const noticeContentPromise = fetchContent('/file/data/notice.html').catch(error => {
-    console.error('公告：预加载出错：', error);
-    return null;
-  });
+  // 使用防抖机制避免重复调用
+  if (window.noticeOpening) {
+    console.log('公告：已在打开中，跳过重复调用');
+    return;
+  }
+  
+  window.noticeOpening = true;
+  
+  // 设置超时清理标志位
+  setTimeout(() => {
+    window.noticeOpening = false;
+  }, 5000);
 
-  const loadingDialog = showLoading();
+  // 预加载公告内容以提高性能，但设置超时避免阻塞
+  const fetchNoticeWithTimeout = (timeout = 3000) => {
+    return Promise.race([
+      fetchContent('/file/data/notice.html'),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('公告加载超时')), timeout)
+      )
+    ]);
+  };
 
   try {
-    const noticeDoc = await noticeContentPromise;
-    if (!noticeDoc) {
-      throw new Error('公告内容加载失败');
-    }
+    const noticeDoc = await fetchNoticeWithTimeout();
     
-    loadingDialog.close();
-
     const noticeContent = noticeDoc.body.innerHTML;
     const hashCurrent = hashCode(noticeContent);
     const hashStored = localStorage.getItem('notice_hash');
@@ -258,10 +268,14 @@ async function openNotice(forceShow = false) {
         message: `公告：内容未变，不会显示`,
         position: 'right-bottom',
       });
+      window.noticeOpening = false;
       return;
     }
 
-    const closeHandler = () => console.log('公告：已关闭');
+    const closeHandler = () => {
+      console.log('公告：已关闭');
+      window.noticeOpening = false;
+    };
 
     const dialog = mdui.dialog({
       title: '公告',
@@ -272,11 +286,16 @@ async function openNotice(forceShow = false) {
           onClick: () => {
             localStorage.setItem('notice_hash', hashCurrent);
             console.log('公告：不再显示，已存储内容标识');
+            window.noticeOpening = false;
             return true;
           }
         },
         {
-          text: '确认'
+          text: '确认',
+          onClick: () => {
+            window.noticeOpening = false;
+            return true;
+          }
         }],
       onOpen: () => mdui.mutation(),
       onClose: closeHandler,
@@ -286,13 +305,17 @@ async function openNotice(forceShow = false) {
     console.log(`公告：${forceShow ? '强制显示' : '显示新内容'}`);
 
   } catch (error) {
-    loadingDialog.close();
-
     console.error('公告：加载出错：', error);
     mdui.dialog({
       title: '公告：加载出错：',
       content: error.message || error,
-      buttons: [{ text: '关闭' }],
+      buttons: [{ 
+        text: '关闭',
+        onClick: () => {
+          window.noticeOpening = false;
+          return true;
+        }
+      }],
       history: false
     });
   }

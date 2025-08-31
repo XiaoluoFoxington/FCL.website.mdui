@@ -66,9 +66,6 @@ async function initApp() {
   
   // 使用IIFE和async/await重构回调地狱
   try {
-    // 并行初始化可以并行的模块
-    const parallelInitPromises = [];
-    
     // 初始化Eruda
     const erudaStart = performance.now();
     await nextFrame('初始化Eruda…', 6);
@@ -106,17 +103,14 @@ async function initApp() {
     document.getElementById('loadAbout').addEventListener('click', loadAbout);
     recordModuleLoadTime('事件监听器添加', eventListenerStart);
 
-    // 预加载可以预加载的内容
-    const preloadPromises = [
-      fetchContent('/file/data/notice.html').catch(() => null),
-      fetchContent('/file/data/odlm.html').catch(() => null)
-    ];
-
-    // 打开公告
+    // 打开公告（非阻塞）
     const noticeStart = performance.now();
     await nextFrame('打开公告…', 36);
-    await openNotice();
-    recordModuleLoadTime('公告打开', noticeStart);
+    // 使用setTimeout将公告显示改为非阻塞操作
+    setTimeout(async () => {
+      await openNotice();
+      recordModuleLoadTime('公告打开', noticeStart);
+    }, 0);
 
     // 获取系统信息
     const deviceInfoStart = performance.now();
@@ -124,11 +118,14 @@ async function initApp() {
     await showDeviceInfo();
     recordModuleLoadTime('设备信息获取', deviceInfoStart);
 
-    // 获取下载TAB内容
+    // 获取下载TAB内容（延迟加载）
     const downLinksStart = performance.now();
     await nextFrame('获取下载TAB内容...', 48);
-    await loadDownLinks();
-    recordModuleLoadTime('下载TAB内容获取', downLinksStart);
+    // 延迟加载下载TAB内容，提高初始加载速度
+    setTimeout(async () => {
+      await loadDownLinks();
+      recordModuleLoadTime('下载TAB内容获取', downLinksStart);
+    }, 100);
 
     // 获取开门见山链接
     const odlmStart = performance.now();
@@ -145,11 +142,14 @@ async function initApp() {
     await loadRunTime();
     recordModuleLoadTime('运作时间加载', runTimeStart);
 
-    // 加载FCL线路2流量
+    // 加载FCL线路2流量（延迟加载）
     const fclTrafficStart = performance.now();
     await nextFrame('加载FCL线路2流量…', 66);
-    await loadFclDownWay2Info();
-    recordModuleLoadTime('FCL线路2流量加载', fclTrafficStart);
+    // 延迟加载FCL线路2流量，因为不是关键路径
+    setTimeout(async () => {
+      await loadFclDownWay2Info();
+      recordModuleLoadTime('FCL线路2流量加载', fclTrafficStart);
+    }, 200);
 
     // 添加定时器
     const timerStart = performance.now();
@@ -192,6 +192,31 @@ async function initApp() {
 
     // 显示各模块加载时间
     displayModuleLoadTimes();
+
+    // 延迟加载非关键模块
+    setTimeout(() => {
+      // 延迟加载赞助列表
+      const sponsorTab = document.querySelector('[href="#tab4"]');
+      if (sponsorTab) {
+        sponsorTab.addEventListener('click', () => {
+          const sponsorList = document.getElementById('sponsorList');
+          if (sponsorList && sponsorList.children.length === 1) {
+            loadSponsorList();
+          }
+        });
+      }
+      
+      // 延迟加载关于页面
+      const aboutTab = document.querySelector('[href="#tab5"]');
+      if (aboutTab) {
+        aboutTab.addEventListener('click', () => {
+          const aboutTabElement = document.getElementById('tab5');
+          if (aboutTabElement && aboutTabElement.children.length === 1) {
+            loadAbout();
+          }
+        });
+      }
+    }, 1000);
 
   } catch (error) {
     console.error('初始化应用：出错：', error);

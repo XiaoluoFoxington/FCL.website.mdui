@@ -96,6 +96,14 @@ import {
   loadFclDownWay2Info
 } from './modules/utils/device.js';
 
+// 导入内容展框机制模块
+import {
+  createPlaceholder,
+  lazyLoadContent,
+  loadWhenVisible,
+  batchLazyLoad
+} from './modules/utils/lazyLoader.js';
+
 // 将变量和函数绑定到全局作用域，以保持与原代码的兼容性
 window.showEpilepsyWarning = showEpilepsyWarning;
 window.sysInfo = sysInfo;
@@ -192,6 +200,12 @@ window.showDeviceInfo = showDeviceInfo;
 window.testAndroidVersion = testAndroidVersion;
 window.setupIndexDownLinks = setupIndexDownLinks;
 window.loadFclDownWay2Info = loadFclDownWay2Info;
+
+// 内容展框机制函数
+window.createPlaceholder = createPlaceholder;
+window.lazyLoadContent = lazyLoadContent;
+window.loadWhenVisible = loadWhenVisible;
+window.batchLazyLoad = batchLazyLoad;
 
 // 初始化应用
 window.addEventListener('DOMContentLoaded', function () {

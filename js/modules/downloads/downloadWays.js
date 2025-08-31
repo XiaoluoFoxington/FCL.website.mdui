@@ -3,6 +3,7 @@
  */
 
 import { loadFlags } from '../core/app.js';
+import { loadDownWay7 } from '../integrations/integrations.js';
 
 // 数据源映射表（优化点3：特殊源逻辑解耦）
 const SOURCE_MAP = {

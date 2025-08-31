@@ -6,6 +6,16 @@ import { loadFlags } from '../core/app.js';
 import { fetchContent } from '../utils/network.js';
 import { Launcher } from '../integrations/launcher-sdk.js';
 
+// 等待Launcher对象加载完成
+async function waitForLauncher() {
+  // 轮询检查Launcher是否已定义
+  while (!Launcher) {
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+  return Launcher;
+}
+import { createPlaceholder, lazyLoadContent } from '../utils/lazyLoader.js';
+
 /**
  * 通用内容加载函数
  * @async
@@ -13,18 +23,26 @@ import { Launcher } from '../integrations/launcher-sdk.js';
  * @param {string} [options.url] - 内容URL
  * @param {string} [options.targetId] - 目标容器ID
  * @param {string} [options.context] - 上下文名称（用于日志/错误提示）
+ * @param {boolean} [options.usePlaceholder=true] - 是否使用占位符
  */
 async function loadContent({
   url = '',
   targetId = '',
-  context = '内容'
+  context = '内容',
+  usePlaceholder = true
 }) {
   const targetContainer = document.getElementById(targetId);
   try {
     if (!targetContainer) {
       throw new Error(`${context}：加载：目标容器不存在：${targetId}`);
     }
-    targetContainer.innerHTML = '<div class="mdui-spinner"></div>正在加载';
+    
+    // 如果使用占位符，先显示占位符
+    if (usePlaceholder) {
+      targetContainer.innerHTML = createPlaceholder(`${context}加载中...`, true);
+    } else {
+      targetContainer.innerHTML = '<div class="mdui-spinner"></div>正在加载';
+    }
 
     const htmlDoc = await fetchContent(url);
 
@@ -46,7 +64,7 @@ async function loadContent({
     mdui.mutation?.();
   } catch (error) {
     console.error(`${context}：加载：`, error);
-    if (targetContainer) targetContainer.innerHTML = error;
+    if (targetContainer) targetContainer.innerHTML = `<div class="mdui-typo"><p>${context}加载失败：${error.message}</p></div>`;
     mdui.dialog({
       title: `${context}：加载：出错：`,
       content: error.message,
@@ -63,7 +81,8 @@ async function loadOdlm() {
   await loadContent({
     url: '/file/data/odlm.html',
     targetId: 'odlm',
-    context: 'odlm'
+    context: '开门见山',
+    usePlaceholder: true
   });
 }
 
@@ -74,7 +93,8 @@ async function loadIntroFcl() {
   await loadContent({
     url: '/file/data/introFcl.html',
     targetId: 'introFcl',
-    context: 'introFcl'
+    context: 'FCL介绍',
+    usePlaceholder: true
   });
 }
 
@@ -86,29 +106,11 @@ async function loadDownLinks() {
   if (loadFlags.downLinksLoaded) {
     return;
   } else {
-    // 预先添加事件监听器以提高响应性
-    setTimeout(() => {
-      const tab2 = document.getElementById('tab2');
-      if (tab2) {
-        // 预绑定常用的事件监听器
-        const setupEventListeners = () => {
-          const elements = tab2.querySelectorAll('[id$="Links"]');
-          elements.forEach(element => {
-            const id = element.id;
-            const functionName = 'load' + id.charAt(0).toUpperCase() + id.slice(1);
-            if (typeof window[functionName] === 'function') {
-              element.addEventListener('click', window[functionName]);
-            }
-          });
-        };
-        setupEventListeners();
-      }
-    }, 0);
-    
     await loadContent({
       url: '/file/data/downLinks.html',
       targetId: 'tab2',
-      context: '直链'
+      context: '直链',
+      usePlaceholder: true
     });
     loadFlags.downLinksLoaded = true;
   }
@@ -125,7 +127,8 @@ async function loadChecksums() {
     await loadContent({
       url: '/file/data/checksums.html',
       targetId: 'tab3',
-      context: '校验'
+      context: '校验',
+      usePlaceholder: true
     });
     loadFlags.checksumsLoaded = true;
   }
@@ -142,7 +145,8 @@ async function loadAbout() {
     await loadContent({
       url: '/file/data/about.html',
       targetId: 'tab5',
-      context: '关于'
+      context: '关于',
+      usePlaceholder: true
     });
     loadFlags.aboutLoaded = true;
   }
@@ -155,6 +159,15 @@ async function loadAbout() {
  * @returns {Promise<void>} 无返回值
  */
 async function loadSponsorList() {
+  const sponsorContainer = document.getElementById('sponsorList');
+  if (!sponsorContainer) {
+    console.warn('赞助列表容器不存在');
+    return;
+  }
+
+  // 显示占位符
+  sponsorContainer.innerHTML = createPlaceholder('赞助列表加载中...', true);
+
   try {
     const response = await fetch('/file/data/sponsorList.json');
     if (!response.ok) {
@@ -195,17 +208,11 @@ async function loadSponsorList() {
   </table>
 </div>`;
 
-    const container = document.getElementById('sponsorList');
-    if (container) {
-      container.innerHTML = html;
-    }
+    sponsorContainer.innerHTML = html;
     mdui.mutation();
   } catch (error) {
     console.error('赞表：加载：出错：', error);
-    const container = document.getElementById('sponsorList');
-    if (container) {
-      container.innerHTML = error;
-    }
+    sponsorContainer.innerHTML = `<div class="mdui-typo"><p>赞助列表加载失败：${error.message}</p></div>`;
   }
 }
 

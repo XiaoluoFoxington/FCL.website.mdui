@@ -204,13 +204,22 @@ async function setupIndexDownLinks(sourceKey) {
     const jsonUrl = sourceConfig.path;
     console.log(`开门见山：JSON：${jsonUrl}`);
 
-    // 并行执行网络请求
+    // 并行执行网络请求，但设置超时避免阻塞
+    const fetchDataWithTimeout = (url, timeout = 5000) => {
+      return Promise.race([
+        fetch(url).then(response => {
+          if (!response.ok) throw new Error(`HTTP出错：${response.status}`);
+          return response.json();
+        }),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('请求超时')), timeout)
+        )
+      ]);
+    };
+
     const [_, jsonData] = await Promise.all([
       odlmPromise,
-      fetch(jsonUrl).then(response => {
-        if (!response.ok) throw new Error(`HTTP出错：${response.status}`);
-        return response.json();
-      })
+      fetchDataWithTimeout(jsonUrl)
     ]);
 
     const antiSpamEl = document.getElementById('fu');
