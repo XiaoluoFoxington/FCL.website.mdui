@@ -4,16 +4,7 @@
 
 import { loadFlags } from '../core/app.js';
 import { fetchContent } from '../utils/network.js';
-import { Launcher } from '../integrations/launcher-sdk.js';
-
-// 等待Launcher对象加载完成
-async function waitForLauncher() {
-  // 轮询检查Launcher是否已定义
-  while (!Launcher) {
-    await new Promise(resolve => setTimeout(resolve, 100));
-  }
-  return Launcher;
-}
+import { Launcher as launcherPromise } from '../integrations/launcher-sdk.js';
 import { createPlaceholder, lazyLoadContent } from '../utils/lazyLoader.js';
 
 /**

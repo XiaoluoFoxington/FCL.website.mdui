@@ -3,16 +3,7 @@
  */
 
 import { loadFlags } from '../core/app.js';
-import { Launcher } from './launcher-sdk.js';
-
-// 等待Launcher对象加载完成
-async function waitForLauncher() {
-  // 轮询检查Launcher是否已定义
-  while (!Launcher) {
-    await new Promise(resolve => setTimeout(resolve, 100));
-  }
-  return Launcher;
-}
+import { Launcher as launcherPromise } from './launcher-sdk.js';
 
 // 从外部加载Launcher SDK
 // 浏览器引入 SDK：
@@ -61,8 +52,10 @@ async function loadDownWay7(repoName, prefix, loadedFlag) {
       x64: document.getElementById(`${prefix}X64`)
     };
 
+    // 等待 Launcher SDK 加载完成
+    const Launcher = await launcherPromise;
+
     // 获取制品列表
-    const Launcher = await waitForLauncher();
     const artifacts = await Launcher.getByRepo(repoName);
     
     // 检查制品列表是否为空
@@ -128,58 +121,6 @@ async function loadDownWay7(repoName, prefix, loadedFlag) {
   }
 }
 
-
-
-/**
- * 加载渲染器线1
- */
-async function loadRenderDownWay1() {
-  await loadList('/file/data/渲染器线1.json', 'renderDownWay1', '渲染器线1', 'renderDownWay1Loaded');
-}
-
-/**
- * 加载渲染器线3
- */
-async function loadRenderDownWay3() {
-  await loadList('/file/data/渲染器线3.json', 'renderDownWay3', '渲染器线3', 'renderDownWay3Loaded');
-}
-
-/**
- * 加载渲染器线7
- */
-async function loadRenderDownWay7() {
-  await loadListDownWay7('MobileGlues', '渲染器线7', 'mgRenderDownWay7Loaded', 'renderDownWay7');
-}
-
-/**
- * 加载驱动线1
- */
-async function loadDriverDownWay1() {
-  await loadList('/file/data/驱动线1.json', 'driverDownWay1', '驱动线1', 'driverDownWay1Loaded');
-}
-
-/**
- * 加载驱动线7
- */
-async function loadDriverDownWay7() {
-  await loadListDownWay7('zl_driver', '驱动线7', 'driverDownWay7Loaded', 'driverDownWay7');
-}
-
-/**
- * 加载驱动线8
- */
-async function loadDriverDownWay8() {
-  await loadList('/file/data/驱动线8.json', 'driverDownWay8', '驱动线8', 'driverDownWay8Loaded');
-}
-
-/**
- * 加载JRE线7
- */
-async function loadJreDownWay7() {
-  await loadListDownWay7('jre', 'JRE线7', 'jreDownWay7Loaded', 'jreDownWay7');
-}
-
-// 导出模块内容
 /**
  * 处理未匹配架构的下载项
  * @param {Array} unmatchedItems - 未匹配架构的下载项数组
@@ -316,8 +257,10 @@ async function loadListDownWay7(repoName, logPrefix, loadedFlag, containerId) {
   console.log(`${logPrefix}：开始`);
 
   try {
+    // 等待 Launcher SDK 加载完成
+    const Launcher = await launcherPromise;
+
     // 获取制品列表
-    const Launcher = await waitForLauncher();
     const drivers = await Launcher.getByRepo(repoName);
 
     // 清空容器
@@ -357,9 +300,59 @@ async function loadListDownWay7(repoName, logPrefix, loadedFlag, containerId) {
   }
 }
 
+/**
+ * 加载渲染器线1
+ */
+async function loadRenderDownWay1() {
+  await loadList('/file/data/渲染器线1.json', 'renderDownWay1', '渲染器线1', 'renderDownWay1Loaded');
+}
+
+/**
+ * 加载渲染器线3
+ */
+async function loadRenderDownWay3() {
+  await loadList('/file/data/渲染器线3.json', 'renderDownWay3', '渲染器线3', 'renderDownWay3Loaded');
+}
+
+/**
+ * 加载渲染器线7
+ */
+async function loadRenderDownWay7() {
+  await loadListDownWay7('MobileGlues', '渲染器线7：MG', 'mgRenderDownWay7Loaded', 'mgRenderDownWay7');
+  await loadListDownWay7('FCL渲染器插件备份源', '渲染器线7：全部', 'renderDownWay7Loaded', 'renderDownWay7');
+}
+
+/**
+ * 加载驱动线1
+ */
+async function loadDriverDownWay1() {
+  await loadList('/file/data/驱动线1.json', 'driverDownWay1', '驱动线1', 'driverDownWay1Loaded');
+}
+
+/**
+ * 加载驱动线7
+ */
+async function loadDriverDownWay7() {
+  await loadListDownWay7('FCLDriverPlugin', '驱动线7', 'driverDownWay7Loaded', 'driverDownWay7');
+}
+
+/**
+ * 加载驱动线8
+ */
+async function loadDriverDownWay8() {
+  await loadList('/file/data/驱动线8.json', 'driverDownWay8', '驱动线8', 'driverDownWay8Loaded');
+}
+
+/**
+ * 加载JRE线7
+ */
+async function loadJreDownWay7() {
+  await loadListDownWay7('其他资源文件', 'JRE线7', 'jreDownWay7Loaded', 'jreDownWay7');
+}
+
 // 导出模块内容
 export {
-  Launcher,
+  launcherPromise as Launcher,
   loadDownWay7,
   handleUnmatchedItems,
   removeUnsupportedArchElements,

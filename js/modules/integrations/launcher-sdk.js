@@ -20,30 +20,33 @@
 //   }
 // ]
 
-// 动态加载外部Launcher SDK
-let Launcher;
-
-// 检查是否在浏览器环境中
-if (typeof window !== 'undefined') {
-  // 创建script标签来加载外部SDK
-  const script = document.createElement('script');
-  script.src = 'https://launcher-mirror.zeart.ink/static/launcher-sdk.js';
-  script.async = true;
-  
-  // 将script标签添加到页面中
-  document.head.appendChild(script);
-  
-  // 等待脚本加载完成
-  script.onload = () => {
-    // 从window对象中获取Launcher
-    Launcher = window.Launcher;
-  };
-  
-  // 处理加载错误
-  script.onerror = (error) => {
-    console.error('Failed to load Launcher SDK:', error);
-  };
-}
+// 创建一个 Promise 来处理异步加载的 Launcher SDK
+const launcherPromise = new Promise((resolve, reject) => {
+  // 检查 Launcher 是否已经存在
+  if (typeof Launcher !== 'undefined') {
+    resolve(Launcher);
+  } else {
+    // 监听 Launcher SDK 加载完成事件
+    const checkLauncher = () => {
+      if (typeof Launcher !== 'undefined') {
+        resolve(Launcher);
+      } else {
+        // 如果还没加载完成，继续检查
+        setTimeout(checkLauncher, 100);
+      }
+    };
+    
+    // 开始检查
+    checkLauncher();
+    
+    // 设置超时时间（5秒）
+    setTimeout(() => {
+      if (typeof Launcher === 'undefined') {
+        reject(new Error('Launcher SDK 加载超时'));
+      }
+    }, 5000);
+  }
+});
 
 // 导出模块内容
-export { Launcher };
+export { launcherPromise as Launcher };
