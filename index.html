@@ -505,10 +505,34 @@
   <script src="/js/lib/gt4.js"></script>
   <script src="/js/lib/eruda.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script src="/js/index.js"></script>
+  <script src="/js/main.js" type="module"></script>
   <script defer src="https://vercount.one/js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-  <script src="https://launcher-mirror.zeart.ink/static/launcher-sdk.js"></script>
+  <!-- 异步加载 Launcher SDK -->
+  <script>
+    // 记录开始加载时间
+    const sdkLoadStartTime = performance.now();
+    
+    // 创建 script 标签并异步加载
+    const script = document.createElement('script');
+    script.src = 'https://launcher-mirror.zeart.ink/static/launcher-sdk.js';
+    script.async = true;
+    
+    // 监听加载完成事件
+    script.onload = function() {
+      const sdkLoadEndTime = performance.now();
+      const loadTime = sdkLoadEndTime - sdkLoadStartTime;
+      console.log(`Launcher SDK 加载完成，耗时: ${loadTime.toFixed(2)} 毫秒`);
+    };
+    
+    // 监听加载错误事件
+    script.onerror = function() {
+      console.error('Launcher SDK 加载失败');
+    };
+    
+    // 添加到页面
+    document.head.appendChild(script);
+  </script>
 </body>
 
 </html>
