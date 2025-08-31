@@ -1888,7 +1888,7 @@ async function showDeviceInfo(containerId) {
       购买和下载正版Minecraft`;
       }
     }
-    else if (info.system.toString() == "iOS") {
+    else if (info.system.toString() == "iOS"|| info.system.toString() == "macOS") {
       output = `<p>您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。</p>
       <br/>获取国际版Minecraft：
     <a href="https://apps.apple.com/us/app/minecraft-dream-it-build-it/id479516143?itscg=30200&itsct=apps_box_badge&mttnsubad=479516143" style="display: inline-block;">
