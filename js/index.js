@@ -1847,7 +1847,65 @@ async function showDeviceInfo(containerId) {
 
     console.log(`架构检测：sysArch：${sysArch}`);
 
-    const output = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
+    // 对特别系统单独做适配
+    let output = '';
+    if (info.system.toString().includes("Windows")) {
+      // Windows Phone也是Windows
+
+      // 动态创建并添加Microsoft Store徽章脚本
+      if (!document.querySelector('script[src="https://get.microsoft.com/badge/ms-store-badge.bundled.js"]')) {
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = 'https://get.microsoft.com/badge/ms-store-badge.bundled.js';
+        document.head.appendChild(script);
+      }
+
+      if (info.systemVersion < 10) {
+        // windows10之前系统特殊处理
+        output = `<p>您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。</p>
+      可以前往
+      <ms-store-badge
+        productid="9NXP44L49SHJ"
+        window-mode="full"
+        theme="auto"
+        size="middle"
+        language="zh-cn"
+        animation="on">
+      </ms-store-badge>
+      购买正版Minecraft Java版，通过各种启动器启动Minecraft Java版`;
+      }
+      else {
+        output = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。
+      <br/>可以前往
+      <ms-store-badge
+        productid="9NXP44L49SHJ"
+        window-mode="full"
+        theme="auto"
+        size="middle"
+        language="zh-cn"
+        animation="on">
+      </ms-store-badge>
+      购买和下载正版Minecraft`;
+      }
+    }
+    else if (info.system.toString() == "iOS") {
+      output = `<p>您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。</p>
+      <br/>获取国际版Minecraft：
+    <a href="https://apps.apple.com/us/app/minecraft-dream-it-build-it/id479516143?itscg=30200&itsct=apps_box_badge&mttnsubad=479516143" style="display: inline-block;">
+    <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/zh-cn?releaseDate=1321488000" alt="Download on the App Store" style="width: 246px; height: 82px; vertical-align: middle; object-fit: contain;" />
+    </a>
+      <br/>
+      要在iOS上运行Minecraft Java版，
+      可以前往<a href="https://pojavlauncher.app/wiki/getting_started/INSTALL.html#ios">此处</a>
+      获取更多关于安装PojavLauncher的说明`;
+    } else if (navigator.userAgent.includes("OpenHarmony") || typeof window.harmony !== 'undefined') {
+      output = `<p>您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。</p>
+      <br/>HarmonyOS NEXT手机需要在“卓易通”中安装，性能有较大损耗
+      <br/>鸿蒙电脑暂时无好用的适配方案，可以尝试在虚拟机中打开此页面下载Windows版`;
+    } else {
+      output = `您的系统为<code>${info.system} ${info.systemVersion}</code>，架构为<code>${archDisplay}</code>，仅供参考，不一定准。`;
+    }
+
     sysInfo = output;
 
     updateContainer(output);
