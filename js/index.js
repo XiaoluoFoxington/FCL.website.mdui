@@ -48,6 +48,9 @@ window.addEventListener('DOMContentLoaded', function () {
  * 初始化各种玩意
  */
 function initApp() {
+  // 记录加载开始时间
+  const startTime = performance.now();
+  
   // 使用IIFE和async/await重构回调地狱
   (async function initSequence() {
     try {
@@ -120,6 +123,23 @@ function initApp() {
       // 移除此提示
       await nextFrame('移除此提示…', 90);
       removeLoadTip();
+      
+      // 计算并显示加载时长
+      const endTime = performance.now();
+      const loadTime = Math.round(endTime - startTime);
+      mdui.snackbar({
+        message: `加载完成，用时 ${loadTime}ms`,
+        position: 'right-bottom',
+        timeout: 3000
+      });
+
+      // 更新公告中的加载时间显示
+      const loadTimeElement = document.getElementById('loadTimeDisplay');
+      if (loadTimeElement) {
+        loadTimeElement.textContent = `${loadTime}ms`;
+      } else {
+        console.log('未找到loadTimeDisplay元素');
+      }
 
     } catch (error) {
       console.error('初始化应用：出错：', error);
