@@ -128,182 +128,7 @@ async function loadDownWay7(repoName, prefix, loadedFlag) {
   }
 }
 
-/**
- * 处理未匹配架构的下载项
- * @param {Array} unmatchedItems - 未匹配架构的下载项数组
- * @param {Object} archElements - 架构元素对象
- * @param {HTMLElement} versionEl - 版本元素
- */
-function handleUnmatchedItems(unmatchedItems, archElements, versionEl) {
-  if (unmatchedItems.length === 0) return;
-  
-  // 如果只有一个未匹配项，使用现有的all按钮
-  if (unmatchedItems.length === 1 && archElements.all) {
-    archElements.all.href = unmatchedItems[0].url;
-    return;
-  }
-  
-  // 多个未匹配项时，创建新按钮
-  // 先移除原始的all按钮
-  if (archElements.all) {
-    archElements.all.remove();
-  }
-  
-  // 获取父容器
-  const parentContainer = versionEl.parentElement?.nextElementSibling;
-  if (!parentContainer) return;
-  
-  // 为每个未匹配项创建新按钮
-  unmatchedItems.forEach((item) => {
-    const newButton = document.createElement('a');
-    newButton.href = item.url;
-    newButton.className = 'mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple';
-    newButton.textContent = item.name;
-    
-    // 添加到父容器
-    parentContainer.appendChild(newButton);
-  });
-}
 
-/**
- * 移除不支持的架构元素
- * @param {Object} archElements - 架构元素对象
- * @param {Set} foundArch - 找到的架构集合
- */
-function removeUnsupportedArchElements(archElements, foundArch) {
-  Object.keys(archElements).forEach(arch => {
-    if (arch !== 'all' && !foundArch.has(arch) && archElements[arch]) {
-      archElements[arch].remove();
-    }
-  });
-}
-
-/**
- * 加载一般列表。这种列表不像上面的需要按架构进行各种杂七杂八的东西，就是一个简单的按钮列表。
- * @async
- * @param {string} fileUrl - 数据JSON文件路径
- * @param {string} targetId - 目标DOM元素ID
- * @param {string} operationName - 操作名称（用于错误信息）
- * @param {string} loadedFlag - 全局加载标记
-
-*/
-async function loadList(fileUrl, targetId, operationName, loadedFlag) {
-  // 检查是否已加载
-  if (loadFlags[loadedFlag]) {
-    return;
-  }
-
-  const targetElement = document.getElementById(targetId);
-
-  //调试
-  console.log(`加载${operationName}：${fileUrl}`);
-
-  try {
-    // 发起请求获取JSON数据
-    const response = await fetch(fileUrl);
-
-    // 检查请求是否成功
-    if (!response.ok) {
-      throw new Error(`状态码：${response.status}`);
-    }
-
-    // 解析JSON数据
-    const data = await response.json();
-
-    // 获取目标DOM元素
-    if (!targetElement) {
-      throw new Error(`元素不存在：${targetId}`);
-    }
-
-    // 生成HTML链接字符串
-    const linksHtml = data.map(item =>
-      `<a href="${item.url}" class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple">${item.name}</a>`
-    ).join('\n');
-
-    // 将生成的HTML填充到目标元素
-    targetElement.innerHTML = linksHtml;
-
-    // 输出加载完成
-    console.log(`加载${operationName}：完成`);
-
-    // 标记为已加载
-    loadFlags[loadedFlag] = true;
-
-  } catch (error) {
-    // 显示错误
-    if (targetElement) {
-      targetElement.textContent = `出错：${error.message}`;
-    }
-
-    // 打印错误
-    console.error(`加载${operationName}：`, error);
-
-    // 显示错误对话框
-    mdui.dialog({
-      title: `加载${operationName}：出错：`,
-      content: error.message,
-      buttons: [{ text: '关闭' }],
-      history: false
-    });
-  }
-}
-
-/**
- * 加载一般列表（线路7）
- * @param {string} repoName - 仓库名称
- * @param {string} logPrefix - 日志和提示信息前缀
- * @param {string} loadedFlag - 全局加载标记
- * @param {string} containerId - 容器元素ID
- */
-async function loadListDownWay7(repoName, logPrefix, loadedFlag, containerId) {
-  // 获取DOM元素引用
-  const container = document.getElementById(containerId);
-
-  // 检查是否已加载
-  if (loadFlags[loadedFlag]) return;
-  console.log(`${logPrefix}：开始`);
-
-  try {
-    // 获取制品列表
-    const Launcher = await waitForLauncher();
-    const drivers = await Launcher.getByRepo(repoName);
-
-    // 清空容器
-    container.innerHTML = '';
-
-    // 处理每个驱动程序
-    drivers.forEach(driver => {
-      // 创建链接元素
-      const link = document.createElement('a');
-      link.href = driver.url;
-      link.className = 'mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple';
-      link.textContent = driver.name;
-      // 如果名称不合理则改为仓库名称
-      if (driver.name === 'app-release.apk') {
-        link.textContent = repoName;
-      }
-      // 添加到容器
-      container.appendChild(link);
-    });
-
-    // 清理并标记完成
-    loadFlags[loadedFlag] = true;
-    console.log(`${logPrefix}：完成`);
-  } catch (error) {
-    console.error(`${logPrefix}：出错`, error);
-
-    // 显示错误信息
-    container.textContent = '出错：' + error.message;
-
-    // 显示错误对话框
-    mdui.dialog({
-      title: `${logPrefix}：出错`,
-      content: error.message,
-      buttons: [{ text: '关闭' }],
-      history: false
-    });
-  }
-}
 
 /**
  * 加载渲染器线1
@@ -323,8 +148,7 @@ async function loadRenderDownWay3() {
  * 加载渲染器线7
  */
 async function loadRenderDownWay7() {
-  await loadListDownWay7('MobileGlues', '渲染器线7：MG', 'mgRenderDownWay7Loaded', 'mgRenderDownWay7');
-  await loadListDownWay7('FCL渲染器插件备份源', '渲染器线7：全部', 'renderDownWay7Loaded', 'renderDownWay7');
+  await loadListDownWay7('MobileGlues', '渲染器线7', 'mgRenderDownWay7Loaded', 'renderDownWay7');
 }
 
 /**
@@ -338,7 +162,7 @@ async function loadDriverDownWay1() {
  * 加载驱动线7
  */
 async function loadDriverDownWay7() {
-  await loadListDownWay7('FCLDriverPlugin', '驱动线7', 'driverDownWay7Loaded', 'driverDownWay7');
+  await loadListDownWay7('zl_driver', '驱动线7', 'driverDownWay7Loaded', 'driverDownWay7');
 }
 
 /**
@@ -352,28 +176,10 @@ async function loadDriverDownWay8() {
  * 加载JRE线7
  */
 async function loadJreDownWay7() {
-  await loadListDownWay7('其他资源文件', 'JRE线7', 'jreDownWay7Loaded', 'jreDownWay7');
+  await loadListDownWay7('jre', 'JRE线7', 'jreDownWay7Loaded', 'jreDownWay7');
 }
 
 // 导出模块内容
-export {
-  Launcher,
-  loadDownWay7,
-  handleUnmatchedItems,
-  removeUnsupportedArchElements,
-  loadList,
-  loadListDownWay7,
-  loadRenderDownWay1,
-  loadRenderDownWay3,
-  loadRenderDownWay7,
-  loadDriverDownWay1,
-  loadDriverDownWay7,
-  loadDriverDownWay8,
-  loadJreDownWay7
-};
-
-
-
 /**
  * 处理未匹配架构的下载项
  * @param {Array} unmatchedItems - 未匹配架构的下载项数组
@@ -549,56 +355,6 @@ async function loadListDownWay7(repoName, logPrefix, loadedFlag, containerId) {
       history: false
     });
   }
-}
-
-/**
- * 加载渲染器线1
- */
-async function loadRenderDownWay1() {
-  await loadList('/file/data/渲染器线1.json', 'renderDownWay1', '渲染器线1', 'renderDownWay1Loaded');
-}
-
-/**
- * 加载渲染器线3
- */
-async function loadRenderDownWay3() {
-  await loadList('/file/data/渲染器线3.json', 'renderDownWay3', '渲染器线3', 'renderDownWay3Loaded');
-}
-
-/**
- * 加载渲染器线7
- */
-async function loadRenderDownWay7() {
-  await loadListDownWay7('MobileGlues', '渲染器线7：MG', 'mgRenderDownWay7Loaded', 'mgRenderDownWay7');
-  await loadListDownWay7('FCL渲染器插件备份源', '渲染器线7：全部', 'renderDownWay7Loaded', 'renderDownWay7');
-}
-
-/**
- * 加载驱动线1
- */
-async function loadDriverDownWay1() {
-  await loadList('/file/data/驱动线1.json', 'driverDownWay1', '驱动线1', 'driverDownWay1Loaded');
-}
-
-/**
- * 加载驱动线7
- */
-async function loadDriverDownWay7() {
-  await loadListDownWay7('FCLDriverPlugin', '驱动线7', 'driverDownWay7Loaded', 'driverDownWay7');
-}
-
-/**
- * 加载驱动线8
- */
-async function loadDriverDownWay8() {
-  await loadList('/file/data/驱动线8.json', 'driverDownWay8', '驱动线8', 'driverDownWay8Loaded');
-}
-
-/**
- * 加载JRE线7
- */
-async function loadJreDownWay7() {
-  await loadListDownWay7('其他资源文件', 'JRE线7', 'jreDownWay7Loaded', 'jreDownWay7');
 }
 
 // 导出模块内容
