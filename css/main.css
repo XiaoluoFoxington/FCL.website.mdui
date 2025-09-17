@@ -37,6 +37,14 @@ img {
   animation: shake 0.1s infinite;
 }
 
+.mdui-panel-item .warning {
+  background-color: #ff0;
+}
+
+.mdui-theme-layout-dark .mdui-panel-item .warning {
+  background-color: #808000;
+}
+
 @keyframes shake {
 
   0%,
