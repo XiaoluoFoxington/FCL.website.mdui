@@ -1684,7 +1684,7 @@ async function setupIndexDownLinks(sourceKey) {
     <br>
     <div class="mdui-row-xs-2">
       <div class="mdui-col">
-        <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="#tab=1">转到"下载"TAB</a>
+        <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="0">转到"下载"TAB</a>
       </div>
       <div class="mdui-col">
         <a class="mdui-btn mdui-btn-raised mdui-btn-block mdui-ripple" href="https://wj.qq.com/s2/22395480/df5b/">向站长反馈</a>
