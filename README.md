@@ -1,8 +1,14 @@
+# 注意
+
+此网站已重制，此版本将不会有任何内容更改。
+
+[XiaoluoFoxington/FCL.website.NEXT](https://github.com/XiaoluoFoxington/FCL.website.NEXT)
+
 # FCL.website.mdui
 
 ## 项目介绍
 
-项目网站：[https://foldcraftlauncher.cn](https://foldcraftlauncher.cn)。
+项目网站：[https://mdui.foldcraftlauncher.cn](https://mdui.foldcraftlauncher.cn)。
 
 这里是由玩家社区自行搭建的[《Fold Craft Launcher》](https://github.com/FCL-Team/FoldCraftLauncher)非官方公益下载站，可以在这里下载到FCL的最新发行版、全部旧版本、ZL最新发行版、ZL部分旧版本、插件、驱动、Java和Pojav FFmpeg Plugin。
 
