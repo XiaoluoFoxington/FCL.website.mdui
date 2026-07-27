@@ -1,8 +1,8 @@
 # 注意
 
-此网站已重制，此版本将不会有任何内容更改。
+此网站已重制，此版本将不会有任何内容更改。新站：
 
-[XiaoluoFoxington/FCL.website.NEXT](https://github.com/XiaoluoFoxington/FCL.website.NEXT)
+[XiaoluoFoxington/FCL.downsite.NEW](https://github.com/XiaoluoFoxington/FCL.downsite.NEW)
 
 # FCL.website.mdui
 
